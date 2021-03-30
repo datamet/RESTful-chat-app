@@ -10,8 +10,8 @@
         super()
     }
 
-    doSomething() {
-        console.log("doing something else")
+    createUser() {
+        console.log("creating user")
     }
 
  }

@@ -9,8 +9,8 @@ class Gateway {
 
     }
 
-    doSomething() {
-        throw new Error("doSomething is not implemented")
+    createUser(username, password) {
+        throw new Error("No implementation for createUser")
     }
 
 }
