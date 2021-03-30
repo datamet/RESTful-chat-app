@@ -1,15 +1,21 @@
-const express = require('express');
-const config = require('./config.js')
+/**
+ * Responsible for starting application
+ */
 
-const PORT = config.port
+// App imports
+const express = require('express')
+const config = require('./lib/config.js')
 
-const app = express();
+// Creating app
+const app = express()
 
+// Route imports
+const api = require('./routes/api')
 
-app.get('/', (req, res)=> {
-  res.send('Hello World');
-}) 
+// Using routes
+app.use(api)
 
+// Starting server
 app.listen(config.port,()=>{
- console.log(`starting server on ${config.port} in ${config.mode}`);
+ console.log(`starting server on ${config.port} in ${config.mode}`)
 });
