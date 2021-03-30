@@ -2,12 +2,14 @@
  * Creating routers with custom prefix
  */
 
-const express = require("express")
+const express = require('express')
+const gateway = require('./gateway')
 
 module.exports = (route, subrouters) => {
     // Check if there are any subroutes
     subrouters = subrouters instanceof Array ? subrouters : []
 
+    // Each router is it's own sub-application to make it more modular
     const app = express()
     const router = express.Router()
 
@@ -16,5 +18,5 @@ module.exports = (route, subrouters) => {
         router.use(subroute)
     }
 
-    return { app, router }
+    return { app, router, gateway }
 }

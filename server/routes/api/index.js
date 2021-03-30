@@ -2,16 +2,10 @@
  * API routes
  */
 
-const router = require('../../lib/router')('/api')
+// Importing subroutes
+const users = require('./users')
 
-// // Importing routes
-// const users = require('./users')
+// Creating sub-router
+const { app, router, gateway } = require('../../lib/router')('/api', [users])
 
-// // Using routes
-// router.use(users)
-
-router.router.get('/',(req, res) => {
-    res.send("hi from api")
-})
-
-module.exports = router.app
+module.exports = app

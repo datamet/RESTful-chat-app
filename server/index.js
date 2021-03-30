@@ -17,5 +17,5 @@ app.use(api)
 
 // Starting server
 app.listen(config.port, () => {
-    console.log(`starting server on ${config.port} in ${config.mode}`)
+    console.log(`starting server on ${config.port} in ${config.mode} mode`)
 });
