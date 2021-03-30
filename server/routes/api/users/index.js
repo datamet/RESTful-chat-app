@@ -1,10 +1,11 @@
 /**
- * Users routes
+ * Users route
  */
 
-const express = require("express")
-const app = module.exports = express()
+const router = require('../../../lib/router')('/users')
 
-app.get("/users", (req, res) => {
-    res.send("user list")
+router.get('/', (req, res) => {
+    res.send("this is the users list")
 })
+
+module.exports = router

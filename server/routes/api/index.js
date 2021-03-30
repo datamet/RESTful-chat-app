@@ -2,13 +2,16 @@
  * API routes
  */
 
-const express = require("express")
-const app = module.exports = express()
-const router = express.Router()
+const router = require('../../lib/router')('/api')
 
-// Importing routes
-const users = require("./users")
+// // Importing routes
+// const users = require('./users')
 
-// Using routes
-app.use('/api', router)
-router.use(users)
+// // Using routes
+// router.use(users)
+
+router.router.get('/',(req, res) => {
+    res.send("hi from api")
+})
+
+module.exports = router.app

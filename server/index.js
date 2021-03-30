@@ -16,6 +16,6 @@ const api = require('./routes/api')
 app.use(api)
 
 // Starting server
-app.listen(config.port,()=>{
- console.log(`starting server on ${config.port} in ${config.mode}`)
+app.listen(config.port, () => {
+    console.log(`starting server on ${config.port} in ${config.mode}`)
 });
