@@ -42,8 +42,53 @@ npm run start
 
 *NB:* Make sure you are using the LTS version of node: `v14.16.0`.
 
+<br>
 
 **Client:**
 
 Instructions will come
 
+<br>
+
+## API refrence
+
+Here you will find a list of every endpoint the chat api exposes and how to use each one
+
+<br>
+
+### Users
+`GET` - `/api/users` - Returns a list of userID's and the corresponding username
+
+<br>
+
+`POST` - `/api/users` - Creates a new user and returns a userID
+
+Required fields:
+ 
+*Header:* 
+
+```
+Content-Type : application/json
+```
+
+*Body:*
+
+```json
+{
+    "username" : "%username%",
+    "password" : "%password%"
+}
+```
+
+<br>
+
+`DELETE` - `/api/users` - Deletes a user
+
+*Header:* 
+
+```
+Content-Type : application/json
+Token : "%Auth Token%"
+```
+
+<br>
