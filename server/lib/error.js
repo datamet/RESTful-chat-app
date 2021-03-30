@@ -6,7 +6,8 @@ const error = {
     },
     exists: () => error.custom(409, "Resource already exists"),
     missing: () => error.custom(400, "Missing required fields"),
-    notfound: () => error.custom(404, "Resource not found")
+    notfound: () => error.custom(404, "Resource not found"),
+    internal: () => error.custom(500, "Internal server error")
 }
 
 module.exports = error

@@ -1,12 +1,13 @@
 /**
- * Implementation of gateway where an inmemory store is used
+ * Implementation of gateway where inmemory stores are used
  */
 
-const error = require('../error') 
-
-const users = []
-
+const error = require('../error')
+const { uuid } = require('../helpers')
 const Gateway = require("./gateway")
+
+// In memory stores
+const users = new Map()
 
 class InMemoryGateway extends Gateway {
 
@@ -14,19 +15,28 @@ class InMemoryGateway extends Gateway {
         super()
     }
 
-    createUser(username, hash, salt) {
+    createUser(name, hash, salt) {
         // Check if username is unique
-        for (const user of users) {
-            if (user.username === username) throw error.exists()
+        for (let [id, user] of users) {
+            if (user.name === name) throw error.exists()
         }
 
-        users.push({
-            username,
+        // Creating a user id
+        const id = uuid()
+
+        // Creating user object
+        const newUser = {
+            name,
             hash,
             salt
-        })
+        }
+
+        // Adding user to user store
+        users.set(id, newUser)
+        return id
     }
 
- }
+}
 
-module.exports = new InMemoryGateway()
+// Exporting an instance of InMemoryGateway
+module.exports = InMemoryGateway

@@ -3,6 +3,8 @@
  * (In memory, database, etc...)
  */
 
+const error = require('../error')
+
 class Gateway {
 
     constructor() {
@@ -10,7 +12,15 @@ class Gateway {
     }
 
     createUser() {
-        throw new Error("No implementation for createUser")
+        throw error.internal()
+    }
+
+    getUsers() {
+        throw error.internal()
+    }
+
+    deleteUser() {
+        throw error.internal()
     }
 
 }

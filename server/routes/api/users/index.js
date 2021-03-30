@@ -2,7 +2,7 @@
  * Users route
  */
 
-const { gateway } = require('../../../lib/config')
+const db = require('../../../lib/gateways/db')
 const error = require('../../../lib/error')
 const { salt, hash } = require('../../../lib/helpers')
 const { app, router } = require('../../../lib/router')('/users')
@@ -22,7 +22,7 @@ router.post('/', (req, res, next) => {
         const passwordHash = hash(password + salt)
 
         try {
-            gateway.createUser(username, passwordHash, passwordSalt)
+            db.createUser(username, passwordHash, passwordSalt)
             res.send("OK")
         }
         catch (err) {

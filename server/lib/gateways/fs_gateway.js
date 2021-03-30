@@ -1,5 +1,5 @@
 /**
- * Implementation of gateway where an inmemory store is used
+ * Implementation of gateway where the file system is used
  */
 
  const Gateway = require("./gateway")
@@ -16,4 +16,4 @@
 
  }
 
-module.exports = new FSGateway()
+module.exports = FSGateway
