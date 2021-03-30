@@ -5,12 +5,7 @@ const parse_body = (req, res, next) => {
        req.rawBody = data;
        
         try {
-            if (data) {
-                console.log(data)
-                req.body = JSON.parse(data);
-                return
-            }
-            req.body = {}
+            req.body = data ? JSON.parse(data) : {}
             next()
         }
         catch (err) {

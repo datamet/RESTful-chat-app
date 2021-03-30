@@ -18,10 +18,13 @@ helpers.salt = () => {
     return salt
 }
 
-helpers.error = (status, message) => {
-    const err = new Error(message)
-    err.status = status
-    return err
+helpers.createRandomString = strLength => {
+    strLength = typeof(strLength) == 'number' && strLength > 0 ? strLength : false;
+    if (strLength) {
+        return [...Array(strLength)].map(i=>(~~(Math.random()*36)).toString(36)).join('');
+    } else {
+        return false;
+    }
 }
 
 module.exports = helpers

@@ -9,7 +9,7 @@ class Gateway {
 
     }
 
-    createUser(username, password) {
+    createUser() {
         throw new Error("No implementation for createUser")
     }
 

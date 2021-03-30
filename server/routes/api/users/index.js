@@ -3,13 +3,16 @@
  */
 
 const { gateway } = require('../../../lib/config')
-const { salt, hash, error } = require('../../../lib/helpers')
+const error = require('../../../lib/error')
+const { salt, hash } = require('../../../lib/helpers')
 const { app, router } = require('../../../lib/router')('/users')
 
+// Get list of users
 router.get('/', (req, res, next) => {
     res.send("this is the users list")
 })
 
+// Create user
 router.post('/', (req, res, next) => {
     const username = req.body.username ? req.body.username : null
     const password = req.body.password ? req.body.password : null
@@ -20,14 +23,20 @@ router.post('/', (req, res, next) => {
 
         try {
             gateway.createUser(username, passwordHash, passwordSalt)
+            res.send("OK")
         }
         catch (err) {
             next(err)
         }
-        res.send("User created")
+        return
     }
     
-    next(error(400, "Missing required fields"))
+    next(error.missing())
+})
+
+// Delete user
+router.delete('/', (req, res, next) => {
+    
 })
 
 module.exports = app

@@ -2,19 +2,22 @@
  * Implementation of gateway where an inmemory store is used
  */
 
+const error = require('../error') 
+
 const users = []
 
- const Gateway = require("./gateway")
+const Gateway = require("./gateway")
 
- class InMemoryGateway extends Gateway {
+class InMemoryGateway extends Gateway {
 
     constructor() {
         super()
     }
 
     createUser(username, hash, salt) {
-        for (user of users) {
-            if (user.username === username) throw new Error("A user with that username already exists")
+        // Check if username is unique
+        for (const user of users) {
+            if (user.username === username) throw error.exists()
         }
 
         users.push({
