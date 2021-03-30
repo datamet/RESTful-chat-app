@@ -6,7 +6,7 @@ const dev = {
 
 const prod = {
     mode: 'production',
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 8080,
     debug: false
 }
 

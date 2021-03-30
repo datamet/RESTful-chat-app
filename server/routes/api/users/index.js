@@ -22,8 +22,8 @@ router.post('/', (req, res, next) => {
         const passwordHash = hash(password + salt)
 
         try {
-            db.createUser(username, passwordHash, passwordSalt)
-            res.send("OK")
+            const userID = db.createUser(username, passwordHash, passwordSalt)
+            res.send(userID)
         }
         catch (err) {
             next(err)
