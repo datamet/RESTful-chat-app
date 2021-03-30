@@ -3,7 +3,6 @@
  */
 
 const express = require('express')
-const gateway = require('./gateway')
 
 module.exports = (route, subrouters) => {
     // Check if there are any subroutes
@@ -18,5 +17,5 @@ module.exports = (route, subrouters) => {
         router.use(subroute)
     }
 
-    return { app, router, gateway }
+    return { app, router }
 }
