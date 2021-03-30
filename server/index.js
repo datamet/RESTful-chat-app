@@ -1,14 +1,29 @@
-const express = require('express');
-const app = express();
+/**
+ * Responsible for starting application
+ */
 
-const PORT = 5000 || process.env.PORT
+// App imports
+const express = require('express')
+const config = require('./lib/config.js')
+const bodyParser = require('./middleware/parse_body')
+const errorHandler = require('./middleware/error_handler')
 
-app.get('/', (req, res)=> {
-  res.send('Hello World');
-}) 
+// Creating app
+const app = express()
 
+// Using app level middleware
+app.use(bodyParser)
 
+// Route imports
+const routes = require('./routes')
 
-app.listen(PORT,()=>{
- console.log(`starting server on ${PORT}`);
+// Using routes
+app.use(routes)
+
+// Using error middleware
+app.use(errorHandler)
+
+// Starting server
+app.listen(config.port, () => {
+    console.log(`starting server on ${config.port} in ${config.mode} mode`)
 });

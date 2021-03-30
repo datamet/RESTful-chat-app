@@ -4,7 +4,8 @@
   "description": "RESTful chat app",
   "main": "index.js",
   "scripts": {
-    "dev": "node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +20,8 @@
   "homepage": "https://github.com/matssom/RESTful-chat-app#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
