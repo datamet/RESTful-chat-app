@@ -3,7 +3,7 @@
  */
 
 const { gateway } = require('../../../lib/config')
-const { salt, hash } = require('../../../lib/helpers')
+const { salt, hash, error } = require('../../../lib/helpers')
 const { app, router } = require('../../../lib/router')('/users')
 
 router.get('/', (req, res, next) => {
@@ -26,7 +26,8 @@ router.post('/', (req, res, next) => {
         }
         res.send("User created")
     }
-    next(new Error("Missing required fields"))
+    
+    next(error(400, "Missing required fields"))
 })
 
 module.exports = app
