@@ -10,10 +10,10 @@ const config = require('./lib/config.js')
 const app = express()
 
 // Route imports
-const api = require('./routes/api')
+const routes = require('./routes')
 
 // Using routes
-app.use(api)
+app.use(routes)
 
 // Starting server
 app.listen(config.port, () => {
