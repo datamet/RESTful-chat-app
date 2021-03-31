@@ -17,6 +17,14 @@ router.get('/', (req, res, next) => {
     }
 })
 
+router.get('/username', (req, res, next) => {
+    try{
+        res.send(db.getUser(req.body.username))
+    }catch (err){
+        next(err)
+    }
+})
+
 // Create user
 router.post('/', (req, res, next) => {
     try {
