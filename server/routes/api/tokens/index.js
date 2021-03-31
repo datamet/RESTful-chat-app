@@ -24,12 +24,23 @@ router.post('/', (req, res) => {
             res.send(token.id)
             return
         }
+        next(error.credentials())
     }
     catch(err) {
         next(err)
         return
     }
-    next(error.credentials())
+})
+
+router.get('/:tokenID', (req, res) => {
+    try {
+        const tokenID = tokenValidator.tokenID(req.params.tokenID)
+        const token = db.getTokenById(tokenID)
+        res.json(token)
+    }
+    catch (err) {
+        next(err)
+    }
 })
 
 router.put('/:tokenID', (req, res) => {
