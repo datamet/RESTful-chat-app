@@ -58,7 +58,7 @@ Here you will find a list of every endpoint the chat api exposes and how to use 
 
 ### Users
 
-`POST` - `/api/users` - Creates a new user and returns a userID
+`POST - /api/users` - Creates a new user and returns a userID
  
 *Header:* 
 
@@ -77,11 +77,11 @@ Content-Type : application/json
 
 <br>
 
-`GET` - `/api/users` - Returns a list of userID's and the corresponding username
+`GET - /api/users` - Returns a list of userID's and the corresponding username
 
 <br>
 
-`DELETE` - `/api/users/:userID` - Deletes a user specified by the userID
+`DELETE - /api/users/:userID` - Deletes a user specified by the userID
 
 *Header:* 
 
@@ -93,7 +93,7 @@ Token : "%Auth Token%"
 
 ### Tokens
 
-`POST` - `/api/tokens` - Authenticates user and establishes connection
+`POST - /api/tokens` - Authenticates user and establishes connection
  
 *Header:* 
 
@@ -112,14 +112,14 @@ Content-Type : application/json
 
 <br>
 
-`GET` - `/api/tokens/:tokenID` - Returns token
+`GET - /api/tokens/:tokenID` - Returns token
 
 <br>
 
-`PUT` - `/api/tokens/:tokenID` - Extends token
+`PUT - /api/tokens/:tokenID` - Extends token
 
 <br>
 
-`DELETE` - `/api/tokens/:tokenID` - Deletes and invalidates token
+`DELETE - /api/tokens/:tokenID` - Deletes and invalidates token
 
 <br>
