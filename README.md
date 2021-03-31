@@ -163,8 +163,6 @@ Token : %tokenID%
 
 <br>
 
-``
-
 `POST - /api/rooms/:roomID/users` - Add user to room
 
 *Header:*
