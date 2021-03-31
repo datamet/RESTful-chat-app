@@ -123,3 +123,69 @@ Content-Type : application/json
 `DELETE - /api/tokens/:tokenID` - Deletes and invalidates token
 
 <br>
+
+### Rooms
+
+`POST - /api/rooms` - Creates a chat room
+
+*Header:*
+
+```
+Token: %tokenID%
+```
+
+<br>
+
+`GET - /api/rooms` - Gets all chat rooms
+
+<br>
+
+`GET - /api/rooms/:roomID` - Get room
+
+<br>
+
+`DELETE - /api/rooms/:roomID` - Delete room
+
+*Header:*
+
+```
+Token : %tokenID%
+```
+
+<br>
+
+``
+
+`POST - /api/rooms/:roomID/users` - Add user to room
+
+*Header:*
+```
+Token : %tokenID%
+```
+
+<br>
+
+`GET - /api/rooms/:roomID/users` - Get all users in room
+
+<br>
+
+`GET - /api/rooms/:roomID/messages` - Get all messages in room
+
+*Header:*
+```
+Token : %tokenID%
+```
+
+`GET - /api/rooms/:roomID/:userID/messages` - Get all messages by user in room
+
+*Header:*
+```
+Token : %tokenID%
+```
+
+`POST - /api/rooms/:roomID/:userID/messages` - Add message to room
+
+*Header:*
+```
+Token : %tokenID%
+```
