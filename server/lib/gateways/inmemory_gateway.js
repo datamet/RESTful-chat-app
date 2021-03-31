@@ -28,7 +28,6 @@ class InMemoryGateway extends Gateway {
 
         // Adding user to user store
         users.set(name, newUser)
-        return id
     }
 
     getUserByName(username) {
@@ -38,7 +37,7 @@ class InMemoryGateway extends Gateway {
     }
 
     storeToken({ id, username, expires}) {
-        tokens.set(token.id, {username, expires})
+        tokens.set(id, {username, expires})
     }
 
 }

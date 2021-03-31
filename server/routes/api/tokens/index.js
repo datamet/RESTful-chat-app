@@ -11,7 +11,7 @@ const { app, router } = require('../../../lib/router')('/tokens')
 
 router.post('/', (req, res) => {
     const username = userValidator.username(req.body.username)
-    const password = userValidator.passworrd(req.body.password)
+    const password = userValidator.password(req.body.password)
 
     const user = db.getUserByName(username)
     const passwordHash = hash(password + salt)

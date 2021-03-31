@@ -19,3 +19,5 @@ validator.password = (password) => {
     if (!length) throw error.custom(403, "Password must be 8 or more characters")
     return password
 }
+
+module.exports = validator
