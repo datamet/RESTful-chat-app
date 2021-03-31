@@ -1,4 +1,5 @@
 const crypto = require('crypto')
+const { tokenExpires } = require('./config')
 const { secret } = require('./keys')
 
 const helpers = {}
@@ -11,6 +12,15 @@ helpers.salt = () => {
     const salt_length = 10
     const salt = createRandomString(salt_length)
     return salt
+}
+
+helpers.createToken = (username) => {
+    const newToken = {
+        id: helpers.uuid(),
+        username,
+        expires: Date.now() + tokenExpires
+    }
+    return newToken
 }
 
 // Complies with the UUID V4 rfc

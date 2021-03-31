@@ -14,24 +14,19 @@ router.get('/', (req, res, next) => {
 
 // Create user
 router.post('/', (req, res, next) => {
-    const username = req.body.username ? req.body.username : null
-    const password = req.body.password ? req.body.password : null
+    try {
+        const username = userValidator.username(req.body.username)
+        const password = userValidator.passworrd(req.body.password)
 
-    if (username && password) {
         const passwordSalt = salt()
         const passwordHash = hash(password + salt)
-
-        try {
-            const userID = db.createUser(username, passwordHash, passwordSalt)
-            res.send(userID)
-        }
-        catch (err) {
-            next(err)
-        }
-        return
-    }
     
-    next(error.missing())
+        const userID = db.createUser(username, passwordHash, passwordSalt)
+        res.send(userID)
+    }
+    catch (err) {
+        next(err)
+    }
 })
 
 // Delete user
