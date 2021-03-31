@@ -23,6 +23,18 @@ class Gateway {
         throw error.internal()
     }
 
+    getUserByName() {
+        throw error.internal()
+    }
+
+    storeToken() {
+        throw error.internal()
+    }
+
+    getTokenById() {
+        throw error.internal()
+    }
+
 }
 
 module.exports = Gateway

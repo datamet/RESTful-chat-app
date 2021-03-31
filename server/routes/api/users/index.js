@@ -5,6 +5,7 @@
 const db = require('../../../lib/gateways/db')
 const error = require('../../../lib/error')
 const { salt, hash } = require('../../../lib/helpers')
+const userValidator = require('../../../lib/validation/user_validator')
 const { app, router } = require('../../../lib/router')('/users')
 
 // Get list of users
@@ -14,24 +15,19 @@ router.get('/', (req, res, next) => {
 
 // Create user
 router.post('/', (req, res, next) => {
-    const username = req.body.username ? req.body.username : null
-    const password = req.body.password ? req.body.password : null
+    try {
+        const username = userValidator.username(req.body.username)
+        const password = userValidator.password(req.body.password)
 
-    if (username && password) {
         const passwordSalt = salt()
         const passwordHash = hash(password + salt)
-
-        try {
-            const userID = db.createUser(username, passwordHash, passwordSalt)
-            res.send(userID)
-        }
-        catch (err) {
-            next(err)
-        }
-        return
-    }
     
-    next(error.missing())
+        db.createUser(username, passwordHash, passwordSalt)
+        res.send("OK")
+    }
+    catch (err) {
+        next(err)
+    }
 })
 
 // Delete user
