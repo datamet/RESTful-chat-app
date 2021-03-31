@@ -31,53 +31,25 @@ class InMemoryGateway extends Gateway {
     }
 
     getUsers() {
-
-        /*
-        const object = {}
-
-        users.forEach((value, key) => {
-            var keys = key.split('.'),
-                last = keys.pop();
-            keys.reduce((r, a) => r[a] = r[a] || {}, object)[last] = value;
-        });
-
-        return object
-        */
-
-        /*
-        return users
-        */
-
-        return JSON.parse(users)
+        const usersList = { "users" : [] }
+        for (const [username, user] of users) {
+            usersList["users"].push({ "username": username })
+        }
+        return usersList
     }
 
     getUser(username){
-        users.forEach(user => {
-            if(user.username === username){
-                return JSON.parse(user);
-            }
-        })
+        if (users.has(username)) return username
 
         throw error.notfound();
-
-        /*
-        for(let  [k, value] of users){
-            if (value === username){
-                return JSON.parse(users.get(k))
-            }
-        }
-        throw error.notfound()
-        */
     }
 
-    deleteUser(token, user_id) {
-        tokens.forEach(key => {
-            if(key === token) tokens.delete(key)
-        });
+    deleteUser(username) {
+        for (const [tokenID, token] of tokens) {
+            if (token.username === username) tokens.delete(tokenID)
+        }
         
-        users.forEach(user => {
-            if(user === user_id) users.delete(user)
-        });
+        users.delete(username)
     }
 
     getUserByName(username) {
