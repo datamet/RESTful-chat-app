@@ -93,7 +93,7 @@ Token : "%Auth Token%"
 
 ### Tokens
 
-`POST - /api/tokens` - Authenticates user, establishes connection and returns a new token
+`POST - /api/tokens` - Authenticates user, establishes connection and returns a new tokenID
  
 *Header:* 
 
@@ -112,7 +112,16 @@ Content-Type : application/json
 
 <br>
 
-`GET - /api/tokens/:tokenID` - Returns token
+`GET` - `/api/tokens/:tokenID` - Returns token in json format
+
+*Response body:*
+```json
+{
+    "id": "%tokenID%",
+    "username": "%username%",
+    "expires": "%expiration date%"
+}
+```
 
 <br>
 

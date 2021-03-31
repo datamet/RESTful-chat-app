@@ -46,6 +46,10 @@ class InMemoryGateway extends Gateway {
         else throw error.notfound()
     }
 
+    deleteToken(id) {
+        tokens.delete(id)
+    }
+
 }
 
 // Exporting an instance of InMemoryGateway
