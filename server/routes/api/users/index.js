@@ -10,7 +10,11 @@ const { app, router } = require('../../../lib/router')('/users')
 
 // Get list of users
 router.get('/', (req, res, next) => {
-    res.send("this is the users list")
+    try{
+        res.send(db.getUsers)
+    }catch (err){
+        next(err)
+    }
 })
 
 // Create user
@@ -32,7 +36,12 @@ router.post('/', (req, res, next) => {
 
 // Delete user
 router.delete('/', (req, res, next) => {
-    
+    try{
+        // Her er jeg litt usikker på hvordan jeg skal få tak i token fra url
+        db.deleteUser(db.getTokenById(req.body.token), req.body.username);
+    }catch (err){
+        next(err)
+    }
 })
 
 module.exports = app
