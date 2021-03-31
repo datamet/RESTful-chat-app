@@ -40,6 +40,12 @@ class InMemoryGateway extends Gateway {
         tokens.set(id, {username, expires})
     }
 
+    getTokenById(id) {
+        const token = tokens.get(id)
+        if (token) return token
+        else throw error.notfound()
+    }
+
 }
 
 // Exporting an instance of InMemoryGateway
