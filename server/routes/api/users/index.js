@@ -17,7 +17,7 @@ router.get('/', (req, res, next) => {
     }
 })
 
-router.get('/username', (req, res, next) => {
+router.get('/:username', (req, res, next) => {
     try{
         res.send(db.getUser(req.body.username))
     }catch (err){
