@@ -1,5 +1,5 @@
 const crypto = require('crypto')
-const { tokenExpires } = require('./config')
+const { tokenExpiration } = require('./config')
 const { secret } = require('./keys')
 
 const helpers = {}
@@ -18,8 +18,9 @@ helpers.createToken = (username) => {
     const newToken = {
         id: helpers.uuid(),
         username,
-        expires: Date.now() + tokenExpires
+        expires: Date.now() + tokenExpiration
     }
+
     return newToken
 }
 

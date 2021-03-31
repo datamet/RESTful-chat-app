@@ -12,7 +12,9 @@ validator.tokenID = (tokenID) => {
 }
 
 validator.valid = (token) => {
-    if (token.expires < Date.now()) return token
+    console.log(token)
+    console.log(Date.now())
+    if (token.expires > Date.now()) return token
     else throw error.authentication()
 }
 
