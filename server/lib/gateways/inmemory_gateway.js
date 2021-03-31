@@ -51,6 +51,15 @@ class InMemoryGateway extends Gateway {
         return JSON.parse(users)
     }
 
+    getUser(username){
+        for(let  [k, value] of users){
+            if (value === username){
+                return JSON.parse(users.get(k))
+            }
+        }
+        throw error.notfound()
+    }
+
     deleteUser(token, user_id) {
         tokens.forEach(key => {
             if(key === token) tokens.delete(key)
