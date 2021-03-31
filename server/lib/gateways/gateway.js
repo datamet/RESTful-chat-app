@@ -43,6 +43,10 @@ class Gateway {
         throw error.internal()
     }
 
+    createRoom() {
+        throw error.internal()
+    }
+
 }
 
 module.exports = Gateway

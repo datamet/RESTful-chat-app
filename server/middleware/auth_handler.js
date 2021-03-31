@@ -9,7 +9,9 @@ const auth_handler = (req, res, next) => {
         }
     
         const tokenID = tokenValidator.tokenID(req.header('Token'))
-        tokenValidator.valid(db.getTokenById(tokenID))
+        const token = db.getTokenById(tokenID)
+        tokenValidator.valid(token)
+        req.user = token.username
         next()
     }
     catch (err) {
