@@ -93,7 +93,7 @@ Token : "%Auth Token%"
 
 ### Tokens
 
-`POST - /api/tokens` - Authenticates user and establishes connection
+`POST - /api/tokens` - Authenticates user, establishes connection and returns a new token
  
 *Header:* 
 
