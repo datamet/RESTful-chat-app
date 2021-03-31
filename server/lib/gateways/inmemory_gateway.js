@@ -52,12 +52,22 @@ class InMemoryGateway extends Gateway {
     }
 
     getUser(username){
+        users.forEach(user => {
+            if(user.username === username){
+                return JSON.parse(user);
+            }
+        })
+
+        throw error.notfound();
+
+        /*
         for(let  [k, value] of users){
             if (value === username){
                 return JSON.parse(users.get(k))
             }
         }
         throw error.notfound()
+        */
     }
 
     deleteUser(token, user_id) {
