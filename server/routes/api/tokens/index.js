@@ -5,7 +5,7 @@ const userValidator = require('../../../lib/validation/user_validator')
 const tokenValidator = require('../../../lib/validation/token_validator')
 const db = require('../../../lib/gateways/db')
 const { hash, salt, createToken } = require('../../../lib/helpers')
-const helpers = require('../../../lib/helpers')
+const { tokenExpiration } = require('../../../lib/config')
 const error = require('../../../lib/error')
 
 const { app, router } = require('../../../lib/router')('/tokens')
@@ -32,9 +32,24 @@ router.post('/', (req, res) => {
     next(error.credentials())
 })
 
+router.put('/:tokenID', (req, res) => {
+    try {
+        const tokenID = tokenValidator.tokenID(req.params.tokenID)
+
+        const token = tokenValidator.valid(db.getTokenById(tokenID))
+        
+        // Extending token expiration date
+        token.expires = Date.now() + tokenExpiration
+        res.send("OK")
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
 router.delete('/:tokenID', (req, res) => {
     try {
-        const tokenID = tokenValidator.tokenID(req.params.tokenId)
+        const tokenID = tokenValidator.tokenID(req.params.tokenID)
         db.deleteToken(tokenID)
         res.send("OK")
     }

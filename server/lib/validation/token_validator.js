@@ -11,4 +11,9 @@ validator.tokenID = (tokenID) => {
     return tokenID
 }
 
+validator.valid = (token) => {
+    if (token.expires < Date.now()) return token
+    else throw error.authentication()
+}
+
 module.exports = validator
