@@ -86,7 +86,6 @@ Content-Type : application/json
 *Header:* 
 
 ```
-Content-Type : application/json
 Token : "%Auth Token%"
 ```
 
