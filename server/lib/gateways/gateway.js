@@ -35,6 +35,10 @@ class Gateway {
         throw error.internal()
     }
 
+    deleteToken() {
+        throw error.internal()
+    }
+
 }
 
 module.exports = Gateway
