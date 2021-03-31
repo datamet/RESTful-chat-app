@@ -3,7 +3,7 @@
 This chat app uses a RESTful Nodejs backend to create chat rooms where clients can communicate.
 
 **Authors:**
-- Adrian Tokle Storset, sXXXXXX
+- Adrian Tokle Storset, s341859
 - Erik Storås Sommer, s341870,
 - Mats Sommervold, s341829
 
