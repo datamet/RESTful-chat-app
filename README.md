@@ -4,7 +4,7 @@ This chat app uses a RESTful Nodejs backend to create chat rooms where clients c
 
 **Authors:**
 - Adrian Tokle Storset, sXXXXXX
-- Erik Storås Sommer, sXXXXXX,
+- Erik Storås Sommer, s341870,
 - Mats Sommervold, s341829
 
 <br>
@@ -58,7 +58,7 @@ Here you will find a list of every endpoint the chat api exposes and how to use 
 
 ### Users
 
-`POST` - `/api/users` - Creates a new user and returns a userID
+`POST - /api/users` - Creates a new user and returns a userID
  
 *Header:* 
 
@@ -77,16 +77,15 @@ Content-Type : application/json
 
 <br>
 
-`GET` - `/api/users` - Returns a list of userID's and the corresponding username
+`GET - /api/users` - Returns a list of userID's and the corresponding username
 
 <br>
 
-`DELETE` - `/api/users/:userID` - Deletes a user specified by the userID
+`DELETE - /api/users/:userID` - Deletes a user specified by the userID
 
 *Header:* 
 
 ```
-Content-Type : application/json
 Token : "%Auth Token%"
 ```
 
@@ -94,7 +93,7 @@ Token : "%Auth Token%"
 
 ### Tokens
 
-`POST` - `/api/tokens` - Authenticates user and establishes connection
+`POST - /api/tokens` - Authenticates user, establishes connection and returns a new tokenID
  
 *Header:* 
 
@@ -124,13 +123,12 @@ Content-Type : application/json
 }
 ```
 
+<br>
+
+`PUT - /api/tokens/:tokenID` - Extends token
 
 <br>
 
-`PUT` - `/api/tokens/:tokenID` - Extends token
-
-<br>
-
-`DELETE` - `/api/tokens/:tokenID` - Deletes and invalidates token
+`DELETE - /api/tokens/:tokenID` - Deletes and invalidates token
 
 <br>
