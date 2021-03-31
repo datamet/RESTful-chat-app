@@ -113,7 +113,17 @@ Content-Type : application/json
 
 <br>
 
-`GET` - `/api/tokens/:tokenID` - Returns token
+`GET` - `/api/tokens/:tokenID` - Returns token in json format
+
+*Response body:*
+```json
+{
+    "id": "%tokenID%",
+    "username": "%username%",
+    "expires": "%expiration date%"
+}
+```
+
 
 <br>
 

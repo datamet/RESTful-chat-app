@@ -10,7 +10,7 @@ const error = require('../../../lib/error')
 
 const { app, router } = require('../../../lib/router')('/tokens')
 
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
     try {
         const username = userValidator.username(req.body.username)
         const password = userValidator.password(req.body.password)
@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
     }
 })
 
-router.get('/:tokenID', (req, res) => {
+router.get('/:tokenID', (req, res, next) => {
     try {
         const tokenID = tokenValidator.tokenID(req.params.tokenID)
         const token = db.getTokenById(tokenID)
@@ -43,7 +43,7 @@ router.get('/:tokenID', (req, res) => {
     }
 })
 
-router.put('/:tokenID', (req, res) => {
+router.put('/:tokenID', (req, res, next) => {
     try {
         const tokenID = tokenValidator.tokenID(req.params.tokenID)
 
@@ -58,7 +58,7 @@ router.put('/:tokenID', (req, res) => {
     }
 })
 
-router.delete('/:tokenID', (req, res) => {
+router.delete('/:tokenID', (req, res, next) => {
     try {
         const tokenID = tokenValidator.tokenID(req.params.tokenID)
         db.deleteToken(tokenID)
