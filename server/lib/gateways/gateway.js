@@ -19,6 +19,10 @@ class Gateway {
         throw error.internal()
     }
 
+    getUser() {
+        throw error.internal()
+    }
+
     deleteUser() {
         throw error.internal()
     }

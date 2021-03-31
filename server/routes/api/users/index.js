@@ -6,11 +6,24 @@ const db = require('../../../lib/gateways/db')
 const error = require('../../../lib/error')
 const { salt, hash } = require('../../../lib/helpers')
 const userValidator = require('../../../lib/validation/user_validator')
+const validator = require('../../../lib/validation/user_validator')
 const { app, router } = require('../../../lib/router')('/users')
 
 // Get list of users
 router.get('/', (req, res, next) => {
-    res.send("this is the users list")
+    try{
+        res.send(db.getUsers())
+    }catch (err){
+        next(err)
+    }
+})
+
+router.get('/:username', (req, res, next) => {
+    try{
+        res.send(db.getUser(req.body.username))
+    }catch (err){
+        next(err)
+    }
 })
 
 // Create user
@@ -31,8 +44,22 @@ router.post('/', (req, res, next) => {
 })
 
 // Delete user
-router.delete('/', (req, res, next) => {
-    
+router.delete('/:username', (req, res, next) => {
+    try{
+        const username = userValidator.username(req.params.username)
+
+        const tokenID = req.header('Token')
+        const token = db.getTokenById(tokenID)
+
+        if (token.username === username) {
+            db.deleteUser(username);
+            res.send("OK")
+            return
+        }
+        next(error.authentication())
+    }catch (err){
+        next(err)
+    }
 })
 
 module.exports = app
