@@ -7,12 +7,14 @@ const express = require('express')
 const config = require('./lib/config.js')
 const bodyParser = require('./middleware/parse_body')
 const errorHandler = require('./middleware/error_handler')
+const authHandler = require('./middleware/auth_handler')
 
 // Creating app
 const app = express()
 
 // Using app level middleware
 app.use(bodyParser)
+app.use(authHandler)
 
 // Route imports
 const routes = require('./routes')
