@@ -99,8 +99,7 @@ Token : "%Auth Token%"
         {
             "id" : "%userID%",
             "username" : "%username%"
-        },
-        ...
+        }
     ]
 }
 ```
@@ -121,8 +120,8 @@ Token : "%Auth Token%"
     "user" : {
         "username" : "%username%",
         "id" : "%userID%",
-        "ownedRooms" : [ "%roomID%", ... ],
-        "rooms" : [ "%roomID%", ... ]
+        "ownedRooms" : [ "%roomID%" ],
+        "rooms" : [ "%roomID%" ]
     }
 }
 ```
@@ -273,8 +272,7 @@ Token : "%Auth Token%"
         {
             "id" : "%roomID%",
             "name" : "%room name%"
-        },
-        ...
+        }
     ]
 }
 ```
@@ -347,8 +345,7 @@ Token : "%Auth Token%"
         {
             "id" : "%userID%",
             "username" : "%username%"
-        },
-        ...
+        }
     ]
 }
 ```
@@ -371,8 +368,7 @@ Token : %tokenID%
             "message" : "%message%",
             "author" : "%userID%",
             "time" : "%time sent%"
-        },
-        ...
+        }
     ]
 }
 ```
@@ -395,8 +391,7 @@ Token : %tokenID%
             "message" : "%message%",
             "author" : "%userID%",
             "time" : "%time sent%"
-        },
-        ...
+        }
     ]
 }
 ```
