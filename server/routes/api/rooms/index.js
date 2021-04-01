@@ -26,7 +26,8 @@ router.post('/', (req, res, next) => {
 router.get('/', (req, res, next) => {
     try {
         const rooms = db.getRooms()
-        const jsonRooms = { "rooms" : rooms }
+        const reducedRooms = rooms.map(room => { return { "id" : room.id, "name" : room.name } })
+        const jsonRooms = { "rooms" : reducedRooms }
         res.json(jsonRooms)
     }
     catch (err)  {
@@ -37,7 +38,8 @@ router.get('/', (req, res, next) => {
 router.get('/:roomID', (req, res, next) => {
     try {
         const room = db.getRoomById(req.params.roomID)
-        res.json(room)
+        const jsonRoom = { "room" : room }
+        res.json(jsonRoom)
     }
     catch (err) {
         next(err)

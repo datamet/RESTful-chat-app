@@ -44,7 +44,7 @@ test("GET /api/users/:userID", async () => {
         .set('Token', tokenID)
         .expect(200)
         .then((res) => {
-            expect(res.body.username).toBe("adrian")
+            expect(res.body.user.username).toBe("adrian")
         })
 })
 

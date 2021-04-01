@@ -45,7 +45,7 @@ test("GET /api/rooms", async () => {
         .then((res) => {
             expect(res.body.rooms.length).toBe(1)
             expect(res.body.rooms[0].name).toBe('testroom')
-            expect(res.body.rooms[0].admin).toBe(userID)
+            expect(res.body.rooms[0].admin).toBeUndefined()
             roomID = res.body.rooms[0].id
         })
 
@@ -53,8 +53,8 @@ test("GET /api/rooms", async () => {
         .set('Token', tokenID)
         .expect(200)
         .then((res) => {
-            expect(res.body.rooms[0]).toBe(roomID)
-            expect(res.body.ownedRooms[0]).toBe(roomID)
+            expect(res.body.user.rooms[0]).toBe(roomID)
+            expect(res.body.user.ownedRooms[0]).toBe(roomID)
         })
 })
 
@@ -63,9 +63,9 @@ test("GET /api/rooms/:roomID", async () => {
         .set('Token', tokenID)
         .expect(200)
         .then((res) => {
-            expect(res.body.name).toBe("testroom")
-            expect(res.body.admin).toBe(userID)
-            expect(res.body.users[0]).toBe(userID)
+            expect(res.body.room.name).toBe("testroom")
+            expect(res.body.room.admin).toBe(userID)
+            expect(res.body.room.users[0]).toBe(userID)
         })
 })
 
@@ -81,7 +81,7 @@ test("DELETE /api/rooms/:roomID", async () => {
         .set('Token', tokenID)
         .expect(200)
         .then((res) => {
-            expect(res.body.ownedRooms.length).toBe(0)
-            expect(res.body.rooms.length).toBe(0)
+            expect(res.body.user.ownedRooms.length).toBe(0)
+            expect(res.body.user.rooms.length).toBe(0)
         })
 })

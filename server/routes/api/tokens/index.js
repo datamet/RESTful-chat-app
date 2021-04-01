@@ -28,7 +28,10 @@ router.post('/', (req, res, next) => {
         if (user.hash === passwordHash) {
             const token = createToken(user.id)
             db.storeToken(token)
-            res.json({ "token" : token.id })
+            res.json({ 
+                "token" : token.id,
+                "message" : "Logged in"
+            })
             return
         }
         next(error.credentials())
@@ -42,7 +45,8 @@ router.get('/:tokenID', (req, res, next) => {
     try {
         const tokenID = tokenValidator.tokenID(req.params.tokenID)
         const token = db.getTokenById(tokenID)
-        res.json(token)
+        const jsonToken = { "token" : token }
+        res.json(jsonToken)
     }
     catch (err) {
         next(err)

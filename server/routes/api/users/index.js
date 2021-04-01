@@ -13,13 +13,8 @@ const { app, router } = require('../../../lib/router')('/users')
 router.get('/', (req, res, next) => {
     try{
         const users = db.getUsers()
-        const jsonUsers = { "users" : [] }
-        for (const user of users) {
-            delete user["hash"]
-            delete user["salt"]
-            delete user["tokens"]
-            jsonUsers["users"].push(user)
-        }
+        const reducedUsers = users.map(user => {return { "username" : user.username, "id" : user.id }})
+        const jsonUsers = { "users" : reducedUsers }
         res.json(jsonUsers)
     }catch (err){
         next(err)
@@ -32,7 +27,8 @@ router.get('/:userID', (req, res, next) => {
         delete user["hash"]
         delete user["salt"]
         delete user["tokens"]
-        res.json(user)
+        const jsonUser = { "user" : user }
+        res.json(jsonUser)
     }catch (err){
         next(err)
     }
