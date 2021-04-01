@@ -1,7 +1,13 @@
+/**
+ * Validator for users
+ */
+
+
 const error = require('../error')
 
 const validator = {}
 
+// Validates username
 validator.username = (username) => {
     if (!username) throw error.missing()
     const string = typeof username === 'string'
@@ -11,6 +17,7 @@ validator.username = (username) => {
     return username
 }
 
+// Validates password
 validator.password = (password) => {
     if (!password) throw error.missing()
     const string = typeof password === 'string'

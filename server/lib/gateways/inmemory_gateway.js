@@ -35,6 +35,7 @@ class InMemoryGateway extends Gateway {
         // Adding user to user store
         userIDs.set(username, userID)
         users.set(userID, newUser)
+        return userID
     }
 
     getUsers() {
@@ -127,7 +128,7 @@ class InMemoryGateway extends Gateway {
     }
 
     getRoomById(roomID) {
-        const room = roooms.get(roomID)
+        const room = rooms.get(roomID)
         if (room) return room
         else throw error.custom(404, "Room not found") 
     }
@@ -138,6 +139,31 @@ class InMemoryGateway extends Gateway {
             roomList.push(room)
         }
         return roomList
+    }
+
+    deleteRoom(roomID) {
+        const room = rooms.get(roomID)
+
+        if (room) {
+            // delete roomID from admin
+            const admin = this.getUserById(room.admin)
+            const i = admin.ownedRooms.indexOf(roomID)
+            admin.ownedRooms.splice(i, 1)
+            users.set(room.admin, admin)
+
+            // delete roomID from users
+            for (const userID of room.users) {
+                const user = this.getUserById(userID)
+                const i = user.rooms.indexOf(roomID)
+                user.rooms.splice(i, 1)
+                users.set(userID, user)
+            }
+
+            // delete room
+            rooms.delete(roomID)
+            return           
+        }
+        throw error.notfound()
     }
 
     addUserToRoom(roomID, userID) {

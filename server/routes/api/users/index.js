@@ -13,26 +13,24 @@ const { app, router } = require('../../../lib/router')('/users')
 router.get('/', (req, res, next) => {
     try{
         const users = db.getUsers()
-        const jsonUsers = { "users" : [] }
-        for (const user of users) {
-            delete user["hash"]
-            delete user["salt"]
-            delete user["tokens"]
-            jsonUsers["users"].push(user)
-        }
+        const reducedUsers = users.map(user => {return { "username" : user.username, "id" : user.id }})
+        const jsonUsers = { "users" : reducedUsers }
         res.json(jsonUsers)
     }catch (err){
         next(err)
     }
 })
 
+// Get one user
 router.get('/:userID', (req, res, next) => {
     try{
         const user = db.getUserById(req.params.userID)
+        // Removing sensitive properties
         delete user["hash"]
         delete user["salt"]
         delete user["tokens"]
-        res.json(user)
+        const jsonUser = { "user" : user }
+        res.json(jsonUser)
     }catch (err){
         next(err)
     }
@@ -47,8 +45,8 @@ router.post('/', (req, res, next) => {
         const passwordSalt = salt()
         const passwordHash = hash(password + salt)
     
-        db.createUser(username, passwordHash, passwordSalt)
-        res.json({ "message" : "User created" })
+        const userID = db.createUser(username, passwordHash, passwordSalt)
+        res.json({ "message" : "User created", "userID" : userID })
     }
     catch (err) {
         next(err)
@@ -58,12 +56,10 @@ router.post('/', (req, res, next) => {
 // Delete user
 router.delete('/:userID', (req, res, next) => {
     try{
-        const userID = req.params.userID
+        const userToRemove = req.params.userID
+        const authenticatedUser = req.user
 
-        const tokenID = req.header('Token')
-        const token = db.getTokenById(tokenID)
-
-        if (token.userID === userID) {
+        if (userToRemove === authenticatedUser) {
             db.deleteUser(userID);
             res.send({ "message" : "User deleted" })
             return
