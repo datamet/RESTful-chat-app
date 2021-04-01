@@ -95,7 +95,7 @@ Token : "%Auth Token%"
 *Response body:*
 ```json
 {
-    "users" [
+    "users" : [
         {
             "id" : "%userID%",
             "username" : "%username%"
