@@ -3,7 +3,7 @@
  */
 
 // Imports
-const tokenValidator = require('../../../lib/validation/token_validator')
+const tokenValidator = require('./validator')
 const db = require('../../../lib/gateways/db')
 const error = require('../../../lib/error')
 const { hash, salt, makeToken } = require('../../../lib/helpers')

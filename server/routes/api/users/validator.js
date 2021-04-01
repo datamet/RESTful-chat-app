@@ -3,7 +3,7 @@
  */
 
 
-const error = require('../error')
+const error = require('../../../lib/error')
 
 const validator = {}
 

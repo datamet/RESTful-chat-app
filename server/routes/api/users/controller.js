@@ -5,7 +5,7 @@
 // imports
  const db = require('../../../lib/gateways/db')
  const error = require('../../../lib/error')
- const userValidator = require('../../../lib/validation/user_validator')
+ const userValidator = require('./validator')
  const { salt, hash } = require('../../../lib/helpers')
 
 const createUser = async (req, res, next) => {

@@ -1,4 +1,4 @@
-const tokenValidator = require('../lib/validation/token_validator')
+const validator = require('../routes/api/tokens/validator')
 const db = require('../lib/gateways/db')
 
 // Runs on evevery request to check if the user is authenticated
@@ -11,9 +11,9 @@ const auth_handler = async (req, res, next) => {
         }
         
         // Validates token and adds user id to request for ease of use
-        const tokenID = tokenValidator.tokenID(req.header('Token'))
+        const tokenID = validator.tokenID(req.header('Token'))
         const token = await db.getTokenById(tokenID)
-        tokenValidator.valid(token)
+        validator.valid(token)
         
         const user = await db.getUserById(token.userID)
         req.user = user

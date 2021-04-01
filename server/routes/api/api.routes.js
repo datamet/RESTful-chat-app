@@ -3,9 +3,9 @@
  */
 
 // Imports
-const users = require('./users/user.controller')
-const tokens = require('./tokens/token.controller')
-const rooms = require('./rooms/room.controller')
+const users = require('./users/controller')
+const tokens = require('./tokens/controller')
+const rooms = require('./rooms/controller')
 
 const { app, router } = require('../../lib/router')('/api')
 

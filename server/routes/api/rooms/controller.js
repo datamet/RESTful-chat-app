@@ -5,7 +5,7 @@
 // Imports
 const db = require('../../../lib/gateways/db')
 const error = require('../../../lib/error')
-const roomValidator = require('../../../lib/validation/room_validator')
+const roomValidator = require('./validator')
 
 const createRoom = async (req, res, next) => {
     const name = roomValidator.name(req.body.name)
