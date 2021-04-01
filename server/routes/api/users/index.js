@@ -6,7 +6,7 @@ const db = require('../../../lib/gateways/db')
 const error = require('../../../lib/error')
 const { salt, hash } = require('../../../lib/helpers')
 const userValidator = require('../../../lib/validation/user_validator')
-const validator = require('../../../lib/validation/user_validator')
+const token_validator = require('../../../lib/validation/token_validator')
 const { app, router } = require('../../../lib/router')('/users')
 
 // Get list of users
