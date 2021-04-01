@@ -26,7 +26,8 @@ router.post('/', (req, res, next) => {
 router.get('/', (req, res, next) => {
     try {
         const rooms = db.getRooms()
-        res.json(rooms)
+        const jsonRooms = { "rooms" : rooms }
+        res.json(jsonRooms)
     }
     catch (err)  {
         next(err)

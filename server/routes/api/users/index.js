@@ -12,15 +12,27 @@ const { app, router } = require('../../../lib/router')('/users')
 // Get list of users
 router.get('/', (req, res, next) => {
     try{
-        res.send(db.getUsers())
+        const users = db.getUsers()
+        const jsonUsers = { "users" : [] }
+        for (const user of users) {
+            delete user["hash"]
+            delete user["salt"]
+            delete user["tokens"]
+            jsonUsers["users"].push(user)
+        }
+        res.json(jsonUsers)
     }catch (err){
         next(err)
     }
 })
 
-router.get('/:username', (req, res, next) => {
+router.get('/:userID', (req, res, next) => {
     try{
-        res.send(db.getUser(req.params.username))
+        const user = db.getUserById(req.params.userID)
+        delete user["hash"]
+        delete user["salt"]
+        delete user["tokens"]
+        res.json(user)
     }catch (err){
         next(err)
     }
@@ -44,15 +56,15 @@ router.post('/', (req, res, next) => {
 })
 
 // Delete user
-router.delete('/:username', (req, res, next) => {
+router.delete('/:userID', (req, res, next) => {
     try{
-        const username = userValidator.username(req.params.username)
+        const userID = req.params.userID
 
         const tokenID = req.header('Token')
         const token = db.getTokenById(tokenID)
 
-        if (token.username === username) {
-            db.deleteUser(username);
+        if (token.userID === userID) {
+            db.deleteUser(userID);
             res.send("OK")
             return
         }

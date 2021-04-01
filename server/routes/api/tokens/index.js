@@ -21,11 +21,12 @@ router.post('/', (req, res, next) => {
         }
         catch (err) {
             next(error.credentials())
+            return
         }
         const passwordHash = hash(password + salt)
 
         if (user.hash === passwordHash) {
-            const token = createToken(username)
+            const token = createToken(user.id)
             db.storeToken(token)
             res.send(token.id)
             return
@@ -34,7 +35,6 @@ router.post('/', (req, res, next) => {
     }
     catch(err) {
         next(err)
-        return
     }
 })
 

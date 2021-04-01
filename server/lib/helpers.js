@@ -14,10 +14,10 @@ helpers.salt = () => {
     return salt
 }
 
-helpers.createToken = (username) => {
+helpers.createToken = (userID) => {
     const newToken = {
         id: helpers.uuid(),
-        username,
+        userID,
         expires: Date.now() + tokenExpiration
     }
 
