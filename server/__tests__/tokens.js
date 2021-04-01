@@ -30,8 +30,8 @@ test("POST /api/tokens", async () => {
         })
 })
 
-test("GET /api/tokens/:tokenID", async () => {
-    await supertest(app).get(`/api/tokens/${tokenID}`)
+test("GET /api/token/:tokenID", async () => {
+    await supertest(app).get(`/api/token/${tokenID}`)
         .set('Token', tokenID)
         .expect(200)
         .then((res) => { 
@@ -41,15 +41,15 @@ test("GET /api/tokens/:tokenID", async () => {
         })
 })
 
-test("PUT /api/tokens/:tokenID", async () => {
-    await supertest(app).put(`/api/tokens/${tokenID}`)
+test("PUT /api/token/:tokenID", async () => {
+    await supertest(app).put(`/api/token/${tokenID}`)
         .set('Token', tokenID)
         .expect(200)
         .then((res) => { 
             expect(res.body.message).toBe("Session extended")
         })
 
-    await supertest(app).get(`/api/tokens/${tokenID}`)
+    await supertest(app).get(`/api/token/${tokenID}`)
         .set('Token', tokenID)
         .expect(200)
         .then((res) => { 

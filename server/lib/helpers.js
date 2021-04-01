@@ -17,7 +17,7 @@ helpers.salt = () => {
 }
 
 // Creating token
-helpers.createToken = (userID) => {
+helpers.makeToken = (userID) => {
     const newToken = {
         id: helpers.uuid(),
         userID,

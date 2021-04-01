@@ -7,7 +7,7 @@ let tokenID, userID
  * User tests
  */
 
-test("POST /api/user", async () => {  
+test("POST /api/users", async () => {  
     await supertest(app).post("/api/users")
         .send({ username: "adrian", password: "password1" })
         .set('Content-Type', 'application/json')
@@ -39,8 +39,8 @@ test("GET /api/users", async () => {
         })
 })
 
-test("GET /api/users/:userID", async () => {  
-    await supertest(app).get(`/api/users/${userID}`)
+test("GET /api/user/:userID", async () => {  
+    await supertest(app).get(`/api/user/${userID}`)
         .set('Token', tokenID)
         .expect(200)
         .then((res) => {
