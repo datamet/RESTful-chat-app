@@ -1,5 +1,5 @@
 const validator = require('../routes/api/tokens/validator')
-const db = require('../lib/gateways/db')
+const db = require('../lib/db')
 
 // Runs on evevery request to check if the user is authenticated
 const auth_handler = async (req, res, next) => {

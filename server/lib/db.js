@@ -6,8 +6,8 @@
  */
 
 
-const FSGateway = require('./fs_gateway')
-const InMemoryGateway = require('./inmemory_gateway')
-const { mode } = require('../config')
+const FSGateway = require('./gateways/fs_gateway')
+const InMemoryGateway = require('./gateways/inmemory_gateway')
+const { mode } = require('./config')
 
 module.exports = mode === 'development' ? new InMemoryGateway() : new FSGateway()

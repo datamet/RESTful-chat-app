@@ -3,7 +3,7 @@
  */
 
 // imports
- const db = require('../../../lib/gateways/db')
+ const db = require('../../../lib/db')
  const error = require('../../../lib/error')
  const userValidator = require('./validator')
  const { salt, hash } = require('../../../lib/helpers')

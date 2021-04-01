@@ -4,7 +4,7 @@
 
 // Imports
 const tokenValidator = require('./validator')
-const db = require('../../../lib/gateways/db')
+const db = require('../../../lib/db')
 const error = require('../../../lib/error')
 const { hash, salt, makeToken } = require('../../../lib/helpers')
 const { tokenExpiration } = require('../../../lib/config')
