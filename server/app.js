@@ -5,10 +5,10 @@
 // Imports
 const express = require('express')
 
-const bodyParser = require('./middleware/parse_body')
-const authenticator = require('./middleware/auth_handler')
+const bodyParser = require('./middleware/bodyParser')
+const authenticator = require('./middleware/authenticator')
 const apiRouter = require('./routes/api/api.routes')
-const errorHandler = require('./middleware/error_handler')
+const errorHandler = require('./middleware/errorHandler')
 
 // Creating app
 const app = express()

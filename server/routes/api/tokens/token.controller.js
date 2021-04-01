@@ -2,7 +2,7 @@
  * User controller
  */
 
-// imports
+// Imports
 const tokenValidator = require('../../../lib/validation/token_validator')
 const db = require('../../../lib/gateways/db')
 const error = require('../../../lib/error')
@@ -60,4 +60,9 @@ const deleteToken = async (req, res, next) => {
     res.send({ "message" : "Logged out"})
 }
 
-module.exports = { createToken, getToken, extendToken, deleteToken }
+module.exports = { 
+    createToken, 
+    getToken, 
+    extendToken, 
+    deleteToken 
+}

@@ -9,7 +9,7 @@ const roomValidator = require('../../../lib/validation/room_validator')
 
 const createRoom = async (req, res, next) => {
     const name = roomValidator.name(req.body.name)
-    const admin = req.user
+    const admin = req.user.id
 
     db.createRoom(name, admin)
     res.send({ "message" : "Room created" })
@@ -30,8 +30,7 @@ const getRoom = async (req, res, next) => {
 
 const deleteRoom = async (req, res, next) => {
     const roomID = req.params.roomID
-    const user = db.getUserById(req.user)
-    roomValidator.admin(user, roomID)
+    roomValidator.admin(req.user, roomID)
     
     db.deleteRoom(roomID)
     res.json({ "message" : "Room deleted" })

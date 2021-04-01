@@ -28,19 +28,20 @@ const getUsers = async (req, res, next) => {
 
 const getUser = async (req, res, next) => {
     const user = await db.getUserById(req.params.userID)
+    
     // Removing sensitive properties
     delete user["hash"]
     delete user["salt"]
     delete user["tokens"]
+
     const jsonUser = { "user" : user }
     res.json(jsonUser)
 }
 
 const deleteUser = async (req, res, next) => {
     const userToRemove = req.params.userID
-    const authenticatedUser = req.user
 
-    if (userToRemove === authenticatedUser) {
+    if (userToRemove === req.user.id) {
         await db.deleteUser(userID);
         res.send({ "message" : "User deleted" })
         return
@@ -48,4 +49,9 @@ const deleteUser = async (req, res, next) => {
     next(error.authentication())
 }
 
-module.exports = { createUser, getUsers, getUser, deleteUser }
+module.exports = { 
+    createUser, 
+    getUsers, 
+    getUser, 
+    deleteUser 
+}
