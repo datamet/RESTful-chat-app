@@ -7,7 +7,6 @@ const db = require('../../../lib/db')
 const error = require('../../../lib/error')
 const validator = require('./validator')
 const auth = require('../../../lib/auth')
-const { tokenExpiration } = require('../../../lib/config')
 
 const createToken = async (req, res, next) => {
     const username = typeof req.body.username === 'string' ? req.body.username : ""
