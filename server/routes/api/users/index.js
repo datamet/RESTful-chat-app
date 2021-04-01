@@ -21,9 +21,11 @@ router.get('/', (req, res, next) => {
     }
 })
 
+// Get one user
 router.get('/:userID', (req, res, next) => {
     try{
         const user = db.getUserById(req.params.userID)
+        // Removing sensitive properties
         delete user["hash"]
         delete user["salt"]
         delete user["tokens"]
@@ -54,12 +56,10 @@ router.post('/', (req, res, next) => {
 // Delete user
 router.delete('/:userID', (req, res, next) => {
     try{
-        const userID = req.params.userID
+        const userToRemove = req.params.userID
+        const authenticatedUser = req.user
 
-        const tokenID = req.header('Token')
-        const token = db.getTokenById(tokenID)
-
-        if (token.userID === userID) {
+        if (userToRemove === authenticatedUser) {
             db.deleteUser(userID);
             res.send({ "message" : "User deleted" })
             return
