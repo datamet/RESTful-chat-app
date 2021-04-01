@@ -1,7 +1,7 @@
 const app = require("../app")
 const supertest = require("supertest")
 
-let tokenID, userID, roomID
+let tokenID, userID, tokenDate
 
 /**
  * Token tests
@@ -37,6 +37,22 @@ test("GET /api/tokens/:tokenID", async () => {
         .then((res) => { 
             expect(res.body.token.id.length).toBe(36)
             expect(res.body.token.user).toBe(userID)
-            tokenID = res.body.token
+            tokenDate = res.body.token.expires
+        })
+})
+
+test("PUT /api/tokens/:tokenID", async () => {
+    await supertest(app).put(`/api/tokens/${tokenID}`)
+        .set('Token', tokenID)
+        .expect(200)
+        .then((res) => { 
+            expect(res.body.message).toBe("Session extended")
+        })
+
+    await supertest(app).get(`/api/tokens/${tokenID}`)
+        .set('Token', tokenID)
+        .expect(200)
+        .then((res) => { 
+            expect(res.body.token.expires).toBeGreaterThan(tokenDate)
         })
 })
