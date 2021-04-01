@@ -56,9 +56,9 @@ Here you will find a list of every endpoint the chat api exposes and how to use 
 
 <br>
 
-### Users
+### `POST - /api/users`
 
-`POST - /api/users` - Creates a new user and returns a userID
+Creates a new user and returns a userID
  
 *Header:* 
 
@@ -84,7 +84,9 @@ Content-Type : application/json
 
 <br>
 
-`GET - /api/users` - Returns a list of all users
+### `GET - /api/users`
+
+Returns a list of all users
 
 *Header:* 
 
@@ -106,7 +108,9 @@ Token : "%Auth Token%"
 
 <br>
 
-`GET - /api/users/:userID` - Returns a user
+### `GET - /api/users/:userID`
+
+Returns a user
 
 *Header:* 
 
@@ -128,7 +132,9 @@ Token : "%Auth Token%"
 
 <br>
 
-`DELETE - /api/users/:userID` - Deletes a user specified by the userID
+### `DELETE - /api/users/:userID`
+
+Deletes a user specified by the userID
 
 *Header:* 
 
@@ -145,9 +151,9 @@ Token : "%Auth Token%"
 
 <br>
 
-### Tokens
+### `POST - /api/tokens`
 
-`POST - /api/tokens` - Authenticates user, establishes connection and returns a new tokenID
+Authenticates user, establishes connection and returns a new tokenID
  
 *Header:* 
 
@@ -174,7 +180,9 @@ Content-Type : application/json
 
 <br>
 
-`GET` - `/api/tokens/:tokenID` - Returns token in json format
+### `GET` - `/api/tokens/:tokenID`
+
+Returns token
 
 *Header:* 
 
@@ -195,7 +203,9 @@ Token : "%Auth Token%"
 
 <br>
 
-`PUT - /api/tokens/:tokenID` - Extends token
+### `PUT - /api/tokens/:tokenID`
+
+Extends token
 
 *Header:* 
 
@@ -212,7 +222,9 @@ Token : "%Auth Token%"
 
 <br>
 
-`DELETE - /api/tokens/:tokenID` - Deletes and invalidates token
+### `DELETE - /api/tokens/:tokenID`
+
+Deletes and invalidates token
 
 *Header:* 
 
@@ -230,9 +242,9 @@ Token : "%Auth Token%"
 
 <br>
 
-### Rooms
+### `POST - /api/rooms`
 
-`POST - /api/rooms` - Creates a chat room
+Creates a chat room
 
 *Header:*
 
@@ -257,7 +269,9 @@ Token: %tokenID%
 
 <br>
 
-`GET - /api/rooms` - Gets all chat rooms
+### `GET - /api/rooms`
+
+Gets all chat rooms
 
 *Header:* 
 
@@ -279,7 +293,9 @@ Token : "%Auth Token%"
 
 <br>
 
-`GET - /api/rooms/:roomID` - Get room
+### `GET - /api/rooms/:roomID`
+
+Get room
 
 *Header:* 
 
@@ -289,7 +305,9 @@ Token : "%Auth Token%"
 
 <br>
 
-`DELETE - /api/rooms/:roomID` - Delete room
+### `DELETE - /api/rooms/:roomID`
+
+Delete room
 
 *Header:*
 
@@ -306,7 +324,9 @@ Token : %tokenID%
 
 <br>
 
-`POST - /api/rooms/:roomID/users` - Add user to room
+### `POST - /api/rooms/:roomID/users`
+
+Add user to room
 
 *Header:*
 ```
@@ -330,7 +350,9 @@ Token : %tokenID%
 
 <br>
 
-`GET - /api/rooms/:roomID/users` - Get all users in room
+### `GET - /api/rooms/:roomID/users`
+
+Get all users in room
 
 *Header:* 
 
@@ -352,7 +374,9 @@ Token : "%Auth Token%"
 
 <br>
 
-`GET - /api/rooms/:roomID/messages` - Get all messages in room
+### `GET - /api/rooms/:roomID/messages`
+
+Get all messages in room
 
 *Header:*
 ```
@@ -375,7 +399,9 @@ Token : %tokenID%
 
 <br>
 
-`GET - /api/rooms/:roomID/:userID/messages` - Get all messages by user in room
+### `GET - /api/rooms/:roomID/:userID/messages`
+
+Get all messages by user in room
 
 *Header:*
 ```
@@ -398,7 +424,9 @@ Token : %tokenID%
 
 <br>
 
-`POST - /api/rooms/:roomID/:userID/messages` - Add message to room
+### `POST - /api/rooms/:roomID/:userID/messages`
+
+Add message to room
 
 *Header:*
 ```
