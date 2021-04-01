@@ -87,6 +87,10 @@ class InMemoryGateway extends Gateway {
         users.set(token.userID, user)
     }
 
+    updateToken(token) {
+        tokens.set(token.id, token)
+    }
+
     getTokenById(id) {
         const token = tokens.get(id)
         if (token) return token

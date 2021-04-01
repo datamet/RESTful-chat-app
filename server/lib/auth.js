@@ -27,6 +27,13 @@ auth.createToken = (userID) => {
     return newToken
 }
 
+auth.extendToken = (token) => {
+    return {
+        ...token,
+        expires: Date.now() + tokenExpiration
+    }
+}
+
 // Creating UUID. Complies with the UUID V4 rfc
 auth.uuid = () => {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {

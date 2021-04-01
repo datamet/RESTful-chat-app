@@ -5,10 +5,10 @@
 // Imports
 const db = require('../../../lib/db')
 const error = require('../../../lib/error')
-const roomValidator = require('./validator')
+const validator = require('./validator')
 
 const createRoom = async (req, res, next) => {
-    const name = roomValidator.name(req.body.name)
+    const name = validator.name(req.body.name)
     const admin = req.user.id
 
     db.createRoom(name, admin)
@@ -30,7 +30,7 @@ const getRoom = async (req, res, next) => {
 
 const deleteRoom = async (req, res, next) => {
     const roomID = req.params.roomID
-    roomValidator.admin(req.user, roomID)
+    validator.admin(req.user, roomID)
     
     db.deleteRoom(roomID)
     res.json({ "message" : "Room deleted" })

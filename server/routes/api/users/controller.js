@@ -5,12 +5,12 @@
 // imports
  const db = require('../../../lib/db')
  const error = require('../../../lib/error')
- const userValidator = require('./validator')
+ const validator = require('./validator')
  const auth = require('../../../lib/auth')
 
 const createUser = async (req, res, next) => {
-    const username = userValidator.username(req.body.username)
-    const password = userValidator.password(req.body.password)
+    const username = validator.username(req.body.username)
+    const password = validator.password(req.body.password)
     
     const passwordSalt = auth.salt()
     const passwordHash = auth.hash(password + passwordSalt)

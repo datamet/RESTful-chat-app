@@ -3,9 +3,9 @@
  */
 
 // Imports
-const tokenValidator = require('./validator')
 const db = require('../../../lib/db')
 const error = require('../../../lib/error')
+const validator = require('./validator')
 const auth = require('../../../lib/auth')
 const { tokenExpiration } = require('../../../lib/config')
 
@@ -38,24 +38,25 @@ const createToken = async (req, res, next) => {
 }
 
 const getToken = async (req, res, next) => {
-    const tokenID = tokenValidator.tokenID(req.params.tokenID)
+    const tokenID = validator.tokenID(req.params.tokenID)
     const token = await db.getTokenById(tokenID)
     const jsonToken = { "token" : token }
     res.json(jsonToken)
 }
 
 const extendToken = async (req, res, next) => {
-    const tokenID = tokenValidator.tokenID(req.params.tokenID)
+    const tokenID = validator.tokenID(req.params.tokenID)
 
-    const token = tokenValidator.valid(await db.getTokenById(tokenID))
+    const token = validator.valid(await db.getTokenById(tokenID))
     
     // Extending token expiration date
-    token.expires = Date.now() + tokenExpiration
+    const extendedToken = auth.extendToken(token)
+    await db.updateToken(extendedToken)
     res.json({ "message" : "Session extended" })
 }
 
 const deleteToken = async (req, res, next) => {
-    const tokenID = tokenValidator.tokenID(req.params.tokenID)
+    const tokenID = validator.tokenID(req.params.tokenID)
     await db.deleteToken(tokenID)
     res.send({ "message" : "Logged out"})
 }
