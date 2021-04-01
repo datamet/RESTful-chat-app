@@ -3,7 +3,7 @@
  */
 
 const error = require('../error')
-const { uuid } = require('../helpers')
+const { uuid } = require('../auth')
 const Gateway = require("./gateway")
 
 // In memory stores

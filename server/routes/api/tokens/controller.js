@@ -6,7 +6,7 @@
 const tokenValidator = require('./validator')
 const db = require('../../../lib/db')
 const error = require('../../../lib/error')
-const { hash, salt, makeToken } = require('../../../lib/helpers')
+const auth = require('../../../lib/auth')
 const { tokenExpiration } = require('../../../lib/config')
 
 const createToken = async (req, res, next) => {
@@ -22,11 +22,11 @@ const createToken = async (req, res, next) => {
         next(error.credentials())
         return
     }
-    const passwordHash = hash(password + salt)
+    const passwordHash = auth.hash(password + user.salt)
 
     // Checking if password matches
     if (user.hash === passwordHash) {
-        const token = makeToken(user.id)
+        const token = auth.createToken(user.id)
         await db.storeToken(token)
         res.json({ 
             "token" : token.id,

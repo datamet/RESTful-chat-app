@@ -6,14 +6,14 @@
  const db = require('../../../lib/db')
  const error = require('../../../lib/error')
  const userValidator = require('./validator')
- const { salt, hash } = require('../../../lib/helpers')
+ const auth = require('../../../lib/auth')
 
 const createUser = async (req, res, next) => {
     const username = userValidator.username(req.body.username)
     const password = userValidator.password(req.body.password)
     
-    const passwordSalt = salt()
-    const passwordHash = hash(password + salt)
+    const passwordSalt = auth.salt()
+    const passwordHash = auth.hash(password + passwordSalt)
 
     const userID = await db.createUser(username, passwordHash, passwordSalt)
     res.json({ "message" : "User created", "userID" : userID })
