@@ -12,20 +12,18 @@ const createRoom = async (req, res, next) => {
     const admin = req.user.id
 
     db.createRoom(name, admin)
-    res.send({ "message" : "Room created" })
+    res.send({ message: "Room created" })
 }
 
 const getRooms = async (req, res, next) => {
     const rooms = db.getRooms()
-    const reducedRooms = rooms.map(room => { return { "id" : room.id, "name" : room.name } })
-    const jsonRooms = { "rooms" : reducedRooms }
-    res.json(jsonRooms)
+    const reducedRooms = rooms.map(({ id, name }) => { return { id, name } })
+    res.json({ rooms: reducedRooms })
 }
 
 const getRoom = async (req, res, next) => {
     const room = db.getRoomById(req.params.roomID)
-    const jsonRoom = { "room" : room }
-    res.json(jsonRoom)
+    res.json({ room })
 }
 
 const deleteRoom = async (req, res, next) => {
@@ -33,7 +31,7 @@ const deleteRoom = async (req, res, next) => {
     validator.admin(req.user, roomID)
     
     db.deleteRoom(roomID)
-    res.json({ "message" : "Room deleted" })
+    res.json({ message: "Room deleted" })
 }
 
 const addUserToRoom = async (req, res, next) => {

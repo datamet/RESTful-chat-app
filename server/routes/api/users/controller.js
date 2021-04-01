@@ -16,14 +16,13 @@ const createUser = async (req, res, next) => {
     const passwordHash = auth.hash(password + passwordSalt)
 
     const userID = await db.createUser(username, passwordHash, passwordSalt)
-    res.json({ "message" : "User created", "userID" : userID })
+    res.json({ message: "User created", userID })
 }
 
 const getUsers = async (req, res, next) => {
-    const users = await db.getUsers()
-    const reducedUsers = users.map(user => {return { "username" : user.username, "id" : user.id }})
-    const jsonUsers = { "users" : reducedUsers }
-    res.json(jsonUsers)
+    const fullUsers = await db.getUsers()
+    const users = fullUsers.map(({ username, id }) => {return { username, id }})
+    res.json({ users })
 }
 
 const getUser = async (req, res, next) => {
@@ -34,8 +33,7 @@ const getUser = async (req, res, next) => {
     delete user["salt"]
     delete user["tokens"]
 
-    const jsonUser = { "user" : user }
-    res.json(jsonUser)
+    res.json({ user })
 }
 
 const deleteUser = async (req, res, next) => {
@@ -43,7 +41,7 @@ const deleteUser = async (req, res, next) => {
 
     if (userToRemove === req.user.id) {
         await db.deleteUser(userID);
-        res.send({ "message" : "User deleted" })
+        res.send({ message: "User deleted" })
         return
     }
     next(error.authentication())

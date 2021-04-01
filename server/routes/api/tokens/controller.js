@@ -27,10 +27,7 @@ const createToken = async (req, res, next) => {
     if (user.hash === passwordHash) {
         const token = auth.createToken(user.id)
         await db.storeToken(token)
-        res.json({ 
-            "token" : token.id,
-            "message" : "Logged in"
-        })
+        res.json({ token : token.id, message : "Logged in"})
         return
     }
     next(error.credentials())
@@ -39,8 +36,7 @@ const createToken = async (req, res, next) => {
 const getToken = async (req, res, next) => {
     const tokenID = validator.tokenID(req.params.tokenID)
     const token = await db.getTokenById(tokenID)
-    const jsonToken = { "token" : token }
-    res.json(jsonToken)
+    res.json({ token })
 }
 
 const extendToken = async (req, res, next) => {
@@ -51,13 +47,13 @@ const extendToken = async (req, res, next) => {
     // Extending token expiration date
     const extendedToken = auth.extendToken(token)
     await db.updateToken(extendedToken)
-    res.json({ "message" : "Session extended" })
+    res.json({ message: "Session extended" })
 }
 
 const deleteToken = async (req, res, next) => {
     const tokenID = validator.tokenID(req.params.tokenID)
     await db.deleteToken(tokenID)
-    res.send({ "message" : "Logged out"})
+    res.send({ message: "Logged out"})
 }
 
 module.exports = { 
