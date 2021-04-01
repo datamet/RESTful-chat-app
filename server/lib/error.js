@@ -11,6 +11,7 @@ const error = {
     invalid: () => error.custom(403, "Invalid format"),
     credentials: () => error.custom(401, "Invalid username/password"),
     authentication: () => error.custom(401, "Authentication failed"),
+    unauthorized: () => error.custom(401, "Unauthorized"),
     expired: () => error.custom(401, "Session expired")
 }
 

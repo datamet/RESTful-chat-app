@@ -1,5 +1,5 @@
 /**
- * API routes
+ * Room routes
  */
 
 const db = require('../../../lib/gateways/db')
@@ -30,6 +30,30 @@ router.get('/', (req, res, next) => {
         res.json(jsonRooms)
     }
     catch (err)  {
+        next(err)
+    }
+})
+
+router.get('/:roomID', (req, res, next) => {
+    try {
+        const room = db.getRoomById(req.params.roomID)
+        res.json(room)
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
+router.delete('/:roomID', (req, res, next) => {
+    try {
+        const roomID = req.params.roomID
+        const user = db.getUserById(req.user)
+        roomValidator.admin(user, roomID)
+        
+        db.deleteRoom(roomID)
+        res.json({ "message" : "Room deleted" })
+    }
+    catch (err) {
         next(err)
     }
 })

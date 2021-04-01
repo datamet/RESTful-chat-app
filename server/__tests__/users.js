@@ -3,6 +3,10 @@ const supertest = require("supertest")
 
 let tokenID, userID
 
+/**
+ * User tests
+ */
+
 test("POST /api/user", async () => {  
     await supertest(app).post("/api/users")
         .send({ username: "adrian", password: "password1" })
@@ -10,8 +14,8 @@ test("POST /api/user", async () => {
         .expect(200)
         .then((res) => {
             expect(res.body.message).toBe("User created")
-        });
-});
+        })
+})
 
 test("POST /api/tokens", async () => {  
     await supertest(app).post("/api/tokens")
@@ -21,8 +25,8 @@ test("POST /api/tokens", async () => {
         .then((res) => {
             expect(res.body.token.length).toBe(36)
             tokenID = res.body.token
-        });
-});
+        })
+})
 
 test("GET /api/users", async () => {  
     await supertest(app).get("/api/users")
@@ -32,8 +36,8 @@ test("GET /api/users", async () => {
             expect(res.body.users.length).toBe(1)
             expect(res.body.users[0].username).toBe("adrian")
             userID = res.body.users[0].id
-        });
-});
+        })
+})
 
 test("GET /api/users/:userID", async () => {  
     await supertest(app).get(`/api/users/${userID}`)
@@ -41,5 +45,6 @@ test("GET /api/users/:userID", async () => {
         .expect(200)
         .then((res) => {
             expect(res.body.username).toBe("adrian")
-        });
-});
+        })
+})
+

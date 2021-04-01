@@ -11,4 +11,9 @@ validator.name = (name) => {
     return name
 }
 
+validator.admin = (user, roomID) => {
+    if (user.ownedRooms.indexOf(roomID) !== -1) return user
+    throw error.unauthorized()
+}
+
 module.exports = validator
