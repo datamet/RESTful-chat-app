@@ -35,6 +35,7 @@ class InMemoryGateway extends Gateway {
         // Adding user to user store
         userIDs.set(username, userID)
         users.set(userID, newUser)
+        return userID
     }
 
     getUsers() {
