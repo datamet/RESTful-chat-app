@@ -37,6 +37,10 @@ class Gateway {
         throw error.internal()
     }
 
+    updateToken(token) {
+        throw error.internal()
+    }
+
     getTokenById(id) {
         throw error.internal()
     }

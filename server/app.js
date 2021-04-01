@@ -1,27 +1,22 @@
 /**
- * Responsible for creating application
+ * Express Application
  */
 
-// App imports
+// Imports
 const express = require('express')
-const bodyParser = require('./middleware/parse_body')
-const errorHandler = require('./middleware/error_handler')
-const authHandler = require('./middleware/auth_handler')
+
+const bodyParser = require('./middleware/bodyParser')
+const authenticator = require('./middleware/authenticator')
+const apiRouter = require('./routes/api/api.routes')
+const errorHandler = require('./middleware/errorHandler')
 
 // Creating app
 const app = express()
 
 // Using app level middleware
 app.use(bodyParser)
-app.use(authHandler)
-
-// Route imports
-const routes = require('./routes')
-
-// Using routes
-app.use(routes)
-
-// Using error middleware
+app.use(authenticator)
+app.use(apiRouter)
 app.use(errorHandler)
 
 module.exports = app

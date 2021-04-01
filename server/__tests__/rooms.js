@@ -12,18 +12,13 @@ beforeAll(async (done) => {
         .send({ username: "adrian", password: "password1" })
         .set('Content-Type', 'application/json')
         .expect(200)
-        .then((res) => {})
+        .then((res) => { userID = res.body.userID })
     
     await supertest(app).post("/api/tokens")
         .send({ username: "adrian", password: "password1" })
         .set('Content-Type', 'application/json')
         .expect(200)
         .then((res) => { tokenID = res.body.token })
-
-    await supertest(app).get("/api/users")
-        .set('Token', tokenID)
-        .expect(200)
-        .then((res) => { userID = res.body.users[0].id })
     
     done()
 })
@@ -49,7 +44,7 @@ test("GET /api/rooms", async () => {
             roomID = res.body.rooms[0].id
         })
 
-    await supertest(app).get(`/api/users/${userID}`)
+    await supertest(app).get(`/api/user/${userID}`)
         .set('Token', tokenID)
         .expect(200)
         .then((res) => {
@@ -58,8 +53,8 @@ test("GET /api/rooms", async () => {
         })
 })
 
-test("GET /api/rooms/:roomID", async () => {  
-    await supertest(app).get(`/api/rooms/${roomID}`)
+test("GET /api/room/:roomID", async () => {  
+    await supertest(app).get(`/api/room/${roomID}`)
         .set('Token', tokenID)
         .expect(200)
         .then((res) => {
@@ -69,15 +64,15 @@ test("GET /api/rooms/:roomID", async () => {
         })
 })
 
-test("DELETE /api/rooms/:roomID", async () => {  
-    await supertest(app).delete(`/api/rooms/${roomID}`)
+test("DELETE /api/room/:roomID", async () => {  
+    await supertest(app).delete(`/api/room/${roomID}`)
         .set('Token', tokenID)
         .expect(200)
         .then((res) => {
             expect(res.body.message).toBe("Room deleted")
         })
 
-    await supertest(app).get(`/api/users/${userID}`)
+    await supertest(app).get(`/api/user/${userID}`)
         .set('Token', tokenID)
         .expect(200)
         .then((res) => {

@@ -3,7 +3,7 @@
  */
 
 const error = require('../error')
-const { uuid } = require('../helpers')
+const { uuid } = require('../auth')
 const Gateway = require("./gateway")
 
 // In memory stores
@@ -85,6 +85,10 @@ class InMemoryGateway extends Gateway {
         userTokens.push(token.id)
         user.tokens = userTokens
         users.set(token.userID, user)
+    }
+
+    updateToken(token) {
+        tokens.set(token.id, token)
     }
 
     getTokenById(id) {
