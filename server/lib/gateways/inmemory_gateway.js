@@ -37,20 +37,29 @@ class InMemoryGateway extends Gateway {
         for (const [username, user] of users) {
             delete user["hash"]
             delete user["salt"]
+            delete user["tokens"]
             usersList["users"].push(user)
         }
         return usersList
     }
 
     getUser(username){
-        if (users.has(username)) return username
+        const user = users.get(username)
+
+        if(user) {
+            delete user["hash"]
+            delete user["salt"]
+            delete user["tokens"]
+            return user
+        }
 
         throw error.notfound();
     }
 
     deleteUser(username) {
-        for (const [tokenID, token] of tokens) {
-            if (token.username === username) tokens.delete(tokenID)
+        const user = this.getUserByName(username)
+        for (const tokenID of user.tokens) {
+            tokens.delete(tokenID)
         }
         
         users.delete(username)
@@ -63,7 +72,18 @@ class InMemoryGateway extends Gateway {
     }
 
     storeToken({ id, username, expires}) {
-        tokens.set(id, {username, expires})
+        const newToken = {
+            id,
+            username,
+            expires
+        }
+        tokens.set(id, newToken)
+        
+        const user = this.getUserByName(username)
+        const userTokens = user.tokens ? user.tokens : []
+        userTokens.push(id)
+        user.tokens = userTokens
+        users.set(username, user)
     }
 
     getTokenById(id) {
