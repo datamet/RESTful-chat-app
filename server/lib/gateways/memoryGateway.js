@@ -186,6 +186,18 @@ class InMemoryGateway extends Gateway {
         users.set(userID, user)
     }
 
+    getUsersInRoom(roomID){
+        const users = [];
+
+        for(const user of users){
+            if(user.roomID === roomID){
+                users.push(user.name);
+            }
+        }
+
+        return users;
+    }
+
 }
 
 module.exports = InMemoryGateway

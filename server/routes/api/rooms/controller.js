@@ -35,11 +35,14 @@ const deleteRoom = async (req, res, next) => {
 }
 
 const addUserToRoom = async (req, res, next) => {
-    throw error.internal()
+    await db.addRoomToUser(req.body.roomID, req.body.user)
+    res.json({ message: "User added to room"})
 }
 
 const getUsersInRoom = async (req, res, next) => {
-    throw error.internal()
+    const users = await db.getUsersInRoom(req.body.roomID)
+    const reducedUsers = users.map(({ name }) => { return { name } })
+    res.json({ user: reducedUsers})
 }
 
 const getMessages = async (req, res, next) => {
