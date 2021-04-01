@@ -65,7 +65,7 @@ class InMemoryGateway extends Gateway {
     getTokenById(id) {
         const token = tokens.get(id)
         if (token) return token
-        else throw error.notfound()
+        else throw error.custom(404, "Session not found")
     }
 
     deleteToken(id) {

@@ -12,10 +12,16 @@ const { app, router } = require('../../../lib/router')('/tokens')
 
 router.post('/', (req, res, next) => {
     try {
-        const username = userValidator.username(req.body.username)
-        const password = userValidator.password(req.body.password)
+        const username = typeof req.body.username === 'string' ? req.body.username : ""
+        const password = typeof req.body.password === 'string' ? req.body.password : ""
 
-        const user = db.getUserByName(username)
+        let user
+        try {
+            user = db.getUserByName(username)
+        }
+        catch (err) {
+            next(error.credentials())
+        }
         const passwordHash = hash(password + salt)
 
         if (user.hash === passwordHash) {

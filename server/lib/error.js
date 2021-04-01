@@ -10,7 +10,8 @@ const error = {
     internal: () => error.custom(500, "Internal server error"),
     invalid: () => error.custom(403, "Invalid format"),
     credentials: () => error.custom(401, "Invalid username/password"),
-    authentication: () => error.custom(401, "Authentication failed")
+    authentication: () => error.custom(401, "Authentication failed"),
+    expired: () => error.custom(401, "Session expired")
 }
 
 module.exports = error
