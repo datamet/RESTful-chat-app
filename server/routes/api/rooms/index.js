@@ -16,7 +16,7 @@ router.post('/', (req, res, next) => {
         const admin = req.user
 
         db.createRoom(name, admin)
-        res.send("OK")
+        res.send({ "message" : "Room created" })
     }
     catch (err) {
         next(err)

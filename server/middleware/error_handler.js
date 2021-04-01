@@ -7,7 +7,8 @@ const error_handler = (err, req, res, next) => {
         console.error(`[TRACEBACK]`)
         console.error(err.stack)
     }
-    res.status(status).send(status === 500 ? "Internal server error" : err.message)
+    const errorMessage = status === 500 ? "Internal server error" : err.message
+    res.status(status).json({ "error" : errorMessage })
 }
 
 module.exports = error_handler

@@ -28,7 +28,7 @@ router.post('/', (req, res, next) => {
         if (user.hash === passwordHash) {
             const token = createToken(user.id)
             db.storeToken(token)
-            res.send(token.id)
+            res.json({ "token" : token.id })
             return
         }
         next(error.credentials())
@@ -57,7 +57,7 @@ router.put('/:tokenID', (req, res, next) => {
         
         // Extending token expiration date
         token.expires = Date.now() + tokenExpiration
-        res.send("OK")
+        res.json({ "message" : "Session extended" })
     }
     catch (err) {
         next(err)
@@ -68,7 +68,7 @@ router.delete('/:tokenID', (req, res, next) => {
     try {
         const tokenID = tokenValidator.tokenID(req.params.tokenID)
         db.deleteToken(tokenID)
-        res.send("OK")
+        res.send({ "message" : "Logged out"})
     }
     catch (err) {
         next(err)

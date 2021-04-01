@@ -48,7 +48,7 @@ router.post('/', (req, res, next) => {
         const passwordHash = hash(password + salt)
     
         db.createUser(username, passwordHash, passwordSalt)
-        res.send("OK")
+        res.json({ "message" : "User created" })
     }
     catch (err) {
         next(err)
@@ -65,7 +65,7 @@ router.delete('/:userID', (req, res, next) => {
 
         if (token.userID === userID) {
             db.deleteUser(userID);
-            res.send("OK")
+            res.send({ "message" : "User deleted" })
             return
         }
         next(error.authentication())
