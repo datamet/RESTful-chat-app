@@ -1,7 +1,12 @@
+/**
+ * Validator for tokens
+ */
+
 const error = require('../error')
 
 const validator = {}
 
+// validates tokenID
 validator.tokenID = (tokenID) => {
     if (!tokenID) throw error.authentication()
     const string = typeof tokenID === 'string'
@@ -11,6 +16,7 @@ validator.tokenID = (tokenID) => {
     return tokenID
 }
 
+// Checks if token is still valid
 validator.valid = (token) => {
     if (token.expires > Date.now()) return token
     else throw error.expired()

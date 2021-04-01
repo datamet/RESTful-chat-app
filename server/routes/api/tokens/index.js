@@ -10,12 +10,14 @@ const error = require('../../../lib/error')
 
 const { app, router } = require('../../../lib/router')('/tokens')
 
+// Creating token (Logging in)
 router.post('/', (req, res, next) => {
     try {
         const username = typeof req.body.username === 'string' ? req.body.username : ""
         const password = typeof req.body.password === 'string' ? req.body.password : ""
 
         let user
+        // Checking if user exists
         try {
             user = db.getUserByName(username)
         }
@@ -25,6 +27,7 @@ router.post('/', (req, res, next) => {
         }
         const passwordHash = hash(password + salt)
 
+        // Checking if password matches
         if (user.hash === passwordHash) {
             const token = createToken(user.id)
             db.storeToken(token)
@@ -41,6 +44,7 @@ router.post('/', (req, res, next) => {
     }
 })
 
+// Returning token based on an id
 router.get('/:tokenID', (req, res, next) => {
     try {
         const tokenID = tokenValidator.tokenID(req.params.tokenID)
@@ -53,6 +57,7 @@ router.get('/:tokenID', (req, res, next) => {
     }
 })
 
+// Extending session
 router.put('/:tokenID', (req, res, next) => {
     try {
         const tokenID = tokenValidator.tokenID(req.params.tokenID)
@@ -68,6 +73,7 @@ router.put('/:tokenID', (req, res, next) => {
     }
 })
 
+// Delete token (Logging out)
 router.delete('/:tokenID', (req, res, next) => {
     try {
         const tokenID = tokenValidator.tokenID(req.params.tokenID)

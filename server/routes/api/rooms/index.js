@@ -5,11 +5,10 @@
 const db = require('../../../lib/gateways/db')
 const roomValidator = require('../../../lib/validation/room_validator')
 
-// Importing subroutes
-
 // Creating sub-router
 const { app, router } = require('../../../lib/router')('/rooms')
 
+// Creating chat room
 router.post('/', (req, res, next) => {
     try {
         const name = roomValidator.name(req.body.name)
@@ -23,6 +22,7 @@ router.post('/', (req, res, next) => {
     }
 })
 
+// Returning all chat rooms
 router.get('/', (req, res, next) => {
     try {
         const rooms = db.getRooms()
@@ -35,6 +35,7 @@ router.get('/', (req, res, next) => {
     }
 })
 
+// Returning room
 router.get('/:roomID', (req, res, next) => {
     try {
         const room = db.getRoomById(req.params.roomID)
@@ -46,6 +47,7 @@ router.get('/:roomID', (req, res, next) => {
     }
 })
 
+// Deleting room
 router.delete('/:roomID', (req, res, next) => {
     try {
         const roomID = req.params.roomID

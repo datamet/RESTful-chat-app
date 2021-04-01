@@ -1,3 +1,7 @@
+/**
+ * Configruation file
+ */
+
 const dev = {
     mode: 'development',
     port: process.env.PORT || 5000,

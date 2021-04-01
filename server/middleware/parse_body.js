@@ -1,3 +1,6 @@
+
+// Parsing body stream to json if:
+// 'Content-Type' : 'application/json'
 const parse_body = (req, res, next) => {
     data = "";
     req.on('data', (chunk) => data += chunk)

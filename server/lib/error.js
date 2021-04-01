@@ -1,3 +1,4 @@
+// Predefined error messages for consistency and ease of use
 const error = {
     custom: (status, message) => {
         const err = new Error(message)

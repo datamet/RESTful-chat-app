@@ -1,7 +1,12 @@
+/**
+ * Validator for rooms
+ */
+
 const error = require('../error')
 
 const validator = {}
 
+// Validates room name
 validator.name = (name) => {
     if (!name) throw error.missing()
     const string = typeof name === 'string'
@@ -11,6 +16,7 @@ validator.name = (name) => {
     return name
 }
 
+// Checks if user is admin of room
 validator.admin = (user, roomID) => {
     if (user.ownedRooms.indexOf(roomID) !== -1) return user
     throw error.unauthorized()
