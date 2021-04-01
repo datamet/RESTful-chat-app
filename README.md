@@ -75,9 +75,57 @@ Content-Type : application/json
 }
 ```
 
+*Response body:*
+```json
+{
+    "message" : "User created"
+}
+```
+
 <br>
 
-`GET - /api/users` - Returns a list of userID's and the corresponding username
+`GET - /api/users` - Returns a list of all users
+
+*Header:* 
+
+```
+Token : "%Auth Token%"
+```
+
+*Response body:*
+```json
+{
+    "users" [
+        {
+            "id" : "%userID%",
+            "username" : "%username%"
+        },
+        ...
+    ]
+}
+```
+
+<br>
+
+`GET - /api/users/:userID` - Returns a user
+
+*Header:* 
+
+```
+Token : "%Auth Token%"
+```
+
+*Response body:*
+```json
+{
+    "user" : {
+        "username" : "%username%",
+        "id" : "%userID%",
+        "ownedRooms" : [ "%roomID%", ... ],
+        "rooms" : [ "%roomID%", ... ]
+    }
+}
+```
 
 <br>
 
@@ -87,6 +135,13 @@ Content-Type : application/json
 
 ```
 Token : "%Auth Token%"
+```
+
+*Response body:*
+```json
+{
+    "message" : "User deleted"
+}
 ```
 
 <br>
@@ -110,16 +165,32 @@ Content-Type : application/json
 }
 ```
 
+*Response body:*
+```json
+{
+    "token" : "%tokenID",
+    "message" : "Logged in"
+}
+```
+
 <br>
 
 `GET` - `/api/tokens/:tokenID` - Returns token in json format
 
+*Header:* 
+
+```
+Token : "%Auth Token%"
+```
+
 *Response body:*
 ```json
 {
-    "id": "%tokenID%",
-    "username": "%username%",
-    "expires": "%expiration date%"
+    "token" : {
+        "id": "%tokenID%",
+        "username": "%username%",
+        "expires": "%expiration date%"
+    }
 }
 ```
 
@@ -127,9 +198,36 @@ Content-Type : application/json
 
 `PUT - /api/tokens/:tokenID` - Extends token
 
+*Header:* 
+
+```
+Token : "%Auth Token%"
+```
+
+*Response body:*
+```json
+{
+    "message" : "Session extended"
+}
+```
+
 <br>
 
 `DELETE - /api/tokens/:tokenID` - Deletes and invalidates token
+
+*Header:* 
+
+```
+Token : "%Auth Token%"
+```
+
+
+*Response body:*
+```json
+{
+    "message" : "Logged out"
+}
+```
 
 <br>
 
@@ -143,13 +241,53 @@ Content-Type : application/json
 Token: %tokenID%
 ```
 
+*Body:*
+
+```json
+{
+    "name" : "%room name%"
+}
+```
+
+*Response body:*
+```json
+{
+    "message" : "Room created"
+}
+```
+
 <br>
 
 `GET - /api/rooms` - Gets all chat rooms
 
+*Header:* 
+
+```
+Token : "%Auth Token%"
+```
+
+*Response body:*
+```json
+{
+    "rooms" : [
+        {
+            "id" : "%roomID%",
+            "name" : "%room name%"
+        },
+        ...
+    ]
+}
+```
+
 <br>
 
 `GET - /api/rooms/:roomID` - Get room
+
+*Header:* 
+
+```
+Token : "%Auth Token%"
+```
 
 <br>
 
@@ -161,6 +299,13 @@ Token: %tokenID%
 Token : %tokenID%
 ```
 
+*Response body:*
+```json
+{
+    "message" : "Room deleted"
+}
+```
+
 <br>
 
 `POST - /api/rooms/:roomID/users` - Add user to room
@@ -170,9 +315,43 @@ Token : %tokenID%
 Token : %tokenID%
 ```
 
+*Body:*
+
+```json
+{
+    "user" : "%userID%",
+}
+```
+
+*Response body:*
+```json
+{
+    "message" : "Added user to room"
+}
+```
+
 <br>
 
 `GET - /api/rooms/:roomID/users` - Get all users in room
+
+*Header:* 
+
+```
+Token : "%Auth Token%"
+```
+
+*Response body:*
+```json
+{
+    "users" : [
+        {
+            "id" : "%userID%",
+            "username" : "%username%"
+        },
+        ...
+    ]
+}
+```
 
 <br>
 
@@ -183,6 +362,23 @@ Token : %tokenID%
 Token : %tokenID%
 ```
 
+*Response body:*
+```json
+{
+    "messages" : [
+        {
+            "id" : "%messageID%",
+            "message" : "%message%",
+            "author" : "%userID%",
+            "time" : "%time sent%"
+        },
+        ...
+    ]
+}
+```
+
+<br>
+
 `GET - /api/rooms/:roomID/:userID/messages` - Get all messages by user in room
 
 *Header:*
@@ -190,9 +386,41 @@ Token : %tokenID%
 Token : %tokenID%
 ```
 
+*Response body:*
+```json
+{
+    "messages" : [
+        {
+            "id" : "%messageID%",
+            "message" : "%message%",
+            "author" : "%userID%",
+            "time" : "%time sent%"
+        },
+        ...
+    ]
+}
+```
+
+<br>
+
 `POST - /api/rooms/:roomID/:userID/messages` - Add message to room
 
 *Header:*
 ```
 Token : %tokenID%
+```
+
+*Body:*
+
+```json
+{
+    "message" : "%message%"
+}
+```
+
+*Response body:*
+```json
+{
+    "message" : "Message sent"
+}
 ```
