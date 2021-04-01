@@ -180,7 +180,7 @@ Content-Type : application/json
 
 <br>
 
-### `GET` - `/api/tokens/:tokenID`
+### `GET - /api/tokens/:tokenID`
 
 Returns token
 
