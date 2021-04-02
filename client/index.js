@@ -24,11 +24,12 @@ rest.use(responseHandler)
 const server = endpoints(rest)
 
 try {
-    console.log(await server.register("mats", "password1"))
-    console.log(await server.login("mats", "password1"))
-    const res = await server.getUsers()
-    console.log(res.body)
-    console.log(await server.getUser(res.body.users[0].id))
+    await server.register("mats", "password1")
+    await server.login("mats", "password1")
+    let res = await server.getUsers()
+        res = await server.getUser(res.body.users[0].id)
+    
+    console.log(res.body.user)
 }
 catch(err) {
     console.log(err)
