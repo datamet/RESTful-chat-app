@@ -2,7 +2,10 @@
  * Config file
  */
 
-const env = process ? 'node' : 'browser'
+let env
+
+if(typeof process === 'object') env = 'node'
+else env = 'browser'
 
 const dev = {
     env,
