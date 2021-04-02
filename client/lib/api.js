@@ -16,8 +16,8 @@ const request = (request) => {
         const res = {
             status: 200,
             body: {},
-            err: () => {
-                reject()
+            err: (reason) => {
+                reject(reason)
             },
             end: () => {
                 resolve({ status: res.status, body: res.body })

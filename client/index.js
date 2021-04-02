@@ -23,8 +23,13 @@ rest.use(responseHandler)
 // setting up server connecion with rest interactor
 const server = endpoints(rest)
 
-console.log(await server.register("mats", "password1"))
-console.log(await server.login("mats", "password1"))
-const res = await server.getUsers()
-console.log(res.body)
-console.log(await server.getUser(res.body.users[0].id))
+try {
+    console.log(await server.register("mats", "password1"))
+    console.log(await server.login("mats", "password1"))
+    const res = await server.getUsers()
+    console.log(res.body)
+    console.log(await server.getUser(res.body.users[0].id))
+}
+catch(err) {
+    console.log(err)
+}
