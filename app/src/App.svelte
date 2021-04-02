@@ -23,6 +23,7 @@
 			<li><Link to="/rooms">Rooms</Link></li>
 			<li><Link to="/login">Login</Link></li>
 			<li><Link to="/register">Register</Link></li>
+			<li><Link to="/logout">Logout</Link></li>
 			<li><Link to="/profile">Profile</Link></li>
 		</ul>
 	</header>
@@ -42,5 +43,20 @@
 		margin: 0;
 		display: flex;
 		gap: 2rem;
+		list-style-type: none;
+	}
+
+	header {
+		height: 50px;
+		background-color: rgb(248, 248, 248);
+		border-bottom: 1px solid lightgray;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	main {
+		max-width: 900px;
+		margin: auto;
 	}
 </style>

@@ -8,6 +8,7 @@ import state from '../lib/state.js'
 
 export default (req, res, next) => {
     if (res.body.token && typeof res.body.token === 'string') state.update({ token: res.body.token })
+    if (res.body.message && res.body.message == 'Logged out') state.update({ token: null })
 
     res.end()
 }

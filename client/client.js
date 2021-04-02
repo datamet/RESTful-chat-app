@@ -6,6 +6,7 @@
 import endpoints from './api/endpoints.js'
 import api from './lib/api.js'
 import config from './lib/config.js'
+import state from './lib/config'
 
 import auth from './middleware/authenticator.js'
 import contentType from './middleware/contentType.js'
@@ -27,6 +28,7 @@ export default (httpModule) => {
 
     // setting up server connecion with rest interactor
     const client = endpoints(rest)
+    client.state = state
 
     return client
 }
