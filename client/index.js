@@ -25,4 +25,6 @@ const server = endpoints(rest)
 
 console.log(await server.register("mats", "password1"))
 console.log(await server.login("mats", "password1"))
-console.log(await server.getUsers())
+const res = await server.getUsers()
+console.log(res.body)
+console.log(await server.getUser(res.body.users[0].id))

@@ -8,7 +8,7 @@ const routes = {
     // User routes
     register: (username, password) => server.post('/api/users', { body: { username, password }}),
     getUsers: () => server.get('/api/users'),
-    // router.get('/user/:userID', users.getUser)
+    getUser: (userID) => server.get(`/api/user/${userID}`),
     // router.delete('/user/:userID', users.deleteUser)
 
     // // Token routes
