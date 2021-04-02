@@ -8,6 +8,7 @@ import config from '../lib/config.js'
 const { env, host, port } = config
 let http
 
+// Uses the browsers built in fetch api
 const browserFetch = async (req, res, next) => {
     try {
         const { path, method, headers, body } = req
@@ -32,6 +33,7 @@ const browserFetch = async (req, res, next) => {
     }
 }
 
+// Uses the http module from the node api.
 const nodeFetch = async (req, res, next) => {
     try {
         const { path, method, headers, body } = req
@@ -76,4 +78,8 @@ const nodeFetch = async (req, res, next) => {
     }
 } 
 
+// Returns function that uses the browsers built in fetch module if running in the browser,
+// otherwise returns a function that takes node's http module as an argument to
+// be able to send http requests via node's api.
+// This had to be done because dynamic imports, still are under development
 export default env === 'browser' ? () => browserFetch : (httpModule) => { http = httpModule;  return nodeFetch }
