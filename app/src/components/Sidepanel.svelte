@@ -43,7 +43,9 @@
         {/each}
         <button class="create-room">Create Room +</button>
     {:else}
-        <p>Log in to view rooms...</p>
+        <div class="login-message">
+            <p>Log in to view rooms...</p>
+        </div>
     {/if}
 </aside>
 
@@ -105,5 +107,12 @@
 
     button:focus {
         outline: none;
+    }
+
+    .login-message {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 </style>
