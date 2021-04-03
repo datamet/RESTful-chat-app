@@ -40,15 +40,41 @@ npm i
 npm run start
 ```
 
-*NB:* Make sure you are using the LTS version of node: `v14.16.0`.
-
 <br>
 
 **Client:**
 
-Instructions will come
+Development mode:
+- Connects to host `localhost` (or host assigned by environment variable `HOST`)
+- Connects to port `5000` (or port assigned by environment variable `PORT`)
+- Prints debug messages to the console
+- Restarts the client whenever a client file is saved
+
+To run the client in development mode:
+```
+cd client
+npm i
+npm run dev
+```
 
 <br>
+
+Production mode:
+- Connects to host `localhost` (or host assigned by environment variable `HOST`)
+- Connects to port `8080` (or port assigned by environment variable `PORT`)
+- Does not print debug messages
+
+To run server in production mode:
+```
+cd client
+npm i
+npm run start
+```
+
+*NB:* Make sure you are using the LTS version of node: `v14.16.0`.
+
+<br>
+
 
 ## API refrence
 
