@@ -4,7 +4,7 @@
   "description": "RESTful chat app",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon --delay 500ms index.js",
+    "dev": "NODE_ENV=development nodemon --delay 1000ms index.js",
     "start": "node index.js",
     "test": "NODE_ENV=development jest"
   },

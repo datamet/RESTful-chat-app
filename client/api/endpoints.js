@@ -20,14 +20,14 @@ const routes = {
     // // Chatroom routes
     createRoom: (name) => server.post('/api/rooms', { body: { name }}),
     getRooms: () => server.get('/api/rooms'),
-    // router.get('/room/:roomID', rooms.getRoom)
-    // router.delete('/room/:roomID', rooms.deleteRoom)
+    getRoom: (roomID) => server.get(`/api/room/${roomID}`),
+    deleteRoom: (roomID) => router.delete(`/api/room/${roomID}`),
 
-    joinRoom: (roomID, userID) => server.post(`/api/room/${roomID}/users`, { body: { userID } })
-    // router.get('/room/:roomID/users', rooms.getUsersInRoom)
+    joinRoom: (roomID, user) => server.post(`/api/room/${roomID}/users`, { body: { user } }),
+    getUsersInRoom: (roomID) => server.get(`/api/room/${roomID}/users`),
 
-    // router.get('/room/:roomID/messages', rooms.getMessages)
-    // router.post('/room/:roomID/:userID/messages', rooms.postMessage)
+    getMessages: (roomID) => router.get(`/api/room/${roomID}/messages`),
+    postMessage: (roomID, message) => router.post(`/api/room/${roomID}/messages`, { body: { message } }),
     // router.get('/room/:roomID/:userID/messages', rooms.getMessagesFromUser)
 }
 
