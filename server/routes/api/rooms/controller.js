@@ -29,17 +29,20 @@ const getRoom = async (req, res, next) => {
 const deleteRoom = async (req, res, next) => {
     const roomID = req.params.roomID
     validator.admin(req.user, roomID)
-    
+
     await db.deleteRoom(roomID)
     res.json({ message: "Room deleted" })
 }
 
 const addUserToRoom = async (req, res, next) => {
-    throw error.internal()
+    await db.addUserToRoom(req.params.roomID, req.body.user)
+    await db.addRoomToUser(req.params.roomID, req.body.user)
+    res.json({ message: "User added to room" })
 }
 
 const getUsersInRoom = async (req, res, next) => {
-    throw error.internal()
+    const users = await db.getUsersInRoom(req.params.roomID)
+    res.json({ user: users })
 }
 
 const getMessages = async (req, res, next) => {
@@ -54,14 +57,14 @@ const getMessagesFromUser = async (req, res, next) => {
     throw error.internal()
 }
 
-module.exports = { 
-    createRoom, 
-    getRooms, 
-    getRoom, 
-    deleteRoom, 
-    addUserToRoom, 
-    getUsersInRoom, 
-    getMessages, 
-    postMessage, 
-    getMessagesFromUser 
+module.exports = {
+    createRoom,
+    getRooms,
+    getRoom,
+    deleteRoom,
+    addUserToRoom,
+    getUsersInRoom,
+    getMessages,
+    postMessage,
+    getMessagesFromUser
 }

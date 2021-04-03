@@ -73,6 +73,10 @@ class Gateway {
         throw error.internal()
     }
 
+    getUsersInRoom(roomID){
+        throw error.internal()
+    }
+
 }
 
 module.exports = Gateway

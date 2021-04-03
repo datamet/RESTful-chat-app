@@ -46,12 +46,12 @@ class InMemoryGateway extends Gateway {
         return usersList
     }
 
-    getUserByName(username){
+    getUserByName(username) {
         const userID = userIDs.get(username)
         if (userID) {
             const user = users.get(userID)
 
-            if(user) {
+            if (user) {
                 return user
             }
         }
@@ -72,14 +72,14 @@ class InMemoryGateway extends Gateway {
         for (const tokenID of user.tokens) {
             tokens.delete(tokenID)
         }
-        
+
         userIDs.delete(user.username)
         users.delete(userID)
     }
 
     storeToken(token) {
         tokens.set(token.id, token)
-        
+
         const user = this.getUserById(token.userID)
         const userTokens = user.tokens ? user.tokens : []
         userTokens.push(token.id)
@@ -134,7 +134,7 @@ class InMemoryGateway extends Gateway {
     getRoomById(roomID) {
         const room = rooms.get(roomID)
         if (room) return room
-        else throw error.custom(404, "Room not found") 
+        else throw error.custom(404, "Room not found")
     }
 
     getRooms() {
@@ -165,7 +165,7 @@ class InMemoryGateway extends Gateway {
 
             // delete room
             rooms.delete(roomID)
-            return           
+            return
         }
         throw error.notfound()
     }
@@ -184,6 +184,10 @@ class InMemoryGateway extends Gateway {
         rooms.push(roomID)
         user.rooms = rooms
         users.set(userID, user)
+    }
+
+    getUsersInRoom(roomID) {
+        return rooms.get(roomID).users
     }
 
 }
