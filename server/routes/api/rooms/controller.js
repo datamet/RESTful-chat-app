@@ -35,13 +35,13 @@ const deleteRoom = async (req, res, next) => {
 }
 
 const addUserToRoom = async (req, res, next) => {
-    await db.addUserToRoom(req.body.roomID, req.body.user)
-    await db.addRoomToUser(req.body.roomID, req.body.user)
+    await db.addUserToRoom(req.params.roomID, req.body.user)
+    await db.addRoomToUser(req.params.roomID, req.body.user)
     res.json({ message: "User added to room" })
 }
 
 const getUsersInRoom = async (req, res, next) => {
-    const users = await db.getUsersInRoom(req.body.roomID)
+    const users = await db.getUsersInRoom(req.params.roomID)
     res.json({ user: users })
 }
 

@@ -187,14 +187,7 @@ class InMemoryGateway extends Gateway {
     }
 
     getUsersInRoom(roomID) {
-        const users = [];
-
-        for (const room of rooms) {
-            if (room.roomID === roomID) {
-                return room.users
-            }
-        }
-        throw error.notfound()
+        return rooms.get(roomID).users
     }
 
 }
