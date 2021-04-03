@@ -6,7 +6,7 @@
 import endpoints from './api/endpoints.js'
 import api from './lib/api.js'
 import config from './lib/config.js'
-import state from './lib/config'
+import state from './lib/state.js'
 
 import auth from './middleware/authenticator.js'
 import contentType from './middleware/contentType.js'

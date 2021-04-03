@@ -12,18 +12,18 @@ const routes = {
     // router.delete('/user/:userID', users.deleteUser)
 
     // // Token routes
-    login: (username, password) => server.post('/api/tokens', { body: { username, password }})
+    login: (username, password) => server.post('/api/tokens', { body: { username, password }}),
     // router.get('/token/:tokenID', tokens.getToken)
     // router.put('/token/:tokenID', tokens.extendToken)
-    // router.delete('/token/:tokenID', tokens.deleteToken)
+    logout: (tokenID) => server.delete(`/api/token/${tokenID}`),
 
     // // Chatroom routes
     // router.post('/rooms', rooms.createRoom)
-    // router.get('/rooms', rooms.getRooms)
+    getRooms: () => server.get('/api/rooms'),
     // router.get('/room/:roomID', rooms.getRoom)
     // router.delete('/room/:roomID', rooms.deleteRoom)
 
-    // router.post('/room/:roomID/users', rooms.addUserToRoom)
+    joinRoom: (roomID, userID) => server.post(`/api/room/${roomID}/users`, { body: { userID } })
     // router.get('/room/:roomID/users', rooms.getUsersInRoom)
 
     // router.get('/room/:roomID/messages', rooms.getMessages)

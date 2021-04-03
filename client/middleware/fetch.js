@@ -29,7 +29,9 @@ const browserFetch = async (req, res, next) => {
         next()
     }
     catch(err) {
-        res.err("Could not connect to server")
+        res.status = 408
+        res.body = { error: "Could not connect to the server" }
+        next()
     }
 }
 
@@ -74,7 +76,9 @@ const nodeFetch = async (req, res, next) => {
         request.end()
     }
     catch (err) {
-        res.err("Could not connect to the server")
+        res.status = 408
+        res.body = { error: "Could not connect to the server" }
+        next()
     }
 } 
 

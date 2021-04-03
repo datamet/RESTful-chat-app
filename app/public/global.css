@@ -5,18 +5,17 @@
 }
 
 html {
-	font-size: 62.5%; /* (1) */
-	height: 100%; /* (2) */
-	width: 100%; /* (2) */
-	overflow-y: scroll; /* (3) */
+	font-size: 62.5%;
+	height: 100%;
+	width: 100%;
 }
 
 body {
-	box-sizing: border-box; /* (1) */
-	margin: 0; /* (2) */
-	font-size: 1.6rem; /* (4) */
-	font-family: sans-serif; /* (5) */
-	color: #333; /* (6) */
+	box-sizing: border-box;
+	margin: 0;
+	font-size: 1.6rem;
+	font-family: sans-serif;
+	color: #333;
 }
 
 a {
