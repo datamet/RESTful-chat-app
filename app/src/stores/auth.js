@@ -16,7 +16,7 @@ function createAuth() {
 export const auth = createAuth();
 
 function createUser() {
-    const token = localStorage.getItem('auth') ? localStorage.getItem('auth') : ''
+    const token = localStorage.getItem('user') ? localStorage.getItem('user') : ''
 	const { subscribe, set, update } = writable(token);
 
 	return {

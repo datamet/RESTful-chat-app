@@ -1,9 +1,11 @@
 <script>
+	import { room } from '../stores/activeRoom.js'
     import ChatIcon from '../assets/chat.svelte'
     import DropdownForm from './DropdownForm.svelte'
     import { auth } from '../stores/auth.js'
     import { getContext } from 'svelte'
     import Button from './Button.svelte'
+    import Userinfo from './Userinfo.svelte'
 
     const client = getContext('client')
 
@@ -21,7 +23,7 @@
     </div>
 
     <div class="room-title">
-        <h2>Mats room 2</h2>
+        <h2>{ $room ? $room.name : '' }</h2>
     </div>
 
     <nav>
@@ -30,6 +32,7 @@
                 <li><DropdownForm action="Login" /></li>
                 <li><DropdownForm action="Register"/></li>
             {:else}
+                <li><Userinfo /></li>
                 <li><Button action={logout}>Logout</Button></li>
             {/if}
         </ul>
@@ -69,6 +72,7 @@
 
     ul {
         display: flex;
+        align-items: center;
         list-style-type: none;
         margin: 0;
         padding: 0;
