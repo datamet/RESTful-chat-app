@@ -45,11 +45,11 @@ const getUsersInRoom = async (req, res, next) => {
     res.json({ user: users })
 }
 
-const getMessages = async (req, res, next) => {
+const postMessage = async (req, res, next) => {
     throw error.internal()
 }
 
-const postMessage = async (req, res, next) => {
+const getMessages = async (req, res, next) => {
     throw error.internal()
 }
 

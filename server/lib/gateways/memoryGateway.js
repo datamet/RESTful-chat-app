@@ -187,7 +187,10 @@ class InMemoryGateway extends Gateway {
     }
 
     getUsersInRoom(roomID) {
-        return rooms.get(roomID).users
+        const userIDs = rooms.get(roomID).users
+        return userIDs
+                    .map(id => this.getUserById(id))
+                    .map(user => { return { id: user.id, username: user.username } })
     }
 
 }
