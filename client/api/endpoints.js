@@ -21,13 +21,13 @@ const routes = {
     createRoom: (name) => server.post('/api/rooms', { body: { name }}),
     getRooms: () => server.get('/api/rooms'),
     getRoom: (roomID) => server.get(`/api/room/${roomID}`),
-    deleteRoom: (roomID) => router.delete(`/api/room/${roomID}`),
+    deleteRoom: (roomID) => server.delete(`/api/room/${roomID}`),
 
     joinRoom: (roomID, user) => server.post(`/api/room/${roomID}/users`, { body: { user } }),
     getUsersInRoom: (roomID) => server.get(`/api/room/${roomID}/users`),
 
-    getMessages: (roomID) => router.get(`/api/room/${roomID}/messages`),
-    postMessage: (roomID, message) => router.post(`/api/room/${roomID}/messages`, { body: { message } }),
+    getMessages: (roomID) => server.get(`/api/room/${roomID}/messages`),
+    postMessage: (roomID, userID, message) => server.post(`/api/room/${roomID}/${userID}/messages`, { body: { message } }),
     // router.get('/room/:roomID/:userID/messages', rooms.getMessagesFromUser)
 }
 

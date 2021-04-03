@@ -39,6 +39,7 @@ const deleteRoom = async (req, res, next) => {
 }
 
 const addUserToRoom = async (req, res, next) => {
+    console.log(req.body)
     await db.addUserToRoom(req.params.roomID, req.body.user)
     await db.addRoomToUser(req.params.roomID, req.body.user)
     res.json({ message: "Added user to room" })

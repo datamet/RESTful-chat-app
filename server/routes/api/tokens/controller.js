@@ -27,7 +27,7 @@ const createToken = async (req, res, next) => {
     if (user.hash === passwordHash) {
         const token = auth.createToken(user.id)
         await db.storeToken(token)
-        res.json({ token : token.id, message : "Logged in"})
+        res.json({ token : token.id, message : "Logged in", userID: token.userID })
         return
     }
     next(error.credentials())
