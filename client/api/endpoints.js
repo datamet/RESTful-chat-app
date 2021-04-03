@@ -18,7 +18,7 @@ const routes = {
     logout: (tokenID) => server.delete(`/api/token/${tokenID}`),
 
     // // Chatroom routes
-    // router.post('/rooms', rooms.createRoom)
+    createRoom: (name) => server.post('/api/rooms', { body: { name }}),
     getRooms: () => server.get('/api/rooms'),
     // router.get('/room/:roomID', rooms.getRoom)
     // router.delete('/room/:roomID', rooms.deleteRoom)
