@@ -4,8 +4,15 @@ const db = require('../lib/db')
 // Runs on evevery request to check if the user is authenticated
 const auth_handler = async (req, res, next) => {
     try {
-        // Exception for create user and login route
-        if ((req.path === '/api/users' || req.path === '/api/tokens') && req.method === 'POST') {
+        // Exception for all paths that are not to /api.
+        if (req.path.lastIndexOf('/api', 0) === 0) {
+            // Exception for /api/users and /api/tokens
+            if (((req.path === '/api/users' || req.path === '/api/tokens') && req.method === 'POST')) {
+                next()
+                return
+            }
+        }
+        else {
             next()
             return
         }

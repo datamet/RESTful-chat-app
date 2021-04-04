@@ -7,10 +7,11 @@ let env
 if(typeof process === 'object') env = 'node'
 else env = 'browser'
 
-const dev = {
+const config = {
     env,
+    push: env === 'node' ? process.env.PUSH || false : false,
     host: env === 'node' ? process.env.HOST || 'localhost' : 'localhost',
     port: env === 'node' ? process.env.PORT || 5000 : 5000
 }
 
-export default dev
+export default config

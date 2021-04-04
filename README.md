@@ -17,7 +17,7 @@ Development mode:
 - Runs on port `5000` (or port assigned by environment variable `PORT`)
 - Prints debug messages to the console
 - Restarts the server whenever a project file is saved
-- Uses an in-memory store for easier testing
+- Uses an in-memory store
 
 To run the server in development mode:
 ```
@@ -31,7 +31,7 @@ npm run dev
 Production mode:
 - Runs on port `8080` (or port assigned by environment variable `PORT`)
 - Does not print debug messages
-- Uses a persistant file system storage option
+- Uses an in-memory store
 
 To run server in production mode:
 ```
@@ -45,8 +45,9 @@ npm run start
 **Client:**
 
 Development mode:
-- Connects to host `localhost` (or host assigned by environment variable `HOST`)
-- Connects to port `5000` (or port assigned by environment variable `PORT`)
+- Connects to host `localhost`
+- Connects to port `5000`
+- Client server runs at port `5500`
 - Prints debug messages to the console
 - Restarts the client whenever a client file is saved
 
@@ -57,19 +58,46 @@ npm i
 npm run dev
 ```
 
+Now, open your browser at `localhost:5500` to interact with the client.
+
 <br>
 
 Production mode:
-- Connects to host `localhost` (or host assigned by environment variable `HOST`)
-- Connects to port `8080` (or port assigned by environment variable `PORT`)
-- Does not print debug messages
+ - The client runs packaged with the server in production mode. Just go to the `/` route to get the client.
+ - If you want to run multiple clients logged in as different users at the same, you can start up multiple dev clients on different ports. Example below.
+ 
+Example of multiple UI clients:
+```
+cd app
 
-To run server in production mode:
+// Do these in separate terminal windows
+npm run dev --port 5001
+npm run dev --port 5002
+npm run dev --port 5003
+npm run dev --port 5004
+...
 ```
-cd client
-npm i
-npm run start
+
+<br>
+
+**Bots:**
+
+The bots can be added to rooms from the client UI or you can start them individually from the terminal
+
+Bots in the terminal:
+- Connects to host `localhost` (or port assigned by environment variable `HOST`)
+- Connects to port `8080` (or port assigned by environment variable `PORT`)
+- Picks random username from a pool of names
+- Will join the `bot` room or create one if it doesn't exist yet.
+- Posts/responds to messages
+
+To run a bot from the terminal:
 ```
+HOST=localhost PORT=8080 node bot.js
+```
+
+Bots from UI:
+- Go to the client in your browser. Log in and create a room and select it. Then add a bot to the room by the panel on the right hand side.
 
 *NB:* Make sure you are using the LTS version of node: `v14.16.0`.
 

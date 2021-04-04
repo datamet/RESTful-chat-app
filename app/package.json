@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "start": "sirv public --single --host"
+    "dev": "rollup -c -w --port 5500",
+    "start": "sirv public --single --port 5500",
+    "host": "sirv public --single --host --port 5500"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",

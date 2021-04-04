@@ -10,10 +10,11 @@
 	import Sidepanel from './components/Sidepanel.svelte'
 	import Chat from './components/Chat.svelte'
 
-	export let host, port
 	export let url = ""
+	export let 	host = window.location.hostname,
+				port = window.location.port
 
-	const client = connection()
+	const client = connection({ host, port })
 	setContext('client', client)
 
 	let unsubscribe

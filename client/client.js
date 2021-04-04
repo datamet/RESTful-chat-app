@@ -14,9 +14,12 @@ import contentType from './middleware/contentType.js'
 import fetch from './middleware/fetch.js'
 import responseHandler from './middleware/responseHandler.js'
 
-export default (httpModule) => {
+export default (options, httpModule) => {
     // Throws error if http module not specified and running in node
     if (!httpModule && config.env === 'node') throw new Error("Http module is required as input when running in node")
+    
+    // Adding passed in config options to config file
+    if (typeof options === 'object') Object.assign(config, options)
 
     // Creating rest interactor
     const rest = api()
@@ -24,7 +27,7 @@ export default (httpModule) => {
     // Telling what the rest interactor should use each time a request is sent
     rest.use(auth)
     rest.use(contentType)
-    rest.use(fetch(httpModule))
+    rest.use(fetch(config, httpModule))
     rest.use(responseHandler)
 
     // setting up server connecion with rest interactor

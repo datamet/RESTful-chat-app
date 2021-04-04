@@ -4,7 +4,7 @@
 
 const dev = {
     mode: 'development',
-    host: process.env.PORT || 'localhost',
+    host: process.env.HOST || 'localhost',
     port: process.env.PORT || 5000,
     debug: true,
     tokenExpiration: 1000 * 60 * 60
@@ -12,7 +12,7 @@ const dev = {
 
 const prod = {
     mode: 'production',
-    host: process.env.PORT || 'localhost',
+    host: process.env.HOST || 'localhost',
     port: process.env.PORT || 8080,
     debug: false,
     tokenExpiration: 1000 * 60 * 60 * 24

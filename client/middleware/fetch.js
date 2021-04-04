@@ -2,17 +2,15 @@
  * Fetching from server
  */
 
-// Imports
-import config from '../lib/config.js'
+import environment from '../lib/config.js'
 
-const { env, host, port } = config
-let http
+let config, http
 
 // Uses the browsers built in fetch api
 const browserFetch = async (req, res, next) => {
     try {
         const { path, method, headers, body } = req
-        const response = await fetch(`http://${host}:${port}${path}`, {
+        const response = await fetch(`http://${config.host}:${config.port}${path}`, {
             method, 
             headers, 
             body: method === 'POST' || method == 'PUT' ? JSON.stringify(body) : null
@@ -42,8 +40,8 @@ const nodeFetch = async (req, res, next) => {
         const data = JSON.stringify(body)
         
         const options = {
-            hostname: host,
-            port,
+            hostname: config.host,
+            port: config.port,
             path,
             method,
             headers: {
@@ -86,4 +84,8 @@ const nodeFetch = async (req, res, next) => {
 // otherwise returns a function that takes node's http module as an argument to
 // be able to send http requests via node's api.
 // This had to be done because dynamic imports, still are under development
-export default env === 'browser' ? () => browserFetch : (httpModule) => { http = httpModule;  return nodeFetch }
+export default environment.env === 'browser' ? (options) => { config = options ; return browserFetch} : (options, httpModule) => { 
+    http = httpModule
+    config = options
+    return nodeFetch 
+}
