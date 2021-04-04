@@ -1,16 +1,25 @@
 <script>
     import SendIcon from '../assets/send.svelte'
     import { user } from '../stores/auth.js'
-    import { getContext, onMount } from 'svelte'
+    import { getContext, onMount, onDestroy } from 'svelte'
     import { room } from '../stores/activeRoom.js'
 
     let messages = []
     let newMessage = ''
     let client = getContext('client')
+    let stopFresh
 
     const getMessages = async () => {
         const res = await client.getMessages($room.id)
         if (res.body.messages) messages = res.body.messages
+    }
+
+    const freshMessages = async () => {
+        const updateFeed = (res) => {
+            if (res.body.messages) messages = res.body.messages
+        }
+
+        stopFresh = client.fresh(500, () => client.getMessages($room.id), updateFeed)
     }
 
     const sendMessage = async () => {
@@ -27,7 +36,11 @@
     }
 
     onMount(() => {
-        getMessages()
+        freshMessages()
+    })
+
+    onDestroy(() => {
+        stopFresh()
     })
 
 </script>
