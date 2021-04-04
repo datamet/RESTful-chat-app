@@ -64,19 +64,7 @@ Now, open your browser at `localhost:5500` to interact with the client.
 
 Production mode:
  - The client runs packaged with the server in production mode. Just go to the `/` route to get the client.
- - If you want to run multiple clients logged in as different users at the same, you can start up multiple dev clients on different ports. Example below.
- 
-Example of multiple UI clients:
-```
-cd app
-
-// Do these in separate terminal windows
-npm run dev --port 5001
-npm run dev --port 5002
-npm run dev --port 5003
-npm run dev --port 5004
-...
-```
+ - To run a second client at the same time you have to run it in another browser or on another device as the client uses the `localStorage` api to keep logged when the browser is refreshed.
 
 <br>
 
