@@ -37,24 +37,31 @@ const deleteRoom = async (req, res, next) => {
 const addUserToRoom = async (req, res, next) => {
     await db.addUserToRoom(req.params.roomID, req.body.user)
     await db.addRoomToUser(req.params.roomID, req.body.user)
-    res.json({ message: "User added to room" })
+    res.json({ message: "Added user to room" })
 }
 
 const getUsersInRoom = async (req, res, next) => {
+    validator.user(req.user, req.params.roomID)
     const users = await db.getUsersInRoom(req.params.roomID)
-    res.json({ user: users })
-}
-
-const getMessages = async (req, res, next) => {
-    throw error.internal()
+    res.json({ users })
 }
 
 const postMessage = async (req, res, next) => {
-    throw error.internal()
+    validator.user(req.user, req.params.roomID)
+    await db.postMessage(req.user.username, req.params.roomID, req.body.message)
+    res.json({ message: "Message sent" })
+}
+
+const getMessages = async (req, res, next) => {
+    validator.user(req.user, req.params.roomID)
+    const messages = await db.getMessages(req.params.roomID)
+    res.json({ messages })
 }
 
 const getMessagesFromUser = async (req, res, next) => {
-    throw error.internal()
+    validator.user(req.user, req.params.roomID)
+    const messages = await db.getMessagesFromUser(req.params.roomID, req.params.userID)
+    res.json({ messages })
 }
 
 module.exports = {
