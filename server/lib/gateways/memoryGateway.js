@@ -118,7 +118,8 @@ class InMemoryGateway extends Gateway {
             id: roomID,
             name,
             admin: adminID,
-            users: [adminID]
+            users: [adminID],
+            messages: []
         }
 
         rooms.set(roomID, newRoom)
@@ -191,6 +192,24 @@ class InMemoryGateway extends Gateway {
         return userIDs
                     .map(id => this.getUserById(id))
                     .map(user => { return { id: user.id, username: user.username } })
+    }
+
+    postMessage(sender, roomID, message){
+        const room = rooms.get(roomID)
+        const new_message = {
+            sender,
+            message
+        }
+        room.messages.push(new_message);
+    }
+
+    getMessages(roomID){
+        return rooms.get(roomID).messages;
+    }
+
+    getMessagesFromUser(roomID, userID){
+        const messages = this.getMessages(roomID);
+        return messages.filter(msg => msg.sender === this.getUserById(userID).username ? true : false)
     }
 
 }

@@ -22,4 +22,10 @@ validator.admin = (user, roomID) => {
     throw error.unauthorized()
 }
 
+// Checks if user is admin of room
+validator.user = (user, roomID) => {
+    if (user.rooms.indexOf(roomID) !== -1) return user
+    throw error.unauthorized()
+}
+
 module.exports = validator
