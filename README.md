@@ -64,7 +64,7 @@ Now, open your browser at `localhost:5500` to interact with the client.
 
 Production mode:
  - The client runs packaged with the server in production mode. Just go to the `/` route to get the client.
- - To run a second client at the same time you have to run it in another browser or on another device as the client uses the `localStorage` api to keep logged when the browser is refreshed.
+ - To run a second client at the same time, logged in as a different user, you have to run it in another browser or on another device as the client uses the `localStorage` api to keep logged when the browser is refreshed.
 
 <br>
 
