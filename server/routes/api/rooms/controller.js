@@ -17,7 +17,11 @@ const createRoom = async (req, res, next) => {
 
 const getRooms = async (req, res, next) => {
     const rooms = await db.getRooms()
-    const reducedRooms = rooms.map(({ id, name }) => { return { id, name } })
+    const reducedRooms = rooms.map(({ id, name, users }) => {
+        let joined = false
+        if (users.indexOf(req.user.id) > -1) joined = true
+        return { id, name, joined }
+    })
     res.json({ rooms: reducedRooms })
 }
 
@@ -35,6 +39,7 @@ const deleteRoom = async (req, res, next) => {
 }
 
 const addUserToRoom = async (req, res, next) => {
+    console.log(req.body)
     await db.addUserToRoom(req.params.roomID, req.body.user)
     await db.addRoomToUser(req.params.roomID, req.body.user)
     res.json({ message: "Added user to room" })

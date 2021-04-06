@@ -4,7 +4,7 @@
   "description": "RESTful chat app",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon index.js",
+    "dev": "NODE_ENV=development nodemon --delay 1000ms index.js",
     "start": "node index.js",
     "test": "NODE_ENV=development jest"
   },
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/matssom/RESTful-chat-app#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1"
   },
   "devDependencies": {

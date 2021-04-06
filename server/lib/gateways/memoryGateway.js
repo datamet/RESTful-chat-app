@@ -62,7 +62,7 @@ class InMemoryGateway extends Gateway {
     getUserById(userID) {
         const user = users.get(userID)
         if (user) {
-            return user
+            return {...user}
         }
         else throw error.notfound()
     }
@@ -103,6 +103,7 @@ class InMemoryGateway extends Gateway {
         if (token) {
             const user = this.getUserById(token.userID)
             if (user) {
+                console.log(user)
                 const i = user.tokens.indexOf(tokenID)
                 user.tokens.splice(i, 1)
                 users.set(token.userID, user)

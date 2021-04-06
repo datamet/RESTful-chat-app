@@ -1,30 +1,65 @@
 <script>
-	export let name;
+	import { auth, user } from './stores/auth.js'
+	import { room } from './stores/activeRoom.js'
+	import { onDestroy, onMount } from 'svelte'
+	import { Router, Route, Link } from 'svelte-routing'
+	import { setContext } from 'svelte'
+	import connection from '../../client/client.js'
+
+	import Header from './components/Header.svelte'
+	import Sidepanel from './components/Sidepanel.svelte'
+	import Chat from './components/Chat.svelte'
+
+	export let host, port
+	export let url = ""
+
+	const client = connection()
+	setContext('client', client)
+
+	let unsubscribe
+	if ($auth) client.state.update({ token: $auth })
+	if ($user) client.state.update({ userID: $user })
+
+	onMount(() => {
+		unsubscribe = client.state.subscribe((state) => {
+			if (state.token && typeof state.token === 'string') auth.set(state.token)
+			else {
+				auth.set('')
+				room.set(null)
+			}
+			if (state.userID && typeof state.userID === 'string') user.set(state.userID)
+			else user.set('')
+		})
+	})
+
+	onDestroy(() => {
+		unsubscribe()
+	})
+
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
+<Router {url}>		
+	<Header />
+
+	<div class="content">
+		<Sidepanel />
+
+		<main>
+			<Chat />
+		</main>
+	</div>
+</Router>
 
 <style>
+	.content {
+		display: flex;
+		height: calc(100vh - 6rem);
+		width: 100%;
+		justify-items: stretch;
+	}
+
 	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
+		height: 100%;
+		width: 100%
 	}
 </style>
