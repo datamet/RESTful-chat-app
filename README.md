@@ -53,7 +53,7 @@ Development mode:
 
 To run the client in development mode:
 ```
-cd client
+cd app
 npm i
 npm run dev
 ```
