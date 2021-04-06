@@ -83,7 +83,16 @@ HOST=localhost PORT=8080 node bot.js
 ```
 
 Bots from UI:
-- Go to the client in your browser. Log in and create a room and select it. Then add a bot to the room by the panel on the right hand side.
+- Picks random username from a pool of names
+- Will join the room you create them in
+- Posts/responds to messages in that room
+
+To create bot in UI:
+- Go to the client in your browser. 
+- Log in, create a room and select it from the rooms list. 
+- Then add a bot to the room by the panel on the right hand side.
+
+<br>
 
 *NB:* Make sure you are using the LTS version of node: `v14.16.0`.
 
