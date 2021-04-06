@@ -134,7 +134,7 @@ Token : "%Auth Token%"
 
 <br>
 
-### `GET - /api/users/:userID`
+### `GET - /api/user/:userID`
 
 Returns a user
 
@@ -158,7 +158,7 @@ Token : "%Auth Token%"
 
 <br>
 
-### `DELETE - /api/users/:userID`
+### `DELETE - /api/user/:userID`
 
 Deletes a user specified by the userID
 
@@ -206,7 +206,7 @@ Content-Type : application/json
 
 <br>
 
-### `GET - /api/tokens/:tokenID`
+### `GET - /api/token/:tokenID`
 
 Returns token
 
@@ -229,7 +229,7 @@ Token : "%Auth Token%"
 
 <br>
 
-### `PUT - /api/tokens/:tokenID`
+### `PUT - /api/token/:tokenID`
 
 Extends token
 
@@ -248,7 +248,7 @@ Token : "%Auth Token%"
 
 <br>
 
-### `DELETE - /api/tokens/:tokenID`
+### `DELETE - /api/token/:tokenID`
 
 Deletes and invalidates token
 
@@ -319,7 +319,7 @@ Token : "%Auth Token%"
 
 <br>
 
-### `GET - /api/rooms/:roomID`
+### `GET - /api/room/:roomID`
 
 Get room
 
@@ -331,7 +331,7 @@ Token : "%Auth Token%"
 
 <br>
 
-### `DELETE - /api/rooms/:roomID`
+### `DELETE - /api/room/:roomID`
 
 Delete room
 
@@ -350,7 +350,7 @@ Token : %tokenID%
 
 <br>
 
-### `POST - /api/rooms/:roomID/users`
+### `POST - /api/room/:roomID/users`
 
 Add user to room
 
@@ -376,7 +376,7 @@ Token : %tokenID%
 
 <br>
 
-### `GET - /api/rooms/:roomID/users`
+### `GET - /api/room/:roomID/users`
 
 Get all users in room
 
@@ -400,7 +400,7 @@ Token : "%Auth Token%"
 
 <br>
 
-### `GET - /api/rooms/:roomID/messages`
+### `GET - /api/room/:roomID/messages`
 
 Get all messages in room
 
@@ -425,7 +425,7 @@ Token : %tokenID%
 
 <br>
 
-### `GET - /api/rooms/:roomID/:userID/messages`
+### `GET - /api/room/:roomID/:userID/messages`
 
 Get all messages by user in room
 
@@ -450,7 +450,7 @@ Token : %tokenID%
 
 <br>
 
-### `POST - /api/rooms/:roomID/:userID/messages`
+### `POST - /api/room/:roomID/:userID/messages`
 
 Add message to room
 
