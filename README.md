@@ -70,8 +70,6 @@ Production mode:
 
 **Bots:**
 
-The bots can be added to rooms from the client UI or you can start them individually from the terminal
-
 Bots in the terminal:
 - Connects to host `localhost` (or port assigned by environment variable `HOST`)
 - Connects to port `8080` (or port assigned by environment variable `PORT`)
