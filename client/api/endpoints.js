@@ -10,14 +10,14 @@ const routes = {
     getUsers: () => server.get('/api/users'),
     getUser: (userID) => server.get(`/api/user/${userID}`),
     // router.delete('/user/:userID', users.deleteUser)
-    deleteUser: (userID) => server.delete(getUser),
+    deleteUser: (userID) => server.delete(`/api/user/${userID}`),
 
     // // Token routes
     login: (username, password) => server.post('/api/tokens', { body: { username, password }}),
     // router.get('/token/:tokenID', tokens.getToken)
-
+    getTokens: () => server.get('/api/tokens'),
     // router.put('/token/:tokenID', tokens.extendToken)
-
+    getToken: (tokenID) => server.get(`/api/token/${tokenID}`),
     logout: (tokenID) => server.delete(`/api/token/${tokenID}`),
 
     // // Chatroom routes
@@ -32,7 +32,7 @@ const routes = {
     getMessages: (roomID) => server.get(`/api/room/${roomID}/messages`),
     postMessage: (roomID, userID, message) => server.post(`/api/room/${roomID}/${userID}/messages`, { body: { message } }),
     // router.get('/room/:roomID/:userID/messages', rooms.getMessagesFromUser)
-    
+
 }
 
 export default (interactor) => {
