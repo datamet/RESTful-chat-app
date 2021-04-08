@@ -1,28 +1,64 @@
 import { randomebot } from "./service.js"
 
-class Bot{
+class Bot {
 
     client
-    bot
+    options
+    username
+    password
 
-    constructor(client){
+
+    constructor(client, options) {
+        const { username, password } = randomebot();
         this.client = client;
-        bot = randomebot();
+        this.options = options;
+        this.username = username;
+        this.password = password;
     }
 
-    loggin(){
-        
+    start() {
+        this.loggin();
     }
 
-    logout(){
+    async loggin() {
+        await this.client.loggin(this.username, this.password);
+    }
+
+    async joinRoom() {
+        const { userID } = this.client.state.get();
+        const roomToJoin = options.room ? this.options.room : "Botroom";
+
+        const res = await this.client.getRooms()
+        for (const room of res.rooms) {
+            if (room.name === roomToJoin) {
+                await this.client.joinRoom(room.id, userID);
+                return;
+            }
+        }
+
+        await this.client.createRoom(roomToJoin);
+        const res =  await this.client.getRooms()
+
+        for(const room of res.rooms){
+            if(room.name === roomToJoin){
+                await this.client.joinRoom(room.id, userID);
+            }
+        }
+    }
+
+    createRoom() {
 
     }
 
-    sendMessage(){
+    sendMessage() {
+
+    }
+
+    logout() {
 
     }
 }
 
-export default (client) => {
+export default (client, options) => {
     return new Bot(client)
 }
