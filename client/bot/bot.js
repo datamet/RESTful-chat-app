@@ -6,7 +6,11 @@ class Bot {
     options
     username
     password
+    roomID
 
+    messages
+    messageSentCounter
+    numberOfMessages
 
     constructor(client, options) {
         const { username, password } = randomebot();
@@ -14,14 +18,13 @@ class Bot {
         this.options = options;
         this.username = username;
         this.password = password;
+        this.numberOfMessages = Math.floor(Math.random()*(100-20+1)+20);
     }
 
-    start() {
-        this.loggin();
-    }
-
-    async loggin() {
+    async start() {
         await this.client.loggin(this.username, this.password);
+        this.joinRoom();
+        this.loop();
     }
 
     async joinRoom() {
@@ -32,26 +35,49 @@ class Bot {
         for (const room of res.rooms) {
             if (room.name === roomToJoin) {
                 await this.client.joinRoom(room.id, userID);
+                this.roomID = room.id;
                 return;
             }
         }
 
         await this.client.createRoom(roomToJoin);
-        const res =  await this.client.getRooms()
+        const res = await this.client.getRooms()
 
-        for(const room of res.rooms){
-            if(room.name === roomToJoin){
+        for (const room of res.rooms) {
+            if (room.name === roomToJoin) {
                 await this.client.joinRoom(room.id, userID);
+                this.roomID = room.id;
+                return;
             }
         }
     }
 
-    createRoom() {
+    loop() {
+        fresh(500, () => this.client.getMessages(roomID), updateMessages);
+        while (true) {
+            // Sjekke om det har kommet noen nye meldinger (this.messages)
+            // Hvis det er det så kan den velge om den vil svare eller ikke
+            // Hvis det har gått så og så lang tid siden sist melding så poster den selv
+            // Ha en counter som teller tid
+            // Sende melding med send funksjonen
+
+            if(this.messageSentCounter === this.numberOfMessages){
+                // Send avsluttende melding
+                break;
+            }
+        }
+    }
+
+    updateMessages(messages) {
+        this.messages = messages;
+    }
+
+    respond() {
 
     }
 
-    sendMessage() {
-
+    send() {
+        // Ha en random delay. Slik at svaret ikke kommer med en gang
     }
 
     logout() {
@@ -60,5 +86,5 @@ class Bot {
 }
 
 export default (client, options) => {
-    return new Bot(client)
+    return new Bot(client, options)
 }
