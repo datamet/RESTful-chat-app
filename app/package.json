@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w --port 5500",
+    "dev": "PORT=5500 rollup -c -w",
     "start": "sirv public --single",
     "host": "sirv public --single --host --port 5500"
   },

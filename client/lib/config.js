@@ -11,7 +11,8 @@ const config = {
     env,
     push: env === 'node' ? process.env.PUSH || false : false,
     host: env === 'node' ? process.env.HOST || 'localhost' : 'localhost',
-    port: env === 'node' ? process.env.PORT || 5000 : 5000
+    port: env === 'node' ? process.env.PORT || 5000 : 5000,
+    wsport: env === 'node' ? process.env.WS_PORT || 5050 : 5050
 }
 
 export default config

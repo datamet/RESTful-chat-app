@@ -113,6 +113,9 @@ class InMemoryGateway extends Gateway {
 
     createRoom(name, adminID) {
         const roomID = uuid()
+        for (const [roomID, room] of rooms) {
+            if (room.name === name) throw error.custom(409, "A room with that name allready exists")
+        }
 
         const newRoom = {
             id: roomID,

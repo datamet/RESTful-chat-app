@@ -11,8 +11,8 @@
 	import Chat from './components/Chat.svelte'
 
 	export let url = ""
-	export let 	host = window.location.hostname,
-				port = window.location.port
+	export let host = window.location.hostname,
+			   port = window.location.port
 
 	const client = connection({ host, port })
 	setContext('client', client)
