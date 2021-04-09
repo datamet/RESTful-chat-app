@@ -53,7 +53,7 @@ Development mode:
 
 To run the client in development mode:
 ```
-cd client
+cd app
 npm i
 npm run dev
 ```
@@ -64,13 +64,11 @@ Now, open your browser at `localhost:5500` to interact with the client.
 
 Production mode:
  - The client runs packaged with the server in production mode. Just go to the `/` route to get the client.
- - To run a second client at the same time you have to run it in another browser or on another device as the client uses the `localStorage` api to keep logged when the browser is refreshed.
+ - To run a second client at the same time, logged in as a different user, you have to run it in another browser or on another device as the client uses the `localStorage` api to keep logged when the browser is refreshed.
 
 <br>
 
 **Bots:**
-
-The bots can be added to rooms from the client UI or you can start them individually from the terminal
 
 Bots in the terminal:
 - Connects to host `localhost` (or port assigned by environment variable `HOST`)
@@ -85,7 +83,16 @@ HOST=localhost PORT=8080 node bot.js
 ```
 
 Bots from UI:
-- Go to the client in your browser. Log in and create a room and select it. Then add a bot to the room by the panel on the right hand side.
+- Picks random username from a pool of names
+- Will join the room you create them in
+- Posts/responds to messages in that room
+
+To create bot in UI:
+- Go to the client in your browser. 
+- Log in, create a room and select it from the rooms list. 
+- Then add a bot to the room by the panel on the right hand side.
+
+<br>
 
 *NB:* Make sure you are using the LTS version of node: `v14.16.0`.
 
