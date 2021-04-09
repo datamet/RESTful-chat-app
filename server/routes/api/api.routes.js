@@ -3,6 +3,7 @@
  */
 
 // Imports
+const config = require('../../lib/config')
 const users = require('./users/controller')
 const tokens = require('./tokens/controller')
 const rooms = require('./rooms/controller')
@@ -46,5 +47,10 @@ router.get('/room/:roomID/users', catcher(rooms.getUsersInRoom))
 router.get('/room/:roomID/messages', catcher(rooms.getMessages))
 router.post('/room/:roomID/:userID/messages', catcher(rooms.postMessage))
 router.get('/room/:roomID/:userID/messages', catcher(rooms.getMessagesFromUser))
+
+// Route to get if server supports push notifications
+router.get('/push', (req, res, next) => {
+    res.json({ push: config.notify ? 'enabled' : 'disabled' })
+})
 
 module.exports = app

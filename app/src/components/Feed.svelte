@@ -23,10 +23,10 @@
     }
 
     const sendMessage = async () => {
+        if (!newMessage) return
         const res = await client.postMessage($room.id, $user, newMessage)
         if (res.body.message) {
             newMessage = ''
-            getMessages()
         }
     }
 
@@ -36,13 +36,19 @@
     }
 
     onMount(() => {
+        getMessages()
         freshMessages()
+    })
+
+    const unsubRoom = room.subscribe((room) => {
+        getMessages()
     })
 
     onDestroy(() => {
         stopFresh()
+        unsubRoom()
     })
-
+    
 </script>
 
 <div class="chat">

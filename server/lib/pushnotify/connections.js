@@ -20,8 +20,6 @@ module.exports = {
         else if (userID) clientsToNotify = [userID]
         else clientsToNotify = [ ...conns.keys() ]
 
-        console.log(clientsToNotify)
-
         clientsToNotify.map(userID => {
             if (conns.has(userID)) {
                 const conn = conns.get(userID)

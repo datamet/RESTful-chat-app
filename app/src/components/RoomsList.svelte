@@ -22,7 +22,6 @@
         if (res.body.message) {
             createRoomError = ''
             newRoomName = ''
-            getRooms()
         }
         else createRoomError = res.body.error
     }

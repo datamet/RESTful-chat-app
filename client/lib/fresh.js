@@ -16,6 +16,7 @@ const fetchBackend = async (func, callback, stop) => {
         callback(res)
     }
     catch(err) {
+        console.log("Error while fetching. Stopping")
         stop()
     }
 }

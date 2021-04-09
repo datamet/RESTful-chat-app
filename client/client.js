@@ -17,6 +17,15 @@ import contentType from './middleware/contentType.js'
 import fetch from './middleware/fetch.js'
 import responseHandler from './middleware/responseHandler.js'
 
+const checkPush = async (client) => {
+    // Check if server has push notifications enabled
+    const res = await client.checkPush()
+
+    // Starting refetch sycle if push notifications are disabled
+    // by client or server
+    if (res.body.push === 'disabled' || !config.push) fresh.start()
+}
+
 export default (options, httpModule, socketModule) => {
     // Throws error if http module not specified and running in node
     if (!httpModule && config.env === 'node') throw new Error("Http module is required as input when running in node")
@@ -35,10 +44,7 @@ export default (options, httpModule, socketModule) => {
 
     // Setting up server connecion with rest interactor
     const client = endpoints(rest)
-
-    // Starting refetch sycle if push notifications are disabled
-    if (!config.push) fresh.start()
-
+    
     // Appending modules to client
     client.state = state
     client.fresh = fresh
@@ -46,5 +52,8 @@ export default (options, httpModule, socketModule) => {
     // Setup websocket connection
     ws(`ws://${config.host}:${config.wsport}`, { socketModule, update: fresh.update })
 
+    checkPush(client)
+
     return client
 }
+
