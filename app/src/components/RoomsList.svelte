@@ -54,7 +54,7 @@
 
     let stopUpdate
     onMount(() => {
-        stopUpdate = client.fresh(3000, () => client.getRooms(), updateRooms)
+        stopUpdate = client.fresh.add(3000, () => client.getRooms(), updateRooms)
     })
 
     onDestroy(() => {

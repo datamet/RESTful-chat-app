@@ -19,7 +19,7 @@
             if (res.body.messages) messages = res.body.messages
         }
 
-        stopFresh = client.fresh(500, () => client.getMessages($room.id), updateFeed)
+        stopFresh = client.fresh.add(3000, () => client.getMessages($room.id), updateFeed)
     }
 
     const sendMessage = async () => {

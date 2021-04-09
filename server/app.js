@@ -6,7 +6,7 @@
 const express = require('express')
 const path = require('path')
 
-const socketserver = require('./lib/soketserver')
+const createWS = require('./lib/ws')
 const http = require('http')
 
 const cors = require('cors')
@@ -20,8 +20,8 @@ const app = express()
 
 // Creating web socket server
 const wsapp = express()
-const wss = http.createServer(wsapp)
-const ws = socketserver(wss)
+const ws_server = http.createServer(wsapp)
+const ws = createWS(ws_server)
 
 // Path to frontend application
 const public = path.join(__dirname, '../app/public')
@@ -34,4 +34,4 @@ app.use(apiRouter)
 app.use(express.static(public))
 app.use(errorHandler)
 
-module.exports = { app, wss }
+module.exports = { app, ws_server }

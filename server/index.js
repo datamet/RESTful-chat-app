@@ -2,13 +2,15 @@
  * Responsible for starting application
  */
 
-const { app, wss } = require('./app')
+const { app, ws_server } = require('./app')
 const config = require('./lib/config')
 
 // Starting web socket server
-wss.listen(config.wsport, () => {
-    console.log(`[ws server] Web socket server started on port ${config.wsport}`);
-});
+if (config.notify) {
+    ws_server.listen(config.wsport, () => {
+        console.log(`[ws server] Web socket server started on port ${config.wsport}`);
+    });
+}
 
 // Starting http rest server
 app.listen(config.port, () => {

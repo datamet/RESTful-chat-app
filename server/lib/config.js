@@ -7,6 +7,7 @@ const dev = {
     host: process.env.HOST || 'localhost',
     port: process.env.PORT || 5000,
     wsport: process.env.WS_PORT || 5050,
+    notify:  process.env.NOTIFY || true,
     debug: true,
     tokenExpiration: 1000 * 60 * 60
 }
@@ -16,6 +17,7 @@ const prod = {
     host: process.env.HOST || 'localhost',
     port: process.env.PORT || 8080,
     wsport: process.env.WS_PORT || 80,
+    notify: process.env.NOTIFY || true,
     debug: false,
     tokenExpiration: 1000 * 60 * 60 * 24
 }

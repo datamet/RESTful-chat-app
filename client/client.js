@@ -10,7 +10,7 @@ import api from './lib/api.js'
 import config from './lib/config.js'
 import state from './lib/state.js'
 import fresh from './lib/fresh.js'
-import createws from './lib/ws.js'
+import ws from './lib/ws.js'
 
 import auth from './middleware/authenticator.js'
 import contentType from './middleware/contentType.js'
@@ -33,14 +33,18 @@ export default (options, httpModule, socketModule) => {
     rest.use(fetch(config, httpModule))
     rest.use(responseHandler)
 
-    // Creating socket socket connection for push notifications
-    const ws = createws(`ws://${config.host}:${config.wsport}`, socketModule ? socketModule : null)
-
-    // setting up server connecion with rest interactor
+    // Setting up server connecion with rest interactor
     const client = endpoints(rest)
+
+    // Starting refetch sycle if push notifications are disabled
+    if (!config.push) fresh.start()
+
+    // Appending modules to client
     client.state = state
     client.fresh = fresh
-    client.ws = ws
+
+    // Setup websocket connection
+    ws(`ws://${config.host}:${config.wsport}`, { socketModule, update: fresh.update })
 
     return client
 }
