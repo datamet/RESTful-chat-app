@@ -1,4 +1,5 @@
-import { randomebot } from "./service.js"
+import {randomebot} from "./service.js"
+// import {fresh} from "../lib/fresh.js"
 
 class Bot {
 
@@ -13,25 +14,25 @@ class Bot {
     numberOfMessages
 
     constructor(client, options) {
-        const { username, password } = randomebot();
+        const {username, password} = randomebot();
         this.client = client;
         this.options = options;
         this.username = username;
         this.password = password;
-        this.numberOfMessages = Math.floor(Math.random()*(100-20+1)+20);
+        this.numberOfMessages = Math.floor(Math.random() * (100 - 20 + 1) + 20);
     }
 
     async start() {
-        await this.client.loggin(this.username, this.password);
-        this.joinRoom();
+        await this.client.login(this.username, this.password);
+        await this.joinRoom();
         this.loop();
     }
 
     async joinRoom() {
-        const { userID } = this.client.state.get();
-        const roomToJoin = options.room ? this.options.room : "Botroom";
+        const {userID} = this.client.state.get();
+        const roomToJoin = this.options.room ? this.options.room : "Botroom";
 
-        const res = await this.client.getRooms()
+        let res = await this.client.getRooms()
         for (const room of res.rooms) {
             if (room.name === roomToJoin) {
                 await this.client.joinRoom(room.id, userID);
@@ -41,7 +42,7 @@ class Bot {
         }
 
         await this.client.createRoom(roomToJoin);
-        const res = await this.client.getRooms()
+        res = await this.client.getRooms()
 
         for (const room of res.rooms) {
             if (room.name === roomToJoin) {
@@ -53,7 +54,7 @@ class Bot {
     }
 
     loop() {
-        fresh(500, () => this.client.getMessages(roomID), updateMessages);
+        fresh(500, () => this.client.getMessages(this.roomID), this.updateMessages);
         while (true) {
             // Sjekke om det har kommet noen nye meldinger (this.messages)
             // Hvis det er det så kan den velge om den vil svare eller ikke
@@ -61,7 +62,7 @@ class Bot {
             // Ha en counter som teller tid
             // Sende melding med send funksjonen
 
-            if(this.messageSentCounter === this.numberOfMessages){
+            if (this.messageSentCounter === this.numberOfMessages) {
                 // Send avsluttende melding
                 break;
             }
