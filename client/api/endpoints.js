@@ -9,14 +9,11 @@ const routes = {
     register: (username, password) => server.post('/api/users', { body: { username, password }}),
     getUsers: () => server.get('/api/users'),
     getUser: (userID) => server.get(`/api/user/${userID}`),
-        // router.delete('/user/:userID', users.deleteUser)
     deleteUser: (userID) => server.delete(`/api/user/${userID}`),
 
     // // Token routes
     login: (username, password) => server.post('/api/tokens', { body: { username, password }}),
-        // router.get('/token/:tokenID', tokens.getToken)
     getTokens: () => server.get('/api/tokens'),
-        // router.put('/token/:tokenID', tokens.extendToken)
     extendToken: (tokenID) => server.post(`/api/token/${tokenID}`),
     logout: (tokenID) => server.delete(`/api/token/${tokenID}`),
 
@@ -31,7 +28,6 @@ const routes = {
 
     getMessages: (roomID) => server.get(`/api/room/${roomID}/messages`),
     postMessage: (roomID, userID, message) => server.post(`/api/room/${roomID}/${userID}/messages`, { body: { message } }),
-        // router.get('/room/:roomID/:userID/messages', rooms.getMessagesFromUser)
     getMessagesFromUser: (roomID, userID) => server.get(`/room/${roomID}/${userID}/messages`)
 }
 
