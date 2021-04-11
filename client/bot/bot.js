@@ -1,5 +1,6 @@
-import {randomebot} from "./service.js"
-import {output} from "./mastermind.js";
+import randomebot from "./service.js"
+import mastermind from "./mastermind.js";
+import client from "../client";
 
 // import {fresh} from "../lib/fresh.js"
 
@@ -59,37 +60,26 @@ class Bot {
     }
 
     loop() {
-        fresh(500, () => this.client.getMessages(this.roomID), this.updateMessages);
+        const stop = fresh.add((500, () => this.client.getMessages(this.roomID), this.updateMessages));
         this.lastMessageTime = Date.now();
 
         while (true) {
             if (this.lastMessage !== this.messages[this.messages.length - 1]) {
-                // Sjekke om det har kommet noen nye meldinger (this.messages)
-                // Hvis det er det så kan den velge om den vil svare eller ikke
-
-                // Oppdaterer tiden
-                this.lastMessageTime = Date.now();
-
-                if (this.messages) {
-                    if (Math.random() < 0.5) {
-                        return;
-                    }
-                }
-
-                this.sendDelay(output(this.messages[this.messages.length - 1], false))
-
-                // Hvis det har gått så og så lang tid siden sist melding så poster den selv
-                // Ha en counter som teller tid
-                // Sende melding med send funksjonen
 
                 if (this.messageSentCounter === this.numberOfMessages) {
                     // Send avsluttende melding
-                    this.sendDelay(output("", true))
+                    this.sendDelay(mastermind("", true))
+                    stop();
+                    this.logout();
                     break;
                 }
-            }else {
+
+                this.lastMessageTime = Date.now();
+
+                this.sendDelay(mastermind(this.messages[this.messages.length - 1], false))
+            } else {
                 if (Date.now() - this.lastMessageTime > 30_000) {
-                    this.sendDelay(output("", false))
+                    this.sendDelay(mastermind("", false));
                 }
             }
             this.lastMessage = this.messages[this.messages.length - 1];
@@ -101,13 +91,12 @@ class Bot {
     }
 
     sendDelay(message) {
-        // Ha en random delay mellom 3 og 10 sek. Slik at svaret ikke kommer med en gang
         let timeout = Math.floor(Math.random() * (10 - 3 + 1) + 3);
         setTimeout(() => this.client.postMessage(this.roomID, this.userID, message), timeout);
     }
 
-    logout() {
-
+    async logout() {
+        await this.client.logout(this.client.state.get().token)
     }
 }
 
