@@ -1,6 +1,5 @@
 import {randomebot} from "./service.js"
-import {output} from "./mastermind";
-import client from "../client";
+import {output} from "./mastermind.js";
 
 // import {fresh} from "../lib/fresh.js"
 
