@@ -20,7 +20,8 @@
   "homepage": "https://github.com/matssom/RESTful-chat-app#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "ws": "^7.4.4"
   },
   "devDependencies": {
     "jest": "^26.6.3",

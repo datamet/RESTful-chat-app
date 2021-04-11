@@ -1,6 +1,6 @@
 <script>
     import { room } from '../stores/activeRoom.js'
-    import { getContext } from 'svelte'
+    import { getContext, onMount, onDestroy } from 'svelte'
     import { user } from '../stores/auth.js'
     import Button from './Button.svelte'
     import HomeIcon from '../assets/home.svelte'
@@ -22,7 +22,6 @@
         if (res.body.message) {
             createRoomError = ''
             newRoomName = ''
-            getRooms()
         }
         else createRoomError = res.body.error
     }
@@ -34,8 +33,7 @@
         room.set(res.body.room)
     }
 
-    const getRooms = async () => {
-        const res = await client.getRooms()
+    const updateRooms = (res) => {
         if (res.body.rooms) {
             const joined = []
             const other = []
@@ -48,7 +46,20 @@
         }
     }
 
-    getRooms()
+    const getRooms = async () => {
+        const res = await client.getRooms()
+        updateRooms(res)
+    }
+
+    let stopUpdate
+    onMount(() => {
+        stopUpdate = client.fresh.add(3000, () => client.getRooms(), updateRooms)
+    })
+
+    onDestroy(() => {
+        stopUpdate()
+    })
+
     room.subscribe(() => getRooms())
 </script>
 
