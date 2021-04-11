@@ -1,7 +1,3 @@
-/**
- * 
- */
-
 const trigger = [
     ["hi", "hey", "hello"],
     ["how are you", "how are things"],
@@ -39,6 +35,8 @@ const alternative = [
     "Bro..."
 ];
 
+const starters = ["Anyone here?", "Hello", "Who is here?", "How are you doing", "I am here!", "Am I alone here?"];
+
 const robot = ["How do you do, fellow human", "I am not a bot"];
 
 const compare = (triggerArray, replyArray, text) => {
@@ -54,8 +52,15 @@ const compare = (triggerArray, replyArray, text) => {
     return item;
 }
 
+const starter = () => {
+    return starters[Math.floor(Math.random() * starters.length)];
+}
+
 export const output = input => {
-    let product;
+    if (!input) {
+        return starter();
+    }
+
     let text = input.toLowerCase().replace(/[^\w\s\d]/gi, "");
     text = text
         .replace(/ a /g, " ")
@@ -69,12 +74,10 @@ export const output = input => {
     //then random alternative
 
     if (compare(trigger, reply, text)) {
-        product = compare(trigger, reply, text);
+        return compare(trigger, reply, text);
     } else if (text.match(/robot/gi)) {
-        product = robot[Math.floor(Math.random() * robot.length)];
+        return robot[Math.floor(Math.random() * robot.length)];
     } else {
-        product = alternative[Math.floor(Math.random() * alternative.length)];
+        return alternative[Math.floor(Math.random() * alternative.length)];
     }
-
-    return product;
 }
