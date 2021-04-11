@@ -37,6 +37,8 @@ const alternative = [
 
 const starters = ["Anyone here?", "Hello", "Who is here?", "How are you doing", "I am here!", "Am I alone here?"];
 
+const enders = ["I have to leave!", "I will be back soon", "Have a nice day, bye!", "I have to go"]
+
 const robot = ["How do you do, fellow human", "I am not a bot"];
 
 const compare = (triggerArray, replyArray, text) => {
@@ -56,7 +58,14 @@ const starter = () => {
     return starters[Math.floor(Math.random() * starters.length)];
 }
 
-export const output = input => {
+const ender = () => {
+    return enders[Math.floor(Math.random() * starters.length)];
+}
+
+export const output = (input, end) => {
+    if (end){
+        return ender();
+    }
     if (!input) {
         return starter();
     }
