@@ -4,7 +4,7 @@ const app = new App({
 	target: document.body,
 	props: {
 		host: 'localhost',
-		port: 5000
+		port: '5000'
 	}
 });
 

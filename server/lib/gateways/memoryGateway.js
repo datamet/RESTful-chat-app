@@ -103,7 +103,6 @@ class InMemoryGateway extends Gateway {
         if (token) {
             const user = this.getUserById(token.userID)
             if (user) {
-                console.log(user)
                 const i = user.tokens.indexOf(tokenID)
                 user.tokens.splice(i, 1)
                 users.set(token.userID, user)
@@ -114,6 +113,9 @@ class InMemoryGateway extends Gateway {
 
     createRoom(name, adminID) {
         const roomID = uuid()
+        for (const [roomID, room] of rooms) {
+            if (room.name === name) throw error.custom(409, "A room with that name allready exists")
+        }
 
         const newRoom = {
             id: roomID,
