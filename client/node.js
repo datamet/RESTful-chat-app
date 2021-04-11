@@ -6,4 +6,4 @@ const client = connect(http)
 
 const bot = createBot(client, {});
 
-bot.start().then(r => console.log(r));
+bot.start();
