@@ -3,9 +3,8 @@ const password = ["Olav1234", "Iselin1234", "Magnus1234", "Mari1234", "Oliver123
 
 export const randomebot = () => {
     const i = Math.floor(Math.random() * botnames.length)
-    const bot = {
+    return {
         username: botnames[i],
         password: password[i]
-    }
-    return bot;
+    };
 }
