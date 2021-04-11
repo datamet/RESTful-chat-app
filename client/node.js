@@ -1,6 +1,9 @@
 import http from 'http'
 import connect from './client.js'
+import createBot from './bot/bot.js'
 
 const client = connect({}, http)
 
-const roomToJoin = options.room ? options.room : 'bot room'
+const bot = createBot(client, {});
+
+bot.start();
