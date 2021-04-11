@@ -1,5 +1,5 @@
-const trigger = [
-    ["hi", "hey", "hello"],
+const activate = [
+    ["hello", "hi", "hey"],
     ["how are you", "how are things"],
     ["what is going on", "what is up"],
     ["happy", "good", "well", "fantastic", "cool"],
@@ -10,43 +10,54 @@ const trigger = [
 ];
 
 const reply = [
-    ["Hello!", "Hi!", "Hey!", "Hi there!"],
-    [
-        "Fine... how are you?",
-        "Pretty well, how are you?",
-        "Fantastic, how are you?"
-    ],
-    [
-        "Nothing much",
-        "Exciting things!"
-    ],
-    ["Glad to hear it"],
+    ["Hello!", "Hey!", "Hi!", "Hello there!"],
+    ["Fine... how are you?", "Pretty well, how are you?", "Fantastic, how are you?"],
+    ["Nothing much", "Exciting things!"],
+    ["Glad to hear!"],
     ["Why?", "Cheer up buddy"],
-    ["What about?", "Once upon a time..."],
-    ["You're welcome", "No problem"],
-    ["Goodbye", "See you later"],
+    ["What about?", "Once upon a time...", "Don't have time, sorry!"],
+    ["You're welcome", "You owe me one!", "No problem"],
+    ["Goodbye", "See you later", "See you soon"],
 ];
 
 const alternative = [
-    "Same",
-    "Go on...",
-    "Try again",
     "I'm listening...",
+    "Go on...",
+    "Continue",
+    "Haha",
+    "Same",
+    "Try again",
+    "I dont understand",
+    "Omg!",
     "Bro..."
 ];
 
-const starters = ["Anyone here?", "Hello", "Who is here?", "How are you doing", "I am here!", "Am I alone here?"];
+const starters = [
+    "Anyone here?",
+    "Hello",
+    "Who is here?",
+    "How are you doing",
+    "I am here!",
+    "Am I alone here?"
+];
 
-const enders = ["I have to leave!", "I will be back soon", "Have a nice day, bye!", "I have to go"]
+const enders = ["I have to leave!",
+    "I will be back soon",
+    "Have a nice day, bye!",
+    "I have to go"
+];
 
-const robot = ["How do you do, fellow human", "I am not a bot"];
+const robot = [
+    "How do you do, fellow human",
+    "I am not a bot"
+];
 
-const compare = (triggerArray, replyArray, text) => {
+const compare = text => {
     let item;
-    for (let i = 0; i < triggerArray.length; i++) {
-        for (let j = 0; j < replyArray.length; j++) {
-            if (triggerArray[i][j] === text) {
-                let items = replyArray[i];
+    for (let i = 0; i < activate.length; i++) {
+        for (let j = 0; j < reply.length; j++) {
+            if (activate[i][j] === text) {
+                let items = reply[i];
                 item = items[Math.floor(Math.random() * items.length)];
             }
         }
@@ -62,8 +73,8 @@ const ender = () => {
     return enders[Math.floor(Math.random() * starters.length)];
 }
 
-export const output = (input, end) => {
-    if (end){
+export default (input, end) => {
+    if (end) {
         return ender();
     }
     if (!input) {
@@ -78,12 +89,8 @@ export const output = (input, end) => {
         .replace(/please /g, "")
         .replace(/ please/g, "");
 
-    //compare arrays
-    //then search keyword
-    //then random alternative
-
-    if (compare(trigger, reply, text)) {
-        return compare(trigger, reply, text);
+    if (compare(activate, reply, text)) {
+        return compare(text);
     } else if (text.match(/robot/gi)) {
         return robot[Math.floor(Math.random() * robot.length)];
     } else {
