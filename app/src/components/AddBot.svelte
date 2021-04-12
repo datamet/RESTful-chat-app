@@ -15,8 +15,8 @@
     const addBot = async () => {
         const res = await client.getUsers()
         if (res.body.users) {
-            if (!name) {
-                createBotError = "Name cannot be empty"
+            if (!name || name.length < 3) {
+                createBotError = "Name must be 3 characters or longer"
                 return
             }
             for (const user of res.body.users) {

@@ -37,12 +37,18 @@
         if (res.body.rooms) {
             const joined = []
             const other = []
+            let activeRoomExists = false
             for (const room of res.body.rooms) {
                 if (room.joined) joined.push(room)
                 else other.push(room)
+                if (selected === room.id) activeRoomExists = true
             }
             joinedRooms = joined
             otherRooms = other
+            if (!activeRoomExists) {
+                selected = null
+                room.set(null)
+            }
         }
     }
 

@@ -1,9 +1,15 @@
 import http from 'http'
 import connect from './client.js'
 import createBot from './bot/bot.js'
+import WebSocket from 'ws'
 
-const client = connect({}, http)
+const name = process.env.USERNAME
+const room = process.env.ROOM
 
-const bot = createBot(client, {});
+const client = connect({}, http, WebSocket)
+
+const bot = createBot(client, { name, room });
 
 bot.start();
+
+console.log("[bot] Bot is running")

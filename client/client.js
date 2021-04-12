@@ -26,7 +26,7 @@ const checkPush = async (client) => {
     if (res.body.push === 'disabled' || !config.push) client.fresh.start()
 }
 
-export default (options, httpModule, socketModule) => {
+export default (options, httpModule, SocketModule) => {
     // Throws error if http module not specified and running in node
     if (!httpModule && config.env === 'node') throw new Error("Http module is required as input when running in node")
     
@@ -53,7 +53,7 @@ export default (options, httpModule, socketModule) => {
     client.fresh = createFresh()
 
     // Setup websocket connection
-    ws(`ws://${config.host}:${config.wsport}`, { socketModule, update: client.fresh.update, state })
+    ws(`ws://${config.host}:${config.wsport}`, { SocketModule, update: client.fresh.update, state })
 
     // Check if push notifications is enabled on server
     checkPush(client)

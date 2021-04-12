@@ -2,7 +2,6 @@ import randomebot from "./service.js"
 import mastermind from "./mastermind.js";
 
 class Bot {
-
     client
     options
     username
@@ -65,7 +64,6 @@ class Bot {
 
         for (const room of res.body.rooms) {
             if (room.name === roomToJoin) {
-                await this.client.joinRoom(room.id, this.userID);
                 this.roomID = room.id;
                 return;
             }
@@ -93,13 +91,13 @@ class Bot {
                 this.lastMessage = lastMessageInRoom
 
                 // Sending response
-                this.sendDelay(mastermind(this.messages[this.messages.length - 1], false))
+                this.sendDelay(mastermind(lastMessageInRoom, false))
             } else {
                 // Checkin time since last message
                 if (Date.now() - this.lastMessageTime > 30_000) {
                     // Sending conversation starter
                     this.unresponsive += 1
-                    if (this.unresponsive === 3) {
+                    if (this.unresponsive === 2) {
                         this.shutdown() 
                         return
                     }
@@ -112,12 +110,12 @@ class Bot {
         this.loopID = id
     }
 
-    shutdown = (reason) => {
+    shutdown = async (reason) => {
         if (this.loopID) clearInterval(this.loopID)
         if (this.stopFresh) this.stopFresh();
         if (reason !== 'server down') {
             if (this.roomID) this.send(mastermind("", true))
-            this.deregister();
+            await this.deregister();
         }
     }
 

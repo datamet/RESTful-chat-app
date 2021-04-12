@@ -12,18 +12,25 @@
         if (res.body.users) users = res.body.users
     }
 
-    const fetchUsers = async () => {
+    const getUsers = async () => {
         const res = await client.getUsersInRoom($room.id)
         updateUsers(res)
+    }
+
+    const freshUsers = async () => {
         stopFetch = client.fresh.add(3000, () => client.getUsersInRoom($room.id), updateUsers)
     }
 
     onMount(() => {
-        fetchUsers()
+        getUsers()
+        freshUsers()
     })
+
+    const unsub = room.subscribe(room => getUsers())
 
     onDestroy(() => {
         stopFetch()
+        unsub()
     })
 
 </script>
