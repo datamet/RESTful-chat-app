@@ -12,8 +12,8 @@ const routes = server => { return {
 
     // // Token routes
     login: (username, password) => server.post('/api/tokens', { body: { username, password }}),
-    // router.get('/token/:tokenID', tokens.getToken)
-    // router.put('/token/:tokenID', tokens.extendToken)
+    getTokens: () => server.get('/api/tokens'),
+    extendToken: (tokenID) => server.post(`/api/token/${tokenID}`),
     logout: (tokenID) => server.delete(`/api/token/${tokenID}`),
 
     // // Chatroom routes
@@ -27,7 +27,7 @@ const routes = server => { return {
 
     getMessages: (roomID) => server.get(`/api/room/${roomID}/messages`),
     postMessage: (roomID, userID, message) => server.post(`/api/room/${roomID}/${userID}/messages`, { body: { message } }),
-    // router.get('/room/:roomID/:userID/messages', rooms.getMessagesFromUser)
+    getMessagesFromUser: (roomID, userID) => server.get(`/room/${roomID}/${userID}/messages`),
     checkPush: () => server.get('/api/push')
 }}
 
