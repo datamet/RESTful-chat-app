@@ -2,9 +2,7 @@
  * API endpoints
  */
 
-let server
-
-const routes = {
+const routes = server => { return {
     // User routes
     register: (username, password) => server.post('/api/users', { body: { username, password }}),
     getUsers: () => server.get('/api/users'),
@@ -30,9 +28,8 @@ const routes = {
     postMessage: (roomID, userID, message) => server.post(`/api/room/${roomID}/${userID}/messages`, { body: { message } }),
     // router.get('/room/:roomID/:userID/messages', rooms.getMessagesFromUser)
     checkPush: () => server.get('/api/push')
-}
+}}
 
 export default (interactor) => {
-    server = interactor
-    return routes
+    return routes(interactor)
 }

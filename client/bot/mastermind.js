@@ -81,7 +81,7 @@ export default (input, end) => {
         return starter();
     }
 
-    let text = input.toLowerCase().replace(/[^\w\s\d]/gi, "");
+    let text = input.message.toLowerCase().replace(/[^\w\s\d]/gi, "");
     text = text
         .replace(/ a /g, " ")
         .replace(/i feel /g, "")

@@ -3,11 +3,13 @@
     import { user } from '../stores/auth.js'
     import { getContext, onMount, onDestroy } from 'svelte'
     import { room } from '../stores/activeRoom.js'
+    import AddBot from './AddBot.svelte'
 
     let messages = []
     let newMessage = ''
     let client = getContext('client')
     let stopFresh
+    let feed
 
     const getMessages = async () => {
         const res = await client.getMessages($room.id)
@@ -51,30 +53,39 @@
     
 </script>
 
-<div class="chat">
+<div class="room">
+    <div class="chat">
+        <div class="feed" bind:this={feed}>
+            {#each messages as message}
+                <div class="message">
+                    <p class="author">{message.sender}:</p>
+                    <div class="message-bubble">
+                        <p class="message-text">{message.message}</p>
+                    </div>
+                </div>
+            {/each}
+        </div>
+        <div class="message-input">
+            <input on:keydown={(e) => { if(e.keyCode === 13) sendMessage() }} class="input-box" placeholder="type message..." type="text" bind:value={newMessage} rows="3">
+            <button on:click={sendMessage} disabled={newMessage.length === 0} class="send-button"><SendIcon /></button>
+        </div>
+    </div>
     <div class="metadata">
         <p>You are {$room.admin === $user ? 'owner' : 'member'} of this room</p>
         {#if $room.admin === $user}
             <button class="delete-button" on:click={deleteRoom}>Delete room</button>
         {/if}
-    </div>
-    <div class="feed">
-        {#each messages as message}
-            <div class="message">
-                <p class="author">{message.sender}:</p>
-                <div class="message-bubble">
-                    <p class="message-text">{message.message}</p>
-                </div>
-            </div>
-        {/each}
-    </div>
-    <div class="message-input">
-        <input on:keydown={(e) => { if(e.keyCode === 13) sendMessage() }} class="input-box" placeholder="type message..." type="text" bind:value={newMessage} rows="3">
-        <button on:click={sendMessage} disabled={newMessage.length === 0} class="send-button"><SendIcon /></button>
+        <AddBot room={$room.name} />
     </div>
 </div>
 
 <style>
+    .room {
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+
     .chat {
         height: 100%;
         display: flex;
@@ -116,14 +127,10 @@
     }
 
     .metadata {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        padding: 1rem 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        background-color: #F3F3F3;
+        box-shadow: 0 0 1rem 0 lightgray;
+        width: 35rem;
+        padding: 2rem;
     }
 
     .delete-button {
@@ -140,6 +147,11 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        overflow-y: scroll;
+    }
+
+    .feed::-webkit-scrollbar {
+        display: none;
     }
 
     .message {

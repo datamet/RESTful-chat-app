@@ -16,6 +16,8 @@
 
 	const client = connection({ host, port })
 	setContext('client', client)
+	setContext('host', host)
+	setContext('port', port)
 
 	let unsubscribe
 	if ($auth) client.state.update({ token: $auth })
