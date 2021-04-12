@@ -1,4 +1,4 @@
-const app = require("../app")
+const { app } = require("../app")
 const supertest = require("supertest")
 
 let tokenID, userID, roomID

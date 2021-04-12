@@ -10,4 +10,4 @@ const FSGateway = require('./gateways/fileSystemGateway')
 const InMemoryGateway = require('./gateways/memoryGateway')
 const { mode } = require('./config')
 
-module.exports = mode === 'development' ? new InMemoryGateway() : new FSGateway()
+module.exports = mode === 'development' ? new InMemoryGateway() : new InMemoryGateway()

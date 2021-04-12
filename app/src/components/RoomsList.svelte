@@ -1,6 +1,6 @@
 <script>
     import { room } from '../stores/activeRoom.js'
-    import { getContext } from 'svelte'
+    import { getContext, onMount, onDestroy } from 'svelte'
     import { user } from '../stores/auth.js'
     import Button from './Button.svelte'
     import HomeIcon from '../assets/home.svelte'
@@ -22,7 +22,6 @@
         if (res.body.message) {
             createRoomError = ''
             newRoomName = ''
-            getRooms()
         }
         else createRoomError = res.body.error
     }
@@ -30,25 +29,43 @@
     const viewRoom = async (roomID) => {
         selected = roomID
         const res = await client.getRoom(roomID)
-        if (res.body.room)
-        room.set(res.body.room)
+        if (res.body.room) room.set(res.body.room)
+        else room.set(null)
     }
 
-    const getRooms = async () => {
-        const res = await client.getRooms()
+    const updateRooms = (res) => {
         if (res.body.rooms) {
             const joined = []
             const other = []
             for (const room of res.body.rooms) {
                 if (room.joined) joined.push(room)
                 else other.push(room)
+                console.log(room.id, selected)
             }
             joinedRooms = joined
             otherRooms = other
         }
     }
 
-    getRooms()
+    const getRooms = async () => {
+        const res = await client.getRooms()
+        updateRooms(res)
+        // if (selected) {
+        //     const res = await client.getRoom(roomID)
+        //     if (res.body.room) room.set(res.body.room)
+        //     else room.set(null)
+        // }
+    }
+
+    let stopUpdate
+    onMount(() => {
+        stopUpdate = client.fresh.add(3000, () => client.getRooms(), updateRooms)
+    })
+
+    onDestroy(() => {
+        stopUpdate()
+    })
+
     room.subscribe(() => getRooms())
 </script>
 

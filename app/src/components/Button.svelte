@@ -1,8 +1,8 @@
 <script>
-    export let action = () => {}
+    export let action = () => {}, color = "blue"
 </script>
 
-<button on:click={action}><slot/></button>
+<button class="{color}" on:click={action}><slot/></button>
 
 <style>
     button {
@@ -13,5 +13,9 @@
         color: white;
         border: none;
         padding: .5rem 1.4rem;
+    }
+
+    .red {
+        background-color: #9C4242;
     }
 </style>

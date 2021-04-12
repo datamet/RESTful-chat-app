@@ -18,7 +18,7 @@ class InMemoryGateway extends Gateway {
         super()
     }
 
-    createUser(username, hash, salt) {
+    createUser(username, hash, salt, bot) {
         // Check if username is unique
         if (userIDs.has(username)) throw error.custom(409, "User already exists")
 
@@ -29,7 +29,8 @@ class InMemoryGateway extends Gateway {
             id: userID,
             username,
             hash,
-            salt
+            salt,
+            bot
         }
 
         // Adding user to user store
@@ -73,6 +74,9 @@ class InMemoryGateway extends Gateway {
             tokens.delete(tokenID)
         }
 
+        for (const room of user.rooms) {
+            this.removeUserFromRoom(room, userID)
+        }
         userIDs.delete(user.username)
         users.delete(userID)
     }
@@ -103,7 +107,6 @@ class InMemoryGateway extends Gateway {
         if (token) {
             const user = this.getUserById(token.userID)
             if (user) {
-                console.log(user)
                 const i = user.tokens.indexOf(tokenID)
                 user.tokens.splice(i, 1)
                 users.set(token.userID, user)
@@ -114,6 +117,9 @@ class InMemoryGateway extends Gateway {
 
     createRoom(name, adminID) {
         const roomID = uuid()
+        for (const [roomID, room] of rooms) {
+            if (room.name === name) throw error.custom(409, "A room with that name allready exists")
+        }
 
         const newRoom = {
             id: roomID,
@@ -188,11 +194,17 @@ class InMemoryGateway extends Gateway {
         users.set(userID, user)
     }
 
+    removeUserFromRoom(roomID, userID) {
+        const room = rooms.get(roomID)
+        if (room.admin === userID) this.deleteRoom(roomID)
+        else room.users.splice(room.users.indexOf(userID), 1)
+    }
+
     getUsersInRoom(roomID) {
         const userIDs = rooms.get(roomID).users
         return userIDs
                     .map(id => this.getUserById(id))
-                    .map(user => { return { id: user.id, username: user.username } })
+                    .map(user => { return { id: user.id, username: user.username, bot: user.bot } })
     }
 
     postMessage(sender, roomID, message){

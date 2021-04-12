@@ -2,11 +2,10 @@
  * API endpoints
  */
 
-let server
-
-const routes = {
+const routes = server => { return {
     // User routes
     register: (username, password) => server.post('/api/users', { body: { username, password }}),
+    registerBot: (username, password) => server.post('/api/users', { body: { username, password, bot: true }}),
     getUsers: () => server.get('/api/users'),
     getUser: (userID) => server.get(`/api/user/${userID}`),
     deleteUser: (userID) => server.delete(`/api/user/${userID}`),
@@ -28,10 +27,10 @@ const routes = {
 
     getMessages: (roomID) => server.get(`/api/room/${roomID}/messages`),
     postMessage: (roomID, userID, message) => server.post(`/api/room/${roomID}/${userID}/messages`, { body: { message } }),
-    getMessagesFromUser: (roomID, userID) => server.get(`/room/${roomID}/${userID}/messages`)
-}
+    getMessagesFromUser: (roomID, userID) => server.get(`/room/${roomID}/${userID}/messages`),
+    checkPush: () => server.get('/api/push')
+}}
 
 export default (interactor) => {
-    server = interactor
-    return routes
+    return routes(interactor)
 }

@@ -6,12 +6,15 @@
 const db = require('../../../lib/db')
 const error = require('../../../lib/error')
 const validator = require('./validator')
+const activeUsers = require('../../../lib/pushnotify/connections')
 
 const createRoom = async (req, res, next) => {
     const name = validator.name(req.body.name)
     const admin = req.user.id
 
     await db.createRoom(name, admin)
+
+    activeUsers.notify({}, activeUsers.ROOM)
     res.send({ message: "Room created" })
 }
 
@@ -35,13 +38,15 @@ const deleteRoom = async (req, res, next) => {
     validator.admin(req.user, roomID)
 
     await db.deleteRoom(roomID)
+    activeUsers.notify({},activeUsers.ROOM)
     res.json({ message: "Room deleted" })
 }
 
 const addUserToRoom = async (req, res, next) => {
-    console.log(req.body)
     await db.addUserToRoom(req.params.roomID, req.body.user)
     await db.addRoomToUser(req.params.roomID, req.body.user)
+
+    activeUsers.notify({roomID: req.params.roomID}, activeUsers.USER)
     res.json({ message: "Added user to room" })
 }
 
@@ -54,6 +59,7 @@ const getUsersInRoom = async (req, res, next) => {
 const postMessage = async (req, res, next) => {
     validator.user(req.user, req.params.roomID)
     await db.postMessage(req.user.username, req.params.roomID, req.body.message)
+    activeUsers.notify({roomID: req.params.roomID}, activeUsers.MESSAGE)
     res.json({ message: "Message sent" })
 }
 
