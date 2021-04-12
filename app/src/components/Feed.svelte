@@ -38,7 +38,7 @@
 
     const deleteRoom = async () => {
         const res = await client.deleteRoom($room.id)
-        if (res.body.message) room.set(null)
+        if (res.body.message) $room = null
     }
 
     onMount(() => {

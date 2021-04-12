@@ -13,8 +13,10 @@
     }
 
     const getUsers = async () => {
-        const res = await client.getUsersInRoom($room.id)
-        updateUsers(res)
+        if ($room) {
+            const res = await client.getUsersInRoom($room.id)
+            updateUsers(res)
+        }
     }
 
     const freshUsers = async () => {

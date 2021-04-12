@@ -29,32 +29,32 @@
     const viewRoom = async (roomID) => {
         selected = roomID
         const res = await client.getRoom(roomID)
-        if (res.body.room)
-        room.set(res.body.room)
+        if (res.body.room) room.set(res.body.room)
+        else room.set(null)
     }
 
     const updateRooms = (res) => {
         if (res.body.rooms) {
             const joined = []
             const other = []
-            let activeRoomExists = false
             for (const room of res.body.rooms) {
                 if (room.joined) joined.push(room)
                 else other.push(room)
-                if (selected === room.id) activeRoomExists = true
+                console.log(room.id, selected)
             }
             joinedRooms = joined
             otherRooms = other
-            if (!activeRoomExists) {
-                selected = null
-                room.set(null)
-            }
         }
     }
 
     const getRooms = async () => {
         const res = await client.getRooms()
         updateRooms(res)
+        // if (selected) {
+        //     const res = await client.getRoom(roomID)
+        //     if (res.body.room) room.set(res.body.room)
+        //     else room.set(null)
+        // }
     }
 
     let stopUpdate

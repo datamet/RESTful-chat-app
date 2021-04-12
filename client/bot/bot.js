@@ -65,6 +65,7 @@ class Bot {
         for (const room of res.body.rooms) {
             if (room.name === roomToJoin) {
                 this.roomID = room.id;
+                this.admin = true
                 return;
             }
         }
@@ -115,7 +116,8 @@ class Bot {
         if (this.stopFresh) this.stopFresh();
         if (reason !== 'server down') {
             if (this.roomID) this.send(mastermind("", true))
-            await this.deregister();
+            if (!this.admin) this.deregister()
+            else this.logout()
         }
     }
 
@@ -141,6 +143,10 @@ class Bot {
 
     async deregister() {
         await this.client.deleteUser(this.userID)
+    }
+
+    async logout() {
+        await this.client.logout(this.client.state.get().token)
     }
 }
 
