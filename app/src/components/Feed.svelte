@@ -13,18 +13,24 @@
     let stopFresh
     let feed
 
+    const updateFeed = (res) => {
+        if (res.body.messages) messages = res.body.messages
+        let height = 20
+        for (const message of feed.children) {
+            height += message.clientHeight
+            height += 20
+        }
+        setTimeout(() => feed.scrollTop = height, 50)
+    }
+
     const getMessages = async () => {
         if ($room) {
             const res = await client.getMessages($room.id)
-            if (res.body.messages) messages = res.body.messages
+            updateFeed(res)
         }
     }
 
     const freshMessages = async () => {
-        const updateFeed = (res) => {
-            if (res.body.messages) messages = res.body.messages
-        }
-
         stopFresh = client.fresh.add(3000, () => client.getMessages($room.id), updateFeed)
     }
 
@@ -151,21 +157,13 @@
         display: none;
     }
 
-    .delete-button {
-        border: none;
-        background-color: #9c4242;
-        color: white;
-        border-radius: .3rem;
-        height: 2.5rem;
-        padding: 0 1rem;
-    }
-
     .feed {
         padding: 2rem;
         display: flex;
         flex-direction: column;
         gap: 1rem;
         overflow-y: scroll;
+        scroll-behavior: smooth;
     }
 
     .feed::-webkit-scrollbar {
