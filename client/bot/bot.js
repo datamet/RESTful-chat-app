@@ -9,6 +9,7 @@ class Bot {
     roomID
     userID
     loopID
+    mastermind
 
     unresponsive = 0
     messages = [{ sender: "", message: "" }]
@@ -24,7 +25,8 @@ class Bot {
         this.options = options ? options : {};
         this.username = username;
         this.password = password;
-        this.numberOfMessages = Math.floor(Math.random() * (100 - 20 + 1) + 20);
+        this.numberOfMessages = Math.floor(Math.random() * (30 - 10 + 1) + 10);
+        this.mastermind = mastermind(this.username);
     }
 
     async start() {
@@ -74,13 +76,11 @@ class Bot {
     loop() {
         const stop = this.client.fresh.add(1000, () => this.client.getMessages(this.roomID), this.updateMessages, this.shutdown);
         this.lastMessageTime = Date.now();
-
-        this.sendDelay(mastermind())
+        this.sendDelay(this.mastermind())
         const id = setInterval(() => {
             const lastMessageInRoom = this.messages[this.messages.length - 1] || { sender: "", message: "" }
             // Checking for new message
             if (this.lastMessage.message !== lastMessageInRoom.message && lastMessageInRoom.sender !== this.username) {
-
                 // Checking if bot has been alive too long
                 if (this.messageSentCounter === this.numberOfMessages) {
                     this.shutdown(stop, id)
@@ -92,7 +92,7 @@ class Bot {
                 this.lastMessage = lastMessageInRoom
 
                 // Sending response
-                this.sendDelay(mastermind(lastMessageInRoom, false))
+                this.sendDelay(this.mastermind(lastMessageInRoom, false))
             } else {
                 // Checkin time since last message
                 if (Date.now() - this.lastMessageTime > 30_000) {
@@ -102,7 +102,7 @@ class Bot {
                         this.shutdown() 
                         return
                     }
-                    this.sendDelay(mastermind("", false));
+                    this.sendDelay(this.mastermind("", false));
                     this.lastMessageTime = Date.now()
                 }
             }
@@ -115,14 +115,14 @@ class Bot {
         if (this.loopID) clearInterval(this.loopID)
         if (this.stopFresh) this.stopFresh();
         if (reason !== 'server down') {
-            if (this.roomID) this.send(mastermind("", true))
+            if (this.roomID) this.send(this.mastermind("", true))
             if (!this.admin) this.deregister()
             else this.logout()
         }
     }
 
-    updateMessages = (messages) => {
-        this.messages = messages;
+    updateMessages = (res) => {
+        this.messages = res.body.messages;
     }
 
     send(message) {
