@@ -8,8 +8,8 @@
 import endpoints from './api/endpoints.js'
 import api from './lib/api.js'
 import config from './lib/config.js'
-import state from './lib/state.js'
-import fresh from './lib/fresh.js'
+import createState from './lib/state.js'
+import createFresh from './lib/fresh.js'
 import ws from './lib/ws.js'
 
 import auth from './middleware/authenticator.js'
@@ -23,10 +23,10 @@ const checkPush = async (client) => {
 
     // Starting refetch sycle if push notifications are disabled
     // by client or server
-    if (res.body.push === 'disabled' || !config.push) fresh.start()
+    if (res.body.push === 'disabled' || !config.push) client.fresh.start()
 }
 
-export default (options, httpModule, socketModule) => {
+export default (options, httpModule, SocketModule) => {
     // Throws error if http module not specified and running in node
     if (!httpModule && config.env === 'node') throw new Error("Http module is required as input when running in node")
     
@@ -36,22 +36,26 @@ export default (options, httpModule, socketModule) => {
     // Creating rest interactor
     const rest = api()
 
+    // Creating state instance
+    const state = createState()
+
     // Telling what the rest interactor should use each time a request is sent
-    rest.use(auth)
+    rest.use(auth(state))
     rest.use(contentType)
     rest.use(fetch(config, httpModule))
-    rest.use(responseHandler)
+    rest.use(responseHandler(state))
 
     // Setting up server connecion with rest interactor
     const client = endpoints(rest)
     
     // Appending modules to client
     client.state = state
-    client.fresh = fresh
+    client.fresh = createFresh()
 
     // Setup websocket connection
-    ws(`ws://${config.host}:${config.wsport}`, { socketModule, update: fresh.update })
+    ws(`ws://${config.host}:${config.wsport}`, { SocketModule, update: client.fresh.update, state })
 
+    // Check if push notifications is enabled on server
     checkPush(client)
 
     return client

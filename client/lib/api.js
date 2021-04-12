@@ -2,9 +2,7 @@
  * Api handler
  */
 
-const middleware = []
-
-const request = (request) => {
+const createRequest = middleware => (request) => {
     const req = {
         path: request.path || '/',
         method: request.method || 'GET',
@@ -38,6 +36,9 @@ const request = (request) => {
 }
 
 export default () => {
+    const middleware = []
+    const request = createRequest(middleware)
+
     return {
         use: (func) => middleware.push(func),
         post: (path, obj) => request({path, method: 'POST', ...obj}),

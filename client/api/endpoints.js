@@ -2,14 +2,13 @@
  * API endpoints
  */
 
-let server
-
-const routes = {
+const routes = server => { return {
     // User routes
     register: (username, password) => server.post('/api/users', { body: { username, password }}),
+    registerBot: (username, password) => server.post('/api/users', { body: { username, password, bot: true }}),
     getUsers: () => server.get('/api/users'),
     getUser: (userID) => server.get(`/api/user/${userID}`),
-    // router.delete('/user/:userID', users.deleteUser)
+    deleteUser: (userID) => server.delete(`/api/user/${userID}`),
 
     // // Token routes
     login: (username, password) => server.post('/api/tokens', { body: { username, password }}),
@@ -30,9 +29,8 @@ const routes = {
     postMessage: (roomID, userID, message) => server.post(`/api/room/${roomID}/${userID}/messages`, { body: { message } }),
     // router.get('/room/:roomID/:userID/messages', rooms.getMessagesFromUser)
     checkPush: () => server.get('/api/push')
-}
+}}
 
 export default (interactor) => {
-    server = interactor
-    return routes
+    return routes(interactor)
 }

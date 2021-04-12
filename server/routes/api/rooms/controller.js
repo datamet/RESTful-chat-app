@@ -38,11 +38,11 @@ const deleteRoom = async (req, res, next) => {
     validator.admin(req.user, roomID)
 
     await db.deleteRoom(roomID)
+    activeUsers.notify({},activeUsers.ROOM)
     res.json({ message: "Room deleted" })
 }
 
 const addUserToRoom = async (req, res, next) => {
-    console.log(req.body)
     await db.addUserToRoom(req.params.roomID, req.body.user)
     await db.addRoomToUser(req.params.roomID, req.body.user)
 

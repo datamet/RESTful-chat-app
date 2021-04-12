@@ -1,29 +1,27 @@
-import state from './state.js'
+import environment from './config.js'
 
-let ws
-let notify
+const browserWS = (url, { update, state }) => {
+    let ws
+    let notify = update
 
-const createWebsocket = (url, SocketModule) => {
-    const ws = SocketModule ? new SocketModule(url) : new WebSocket(url)
+    const createWebsocket = (url) => {
+        const ws = new WebSocket(url)
 
-    ws.onerror = (event) => {
-        console.log(event)
-        ws.close()
+        ws.onerror = (event) => {
+            console.log(event)
+            ws.close()
+        }
+
+        return ws
     }
 
-    return ws
-}
+    const handleMessage = (event) => {
+        notify()
+    }
 
-const handleMessage = (event) => {
-    console.log(event)
-    notify()
-}
-
-export default (url, { socketModule, update }) => {
-    notify = update
     state.subscribe(({ token }) => {
         if (token && !ws) {
-            ws = createWebsocket(url, socketModule ? socketModule : null)
+            ws = createWebsocket(url)
             ws.onopen = () => ws.send(token)
             ws.onmessage = (event) => handleMessage(event)
         }
@@ -33,3 +31,37 @@ export default (url, { socketModule, update }) => {
         }
     })
 }
+
+const nodeWS = (url, { SocketModule, update, state }) => {
+    let ws
+    let notify = update
+
+    const createWebsocket = (url, SocketModule) => {
+        const ws = new SocketModule(url)
+
+        ws.on('error', (event) => {
+            console.log(event)
+            ws.close()
+        })
+
+        return ws
+    }
+
+    const handleMessage = (event) => {
+        notify()
+    }
+
+    state.subscribe(({ token }) => {
+        if (token && !ws) {
+            ws = createWebsocket(url, SocketModule)
+            ws.on('open', () => ws.send(token))
+            ws.on('message', (event) => handleMessage(event))
+        }
+        else if (!token && ws) {
+            ws.close()
+            ws = null
+        }
+    })
+}
+
+export default environment.env === 'browser' ? browserWS : nodeWS
