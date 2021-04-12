@@ -8,7 +8,7 @@ const routes = server => { return {
     registerBot: (username, password) => server.post('/api/users', { body: { username, password, bot: true }}),
     getUsers: () => server.get('/api/users'),
     getUser: (userID) => server.get(`/api/user/${userID}`),
-    // router.delete('/user/:userID', users.deleteUser)
+    deleteUser: (userID) => server.delete(`/api/user/${userID}`),
 
     // // Token routes
     login: (username, password) => server.post('/api/tokens', { body: { username, password }}),

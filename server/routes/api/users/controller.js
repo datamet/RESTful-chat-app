@@ -3,10 +3,12 @@
  */
 
 // imports
- const db = require('../../../lib/db')
- const error = require('../../../lib/error')
- const validator = require('./validator')
- const auth = require('../../../lib/auth')
+const db = require('../../../lib/db')
+const error = require('../../../lib/error')
+const validator = require('./validator')
+const auth = require('../../../lib/auth')
+const activeUsers = require('../../../lib/pushnotify/connections')
+
 
 const createUser = async (req, res, next) => {
     const username = validator.username(req.body.username)
@@ -17,6 +19,7 @@ const createUser = async (req, res, next) => {
     const passwordHash = auth.hash(password + passwordSalt)
 
     const userID = await db.createUser(username, passwordHash, passwordSalt, bot)
+    activeUsers.notify({},activeUsers.USER)
     res.json({ message: "User created", userID })
 }
 
@@ -41,8 +44,9 @@ const deleteUser = async (req, res, next) => {
     const userToRemove = req.params.userID
 
     if (userToRemove === req.user.id) {
-        await db.deleteUser(userID);
+        await db.deleteUser(userToRemove);
         res.send({ message: "User deleted" })
+        activeUsers.notify({},activeUsers.USER)
         return
     }
     next(error.authentication())

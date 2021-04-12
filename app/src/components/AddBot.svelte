@@ -13,7 +13,7 @@
     let createBotError = ''
 
     const addBot = async () => {
-        const res = await client.getUsersInRoom($activeRoom.id)
+        const res = await client.getUsers()
         if (res.body.users) {
             if (!name) {
                 createBotError = "Name cannot be empty"
@@ -26,11 +26,12 @@
                 }
             }
         }
-        createBotError = ''
-
         const botClient = connection({ host, port })
         const bot = createBot(botClient, { room, name })
         bot.start()
+
+        createBotError = ''
+        name = ''
     }
 </script>
 

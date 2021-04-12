@@ -74,6 +74,9 @@ class InMemoryGateway extends Gateway {
             tokens.delete(tokenID)
         }
 
+        for (const room of user.rooms) {
+            this.removeUserFromRoom(room, userID)
+        }
         userIDs.delete(user.username)
         users.delete(userID)
     }
@@ -189,6 +192,12 @@ class InMemoryGateway extends Gateway {
         rooms.push(roomID)
         user.rooms = rooms
         users.set(userID, user)
+    }
+
+    removeUserFromRoom(roomID, userID) {
+        const room = rooms.get(roomID)
+        if (room.admin === userID) this.deleteRoom(roomID)
+        else room.users.splice(room.users.indexOf(userID), 1)
     }
 
     getUsersInRoom(roomID) {

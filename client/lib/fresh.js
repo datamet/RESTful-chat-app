@@ -13,6 +13,7 @@ const fetchBackend = async (func, callback, stop) => {
     catch(err) {
         console.log("Error while fetching. Stopping")
         console.log(err)
+        if (errCallback) errCallback()
         stop()
     }
 }
@@ -30,19 +31,19 @@ class Fresh {
             clearInterval(id)
         }
     
-        this.add = (interval, func, callback) => {
+        this.add = (interval, func, callback, errCallback) => {
     
             const id = setInterval(() => {
-                if (this.started) fetchBackend(func, callback, this.createStopper(id))
+                if (this.started) fetchBackend(func, callback, this.createStopper(id), errCallback)
             }, interval)
     
-            this.subs.set(id, { interval, func, callback })
+            this.subs.set(id, { interval, func, callback, errCallback })
             return this.createStopper(id)  
         }
     
         this.update = () => {
-            for (const [id, { func, callback }] of this.subs) {
-                fetchBackend(func, callback, this.createStopper(id))
+            for (const [id, { func, callback, errCallback }] of this.subs) {
+                fetchBackend(func, callback, this.createStopper(id), errCallback)
             }
         }
     }
