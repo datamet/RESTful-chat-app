@@ -5,6 +5,7 @@
 const routes = server => { return {
     // User routes
     register: (username, password) => server.post('/api/users', { body: { username, password }}),
+    registerBot: (username, password) => server.post('/api/users', { body: { username, password, bot: true }}),
     getUsers: () => server.get('/api/users'),
     getUser: (userID) => server.get(`/api/user/${userID}`),
     // router.delete('/user/:userID', users.deleteUser)

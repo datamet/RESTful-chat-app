@@ -11,11 +11,12 @@
 const createUser = async (req, res, next) => {
     const username = validator.username(req.body.username)
     const password = validator.password(req.body.password)
+    const bot = req.body.bot
     
     const passwordSalt = auth.salt()
     const passwordHash = auth.hash(password + passwordSalt)
 
-    const userID = await db.createUser(username, passwordHash, passwordSalt)
+    const userID = await db.createUser(username, passwordHash, passwordSalt, bot)
     res.json({ message: "User created", userID })
 }
 

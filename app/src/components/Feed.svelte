@@ -4,6 +4,8 @@
     import { getContext, onMount, onDestroy } from 'svelte'
     import { room } from '../stores/activeRoom.js'
     import AddBot from './AddBot.svelte'
+    import UserList from './UserList.svelte'
+    import Button from './Button.svelte'
 
     let messages = []
     let newMessage = ''
@@ -12,8 +14,10 @@
     let feed
 
     const getMessages = async () => {
-        const res = await client.getMessages($room.id)
-        if (res.body.messages) messages = res.body.messages
+        if ($room) {
+            const res = await client.getMessages($room.id)
+            if (res.body.messages) messages = res.body.messages
+        }
     }
 
     const freshMessages = async () => {
@@ -71,10 +75,16 @@
         </div>
     </div>
     <div class="metadata">
-        <p>You are {$room.admin === $user ? 'owner' : 'member'} of this room</p>
         {#if $room.admin === $user}
-            <button class="delete-button" on:click={deleteRoom}>Delete room</button>
+            <div class="admin-actions">
+                <p>Admin actions:</p>
+                <Button color="red" action={deleteRoom}>Delete room</Button>
+            </div>
         {/if}
+        <div>
+            <p>Users in room:</p>
+            <UserList />
+        </div>
         <AddBot room={$room.name} />
     </div>
 </div>
@@ -131,6 +141,14 @@
         box-shadow: 0 0 1rem 0 lightgray;
         width: 35rem;
         padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        overflow-y: scroll;
+    }
+
+    .metadata::-webkit-scrollbar {
+        display: none;
     }
 
     .delete-button {
@@ -175,5 +193,10 @@
 
     .message-text {
         margin: 0;
+    }
+
+    .admin-actions {
+        display: flex;
+        flex-direction: column;
     }
 </style>

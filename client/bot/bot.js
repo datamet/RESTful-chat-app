@@ -17,7 +17,8 @@ class Bot {
     lastMessageTime
 
     constructor(client, options) {
-        const {username, password} = randomebot();
+        let { username, password } = randomebot();
+        if (options.name) username = options.name
         this.client = client;
         this.options = options ? options : {};
         this.username = username;
@@ -26,7 +27,7 @@ class Bot {
     }
 
     async start() {
-        let res = await this.client.register(this.username, this.password)
+        let res = await this.client.registerBot(this.username, this.password)
         if (res.body.message === 'User created') {
             await this.client.login(this.username, this.password);
             this.userID = this.client.state.get().userID;
