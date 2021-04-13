@@ -19,5 +19,8 @@
   "homepage": "https://github.com/matssom/RESTful-chat-app#readme",
   "dependencies": {
     "chat-app": "file:server"
+  },
+  "devDependencies": {
+    "@rollup/plugin-replace": "^2.4.2"
   }
 }

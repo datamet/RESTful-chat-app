@@ -11,6 +11,8 @@ This chat app uses a RESTful Nodejs backend to create chat rooms where clients c
 
 ## How to run
 
+**NOTE!** If you are looking for delivery instructions, see `README.pdf` instead!
+
 **Server:**
 
 Development mode:

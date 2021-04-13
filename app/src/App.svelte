@@ -9,8 +9,8 @@
 	import Sidepanel from './components/Sidepanel.svelte'
 	import Chat from './components/Chat.svelte'
 
-	let host = window.location.hostname
-	let port = window.location.port
+	let host = dev_server.host ? dev_server.host : window.location.hostname
+	let port = dev_server.port ? dev_server.port : window.location.port
 
 	const client = connection({ host, port })
 	setContext('client', client)
