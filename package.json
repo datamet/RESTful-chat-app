@@ -4,7 +4,7 @@
   "description": "This chat app uses a RESTful Nodejs backend to create chat rooms where clients can communicate.",
   "main": "index.js",
   "scripts": {
-    "start": "node index"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/matssom/RESTful-chat-app/issues"
   },
-  "homepage": "https://github.com/matssom/RESTful-chat-app#readme"
+  "homepage": "https://github.com/matssom/RESTful-chat-app#readme",
+  "dependencies": {
+    "chat-app": "file:server"
+  }
 }
