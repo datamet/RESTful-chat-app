@@ -13,10 +13,26 @@ This chat app uses a RESTful Nodejs backend to create chat rooms where clients c
 
 **NOTE!** If you are looking for delivery instructions, see `README.pdf` instead!
 
+**In docker:**
+
+You need docker installed to run the server in a docker image.
+```
+docker build -t rest-chat-app .
+docker run -p 5000:5000 -p 5050:5050 rest-chat-app // -p maps a docker port to a local port on your machine
+```
+
+To stop the docker container you could use:
+```
+docker stop $(dokcer ps -a -q)
+```
+
+<br>
+
 **Server:**
 
 Development mode:
-- Runs on port `5000` (or port assigned by environment variable `PORT`)
+- Rest server runs on port `5000` (or port assigned by environment variable `PORT`)
+- Websocket server urns on port `5050` (or port assigned by environment variable `WS_PORT`)
 - Prints debug messages to the console
 - Restarts the server whenever a project file is saved
 - Uses an in-memory store
@@ -31,7 +47,8 @@ npm run dev
 <br>
 
 Production mode:
-- Runs on port `8080` (or port assigned by environment variable `PORT`)
+- Rest server runs on port `5000` (or port assigned by environment variable `PORT`)
+- Websocket server urns on port `5050` (or port assigned by environment variable `WS_PORT`)
 - Does not print debug messages
 - Uses an in-memory store
 
@@ -48,7 +65,7 @@ npm run start
 
 Development mode:
 - Connects to host `localhost`
-- Connects to port `5000`
+- Connects to port `5000` and wsport `5050`
 - Client server runs at port `5500`
 - Prints debug messages to the console
 - Restarts the client whenever a client file is saved
