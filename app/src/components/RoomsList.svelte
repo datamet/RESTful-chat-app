@@ -40,7 +40,6 @@
             for (const room of res.body.rooms) {
                 if (room.joined) joined.push(room)
                 else other.push(room)
-                console.log(room.id, selected)
             }
             joinedRooms = joined
             otherRooms = other

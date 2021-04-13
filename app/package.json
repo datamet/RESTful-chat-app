@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "rollup -c",
-    "dev": "PORT=5500 rollup -c -w",
+    "build": "npx rollup -c",
+    "dev": "PORT=5500 npx rollup -c -w",
     "start": "sirv public --single",
     "host": "sirv public --single --host --port 5500"
   },

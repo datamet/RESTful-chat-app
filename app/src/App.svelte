@@ -2,7 +2,6 @@
 	import { auth, user } from './stores/auth.js'
 	import { room } from './stores/activeRoom.js'
 	import { onDestroy, onMount } from 'svelte'
-	import { Router, Route, Link } from 'svelte-routing'
 	import { setContext } from 'svelte'
 	import connection from '../../client/client.js'
 
@@ -10,9 +9,8 @@
 	import Sidepanel from './components/Sidepanel.svelte'
 	import Chat from './components/Chat.svelte'
 
-	export let url = ""
-	export let host = window.location.hostname,
-			   port = window.location.port
+	let host = window.location.hostname
+	let port = window.location.port
 
 	const client = connection({ host, port })
 	setContext('client', client)
@@ -41,17 +39,13 @@
 
 </script>
 
-<Router {url}>		
-	<Header />
-
-	<div class="content">
-		<Sidepanel />
-
-		<main>
-			<Chat />
-		</main>
-	</div>
-</Router>
+<Header />
+<div class="content">
+	<Sidepanel />
+	<main>
+		<Chat />
+	</main>
+</div>
 
 <style>
 	.content {
