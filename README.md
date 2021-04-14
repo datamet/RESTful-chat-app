@@ -15,7 +15,12 @@ This chat app uses a RESTful Nodejs backend to create chat rooms where clients c
 
 **In docker:**
 
-You need docker installed to run the server in a docker image.
+- You can map the docker port (5000) to any port on your local machine.
+- Static client is bundeled at the `/` route
+- Runs in production mode
+- Has push notifications over websockets enabled
+
+You need docker installed to run the server in a docker container.
 ```
 docker build -t rest-chat-app .
 docker run -p 5000:5000 rest-chat-app // -p maps a docker port to a local port on your machine
@@ -36,6 +41,7 @@ Development mode:
 - Prints debug messages to the console
 - Restarts the server whenever a project file is saved
 - Uses an in-memory store
+- provide `NOTIFY=false` if you don't want push notifications enabled
 
 To run the server in development mode:
 ```
@@ -51,6 +57,7 @@ Production mode:
 - Websocket server urns on port `5050` (or port assigned by environment variable `WS_PORT`)
 - Does not print debug messages
 - Uses an in-memory store
+- provide `NOTIFY=false` if you don't want push notifications enabled
 
 To run server in production mode:
 ```
@@ -69,6 +76,7 @@ Development mode:
 - Client server runs at port `5500`
 - Prints debug messages to the console
 - Restarts the client whenever a client file is saved
+- Will use push notifications if server has it enabled
 
 To run the client in development mode:
 ```
@@ -95,6 +103,7 @@ Bots in the terminal:
 - Picks random username from a pool of names
 - Will join the `bot` room or create one if it doesn't exist yet.
 - Posts/responds to messages
+- Will use push notifications if server has it enabled
 
 To run a bot from the terminal:
 ```
@@ -105,6 +114,7 @@ Bots from UI:
 - Picks random username from a pool of names
 - Will join the room you create them in
 - Posts/responds to messages in that room
+- Will use push notifications if server has it enabled
 
 To create bot in UI:
 - Go to the client in your browser. 
