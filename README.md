@@ -384,7 +384,7 @@ Token : "%Auth Token%"
 
 *Response Body:*
 
-```
+```json
 {
     "room": {
         "id": "%roomID%",
@@ -545,5 +545,18 @@ Token : %tokenID%
 ```json
 {
     "message" : "Message sent"
+}
+```
+
+<br>
+
+### `GET - /api/push`
+
+Check if server has push notifications enabled
+
+*Response body:*
+```json
+{
+    "push" : "enabled/disabled"
 }
 ```
