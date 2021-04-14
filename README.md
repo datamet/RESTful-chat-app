@@ -36,8 +36,7 @@ docker stop $(dokcer ps -a -q)
 **Server:**
 
 Development mode:
-- Rest server runs on port `5000` (or port assigned by environment variable `PORT`)
-- Websocket server urns on port `5050` (or port assigned by environment variable `WS_PORT`)
+- Server runs on port `5000` (or port assigned by environment variable `PORT`)
 - Prints debug messages to the console
 - Restarts the server whenever a project file is saved
 - Uses an in-memory store
@@ -53,8 +52,7 @@ npm run dev
 <br>
 
 Production mode:
-- Rest server runs on port `5000` (or port assigned by environment variable `PORT`)
-- Websocket server urns on port `5050` (or port assigned by environment variable `WS_PORT`)
+- Server runs on port `5000` (or port assigned by environment variable `PORT`)
 - Does not print debug messages
 - Uses an in-memory store
 - provide `NOTIFY=false` if you don't want push notifications enabled
@@ -72,7 +70,7 @@ npm run start
 
 Development mode:
 - Connects to host `localhost`
-- Connects to port `5000` and wsport `5050`
+- Connects to port `5000`
 - Client server runs at port `5500`
 - Prints debug messages to the console
 - Restarts the client whenever a client file is saved
@@ -98,8 +96,8 @@ Production mode:
 **Bots:**
 
 Bots in the terminal:
-- Connects to host `localhost` (or port assigned by environment variable `HOST`)
-- Connects to port `8080` (or port assigned by environment variable `PORT`)
+- Connects to host `localhost` (or port assigned by environment variable `SERVER_HOST`)
+- Connects to port `5000` (or port assigned by environment variable `SERVER_PORT`)
 - Picks random username from a pool of names
 - Will join the `bot` room or create one if it doesn't exist yet.
 - Posts/responds to messages
@@ -107,7 +105,8 @@ Bots in the terminal:
 
 To run a bot from the terminal:
 ```
-HOST=localhost PORT=8080 node bot.js
+cd client
+HOST=localhost PORT=5000 node bot.js
 ```
 
 Bots from UI:
