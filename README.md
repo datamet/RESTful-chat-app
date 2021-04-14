@@ -18,7 +18,7 @@ This chat app uses a RESTful Nodejs backend to create chat rooms where clients c
 You need docker installed to run the server in a docker image.
 ```
 docker build -t rest-chat-app .
-docker run -p 5000:5000 -p 5050:5050 rest-chat-app // -p maps a docker port to a local port on your machine
+docker run -p 5000:5000 rest-chat-app // -p maps a docker port to a local port on your machine
 ```
 
 To stop the docker container you could use:
