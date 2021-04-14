@@ -363,7 +363,8 @@ Token : "%Auth Token%"
     "rooms" : [
         {
             "id" : "%roomID%",
-            "name" : "%room name%"
+            "name" : "%room name%",
+            "joined": true
         }
     ]
 }
@@ -379,6 +380,27 @@ Get room
 
 ```
 Token : "%Auth Token%"
+```
+
+*Response Body:*
+
+```
+{
+    "room": {
+        "id": "%roomID%",
+        "name": "%room name%",
+        "admin": "%userID%",
+        "users": [
+            "%userID%"
+        ],
+        "messages": [
+            {
+                "sender": "%user name%",
+                "message": "%message%"
+            }
+        ]
+    }
+}
 ```
 
 <br>
