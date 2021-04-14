@@ -1,4 +1,5 @@
-const { app } = require("../app")
+const { server } = require("../server")
+const app = server
 const supertest = require("supertest")
 
 let tokenID, userID
