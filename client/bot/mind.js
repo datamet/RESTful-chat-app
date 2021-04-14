@@ -149,6 +149,7 @@ triggers.set(' see you ', () => res.bye)
 triggers.set(' goodnight ', () => res.bye)
 triggers.set(' good night ', () => res.bye)
 triggers.set(' i have to go ', () => res.bye)
+triggers.set(' cya ', () => res.bye)
 
 // Pick random element of array
 const rand = arr => arr[Math.floor(Math.random() * arr.length)];
