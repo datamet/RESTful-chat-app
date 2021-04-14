@@ -1,7 +1,8 @@
 /**
  * Respons handler
  * 
- * Responsible for handeling responses
+ * Responsible for handeling responses and updating state based on
+ * responses from the server
  */
 
 export default state => (req, res, next) => {

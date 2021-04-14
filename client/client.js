@@ -3,11 +3,14 @@
  * 
  * This application is created to be able run in both the browser and in nodejs
  * Exports a createClient function that when called returns a new client instance
+ * 
+ * The client is inspired by the way express handles requests. We have implemented
+ * a similar req, res, next middleware approach
  */
 
 // Imports
 import endpoints from './api/endpoints.js'
-import api from './lib/api.js'
+import createCore from './lib/core.js'
 import config from './lib/config.js'
 import createState from './lib/state.js'
 import createFresh from './lib/fresh.js'
@@ -34,30 +37,34 @@ export default (options, httpModule, SocketModule) => {
     // Adding passed in config options to config file
     if (typeof options === 'object') Object.assign(config, options)
 
-    // Creating rest interactor
-    const rest = api()
+    // Creating the client core. Responsible for funneling requests from start to response
+    const core = createCore()
 
     // Creating state instance
     const state = createState()
 
-    // Telling what the rest interactor should use each time a request is sent
-    rest.use(auth(state))
-    rest.use(contentType)
-    rest.use(fetch(config, httpModule))
-    rest.use(responseHandler(state))
+    // Telling what the client core should use each time a request is sent
+    core.use(auth(state))
+    core.use(contentType)
+    core.use(fetch(config, httpModule))
+    core.use(responseHandler(state))
 
-    // Setting up server connecion with rest interactor
-    const client = endpoints(rest)
+    // Setting up the endpoints with the client core
+    const client = endpoints(core)
     
-    // Appending modules to client
+    // Appending state to client
     client.state = state
+
+    // Appending fresh module (api for getting fresh data whenever there are changes on the server)
     client.fresh = createFresh()
 
-    // Setup websocket connection
+    // Creating websocket url
     const wsURL = config.port ? `ws://${config.host}:${config.port}` : `ws://${config.host}`
+
+    // Setting up websocket module and passing, client state and an update function from fresh.
     ws(wsURL, { SocketModule, update: client.fresh.update, state })
 
-    // Check if push notifications is enabled on server
+    // Check if push notifications are enabled on server
     checkPush(client)
 
     return client
