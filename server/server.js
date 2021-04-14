@@ -15,13 +15,15 @@ const authenticator = require('./middleware/authenticator')
 const apiRouter = require('./routes/api/api.routes')
 const errorHandler = require('./middleware/errorHandler')
 
-// Creating app
-const app = express()
-
 // Creating web socket server
-const wsapp = express()
-const ws_server = http.createServer(wsapp)
-const ws = createWS(ws_server)
+const server = http.createServer()
+
+// Creating rest app and passing it to server
+const app = express()
+server.on('request', app)
+
+// Create websoket app and passing it server
+const ws = createWS(server)
 
 // Path to frontend application
 const public_path = path.join(__dirname, '../app/public')
@@ -34,4 +36,4 @@ app.use(apiRouter)
 app.use(express.static(public_path))
 app.use(errorHandler)
 
-module.exports = { app, ws_server }
+module.exports = { server }

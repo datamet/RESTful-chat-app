@@ -1,3 +1,4 @@
+
 const activate = [
     ["anyone here?", "who is here?", "how are you doing", "i am here!", "am I alone here?"],
     ["i have to leave!", "i will be back soon", "have a nice day, bye!", "i have to go"],

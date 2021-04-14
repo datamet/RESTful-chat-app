@@ -53,7 +53,8 @@ export default (options, httpModule, SocketModule) => {
     client.fresh = createFresh()
 
     // Setup websocket connection
-    ws(`ws://${config.host}:${config.wsport}`, { SocketModule, update: client.fresh.update, state })
+    const wsURL = config.port ? `ws://${config.host}:${config.port}` : `ws://${config.host}`
+    ws(wsURL, { SocketModule, update: client.fresh.update, state })
 
     // Check if push notifications is enabled on server
     checkPush(client)

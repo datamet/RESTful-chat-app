@@ -1,5 +1,5 @@
 import randomebot from "./service.js"
-import mastermind from "./mastermind.js";
+import mastermind from "./mind.js";
 
 class Bot {
     client
@@ -12,7 +12,8 @@ class Bot {
     mastermind
 
     unresponsive = 0
-    messages = [{ sender: "", message: "" }]
+    messages = []
+    newMessages = []
     messageSentCounter = 0
     numberOfMessages
     lastMessage = { sender: "", message: "" }
@@ -26,7 +27,7 @@ class Bot {
         this.username = username;
         this.password = password;
         this.numberOfMessages = Math.floor(Math.random() * (30 - 10 + 1) + 10);
-        this.mastermind = mastermind(this.username);
+        this.mastermind = mastermind({ username: this.username });
     }
 
     async start() {
@@ -42,6 +43,8 @@ class Bot {
                     this.shutdown()
                     return
                 }
+                res = await this.client.getMessages(this.roomID)
+                if (res) this.messages = res.body.messages
                 this.loop()
                 return
             }
@@ -73,36 +76,48 @@ class Bot {
         }
     }
 
+    shouldBeAlive() {
+        if (this.messageSentCounter === this.numberOfMessages) {
+            this.shutdown()
+            return
+        }
+    }
+
+    nextMessage() {
+        if (this.newMessages.length > 0) {
+            const message = this.newMessages.shift()
+            this.messages.push(message)
+            if (message.sender !== this.username) return message
+        }
+    }
+
     loop() {
         const stop = this.client.fresh.add(1000, () => this.client.getMessages(this.roomID), this.updateMessages, this.shutdown);
         this.lastMessageTime = Date.now();
-        this.sendDelay(this.mastermind())
+        this.sendDelay(this.mastermind(null, { starter: true }))
         const id = setInterval(() => {
-            const lastMessageInRoom = this.messages[this.messages.length - 1] || { sender: "", message: "" }
-            // Checking for new message
-            if (this.lastMessage.message !== lastMessageInRoom.message && lastMessageInRoom.sender !== this.username) {
+            const msg = this.nextMessage()
+            if (msg) {
                 // Checking if bot has been alive too long
-                if (this.messageSentCounter === this.numberOfMessages) {
-                    this.shutdown(stop, id)
-                    return
-                }
+                this.shouldBeAlive()
 
-                // Updating last message
+                // Updating last message time
                 this.lastMessageTime = Date.now();
-                this.lastMessage = lastMessageInRoom
 
                 // Sending response
-                this.sendDelay(this.mastermind(lastMessageInRoom, false))
+                this.sendDelay(this.mastermind(msg))
             } else {
                 // Checkin time since last message
                 if (Date.now() - this.lastMessageTime > 30_000) {
-                    // Sending conversation starter
+                    // Checking if unresponsive twice
                     this.unresponsive += 1
                     if (this.unresponsive === 2) {
                         this.shutdown() 
                         return
                     }
-                    this.sendDelay(this.mastermind("", false));
+
+                    // Sending conversation starter
+                    this.send(this.mastermind());
                     this.lastMessageTime = Date.now()
                 }
             }
@@ -115,14 +130,15 @@ class Bot {
         if (this.loopID) clearInterval(this.loopID)
         if (this.stopFresh) this.stopFresh();
         if (reason !== 'server down') {
-            if (this.roomID) this.send(this.mastermind("", true))
+            if (this.roomID) this.send(this.mastermind(null, { ender: true }))
             if (!this.admin) this.deregister()
             else this.logout()
         }
     }
 
     updateMessages = (res) => {
-        this.messages = res.body.messages;
+        const fresh = [...res.body.messages]
+        this.newMessages = fresh.slice(this.messages.length, fresh.length)
     }
 
     send(message) {
@@ -135,7 +151,7 @@ class Bot {
     }
 
     sendDelay(message) {
-        let timeout = Math.floor(Math.random() * (10 - 3 + 1) + 3);
+        let timeout = Math.floor(Math.random() * (10 - 4 + 1) + 4);
         setTimeout(() => {
             this.send(message)
         }, timeout);

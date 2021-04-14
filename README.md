@@ -11,6 +11,8 @@ This chat app uses a RESTful Nodejs backend to create chat rooms where clients c
 
 ## How to run
 
+**NOTE!** If you are looking for delivery instructions, see `README.pdf` instead!
+
 **In docker:**
 
 You need docker installed to run the server in a docker image.
@@ -23,6 +25,8 @@ To stop the docker container you could use:
 ```
 docker stop $(dokcer ps -a -q)
 ```
+
+<br>
 
 **Server:**
 

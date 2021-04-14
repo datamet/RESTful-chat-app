@@ -10,7 +10,8 @@ let config, http
 const browserFetch = async (req, res, next) => {
     try {
         const { path, method, headers, body } = req
-        const response = await fetch(`http://${config.host}:${config.port}${path}`, {
+        const url = config.port ? `http://${config.host}:${config.port}${path}` : `http://${config.host}${path}`
+        const response = await fetch(url, {
             method, 
             headers, 
             body: method === 'POST' || method == 'PUT' ? JSON.stringify(body) : null

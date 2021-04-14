@@ -15,12 +15,14 @@
 
     const updateFeed = (res) => {
         if (res.body.messages) messages = res.body.messages
-        let height = 20
-        for (const message of feed.children) {
-            height += message.clientHeight
-            height += 20
+        if (feed) {
+            let height = 20
+            for (const message of feed.children) {
+                height += message.clientHeight
+                height += 20
+            }
+            setTimeout(() => feed.scrollTop = height, 50)
         }
-        setTimeout(() => feed.scrollTop = height, 50)
     }
 
     const getMessages = async () => {
