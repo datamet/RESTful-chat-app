@@ -2,6 +2,7 @@
  * Client application
  * 
  * This application is created to be able run in both the browser and in nodejs
+ * Exports a createClient function that when called returns a new client instance
  */
 
 // Imports

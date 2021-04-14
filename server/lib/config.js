@@ -6,7 +6,6 @@ const dev = {
     mode: 'development',
     host: process.env.HOST || 'localhost',
     port: process.env.PORT || 5000,
-    wsport: process.env.WS_PORT || 5050,
     notify:  process.env.NOTIFY === 'false' ? false : true,
     debug: true,
     tokenExpiration: 1000 * 60 * 60
@@ -16,7 +15,6 @@ const prod = {
     mode: 'production',
     host: process.env.HOST || 'localhost',
     port: process.env.PORT || 5000,
-    wsport: process.env.WS_PORT || 5050,
     notify:  process.env.NOTIFY === 'false' ? false : true,
     debug: false,
     tokenExpiration: 1000 * 60 * 60 * 24
