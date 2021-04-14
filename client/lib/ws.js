@@ -9,7 +9,7 @@ const browserWS = (url, { update, state }) => {
         const ws = new WebSocket(url)
 
         ws.onerror = (event) => {
-            console.log(event)
+            notify({start: true})
             ws.close()
         }
 
@@ -25,6 +25,7 @@ const browserWS = (url, { update, state }) => {
     state.subscribe(({ token }) => {
         if (token && !ws) {
             // If logged in and websocket does not exist
+            notify({start: false})
             ws = createWebsocket(url)
             ws.onopen = () => ws.send(token)
             ws.onmessage = (event) => handleMessage(event)
@@ -62,6 +63,7 @@ const nodeWS = (url, { SocketModule, update, state }) => {
     state.subscribe(({ token }) => {
         if (token && !ws) {
             // If logged in and websocket does not exist
+            notify({start: false})
             ws = createWebsocket(url, SocketModule)
             ws.on('open', () => ws.send(token))
             ws.on('message', (event) => handleMessage(event))

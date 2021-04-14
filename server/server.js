@@ -5,6 +5,7 @@
 // Imports
 const express = require('express')
 const path = require('path')
+const config = require('./lib/config')
 
 const createWS = require('./lib/ws')
 const http = require('http')
@@ -23,7 +24,7 @@ const app = express()
 server.on('request', app)
 
 // Create websoket app and passing server to it
-const ws = createWS(server)
+if (config.notify) createWS(server)
 
 // Path to static frontend
 const public_path = path.join(__dirname, '../app/public')
