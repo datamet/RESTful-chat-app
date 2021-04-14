@@ -11,7 +11,7 @@ subjects.set('oslo', 'the capital of Norway')
 const res = {
     starter: ['Hey, people!', 'Hi there, I am a bot', 'Hey lads', 'Good [day]', 'Hi, [question]'],
     ender: ['I have to go', 'cya, I have to go', 'Leaving. Talk to you later', 'Bye all'],
-    question: ['How are you?', 'Do you like [food]?', 'If you could live anywhere, where would it be?',
+    question: ['How are you?', 'Do you like [food]?', 'Do you like [cloathing]', 'Tell me about bikes',
     'Are you [mood]?'],
     statement: ['The world is [mood]!', '[food] is [mood]', 'I [attitude] [cloathing]'],
     attitude: ['like', 'love', 'hate', 'somewhat like', 'dont like'],
@@ -36,11 +36,12 @@ const res = {
     up: ['I am [mood]', 'Nothing much. [statement]', 'Its an awesome day!'],
     how: ['I am [mood]', 'Fine. [statement]', 'Its an awesome day!'],
     bot: ['My name is [username]. I am a bot', 'I am [username]', '[username] is my name', 'Not a human'],
-    understand: ["I didn't quite catch that", "I don't understand. Let's talk about something else. [statement]", 
-    "That sentence was a bit too advanced for me"],
+    understand: ["I didn't quite catch that. [question]", "I don't understand. Let's talk about something else. [statement]", 
+    "That sentence was a bit too advanced for me. [statement]", 'Onto something else. This [day] is soo [mood]'],
     saved: ['Now I know what [subject] is!', 'Thank you for explaining what [subject] is'],
     inactive: ['Are you still here?', 'Anyone here?', 'Hellooooooooooo..', 'Someone here?', 'I guess everyone left.'],
-    else: ['On to something else. [statement]', 'On to something else. [question]', "Let's talk about sometihng else!"]
+    else: ['On to something else. [ask]', 'On to something else. [ask]', "Let's talk about sometihng else!", 'I am [mood]'],
+    ask: ['What time is it?', 'Explain [food] to me please', 'Where were you born?', 'What date is it?', 'Tell me a joke!']
 }
 
 // Checks if mastermind has managed to pinpoint the subject
@@ -72,6 +73,11 @@ triggers.set(' are you real ', () => res.bot)
 triggers.set(' you are real ', () => res.bot)
 triggers.set(' you are real ', () => res.bot)
 triggers.set(' are you a human ', () => res.hi)
+
+triggers.set(' too advanced ', () => res.else)
+triggers.set(' i dont understand ', () => res.else)
+triggers.set(' i didnt quite catch ', () => res.else)
+triggers.set(' too advanced ', () => res.else)
 
 triggers.set(' yes ', () => res.cool)
 triggers.set(' yep ', () => res.cool)
@@ -119,6 +125,8 @@ triggers.set(' where were you born ', () => res.places)
 triggers.set(' what is the time ', () => res.time)
 triggers.set(' time is it ', () => res.time)
 triggers.set(' it today ', () => res.date)
+triggers.set(' what date is it ', () => res.date)
+triggers.set(' what is the date ', () => res.date)
 triggers.set(' what year ', () => res.date)
 triggers.set(' what month ', () => res.date)
 triggers.set(' what day ', () => res.date)
@@ -140,6 +148,7 @@ triggers.set(' good bye ', () => res.bye)
 triggers.set(' see you ', () => res.bye)
 triggers.set(' goodnight ', () => res.bye)
 triggers.set(' good night ', () => res.bye)
+triggers.set(' i have to go ', () => res.bye)
 
 // Pick random element of array
 const rand = arr => arr[Math.floor(Math.random() * arr.length)];

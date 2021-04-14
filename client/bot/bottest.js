@@ -1,3 +1,7 @@
+/**
+ * Script to test bot responses from the terminal only
+ */
+
 import readline from 'readline'
 import mind from './mind.js'
 
