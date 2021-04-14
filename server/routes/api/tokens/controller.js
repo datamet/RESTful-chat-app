@@ -8,6 +8,7 @@ const error = require('../../../lib/error')
 const validator = require('./validator')
 const auth = require('../../../lib/auth')
 
+// Login
 const createToken = async (req, res, next) => {
     const username = typeof req.body.username === 'string' ? req.body.username : ""
     const password = typeof req.body.password === 'string' ? req.body.password : ""
@@ -33,12 +34,14 @@ const createToken = async (req, res, next) => {
     next(error.credentials())
 }
 
+// Get login information
 const getToken = async (req, res, next) => {
     const tokenID = validator.tokenID(req.params.tokenID)
     const token = await db.getTokenById(tokenID)
     res.json({ token })
 }
 
+// Extend session
 const extendToken = async (req, res, next) => {
     const tokenID = validator.tokenID(req.params.tokenID)
 
@@ -50,6 +53,7 @@ const extendToken = async (req, res, next) => {
     res.json({ message: "Session extended" })
 }
 
+// Logout
 const deleteToken = async (req, res, next) => {
     const tokenID = validator.tokenID(req.params.tokenID)
     await db.deleteToken(tokenID)
