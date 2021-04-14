@@ -1,3 +1,8 @@
+/**
+ * Stores active connections
+ * Exposes methods to store and notify all acitve connections
+ */
+
 const conns = new Map()
 const db = require('../db.js')
 

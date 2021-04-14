@@ -84,7 +84,7 @@ const nodeFetch = async (req, res, next) => {
 // Returns function that uses the browsers built in fetch module if running in the browser,
 // otherwise returns a function that takes node's http module as an argument to
 // be able to send http requests via node's api.
-// This had to be done because dynamic imports, still are under development
+// This had to be done because dynamic imports still are under development
 export default environment.env === 'browser' ? (options) => { config = options ; return browserFetch} : (options, httpModule) => { 
     http = httpModule
     config = options

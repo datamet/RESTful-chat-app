@@ -1,3 +1,7 @@
+/**
+ * Script for running a bot from the terminal.
+ */
+
 import http from 'http'
 import connect from './client.js'
 import createBot from './bot/bot.js'

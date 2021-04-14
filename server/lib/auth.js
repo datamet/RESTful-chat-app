@@ -1,3 +1,7 @@
+/**
+ * Handles crypto
+ */
+
 const crypto = require('crypto')
 const { tokenExpiration } = require('./config')
 const { secret } = require('./keys')

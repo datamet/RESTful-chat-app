@@ -1,5 +1,8 @@
-// let state = {}
-// let subscribers = []
+/**
+ * Client state
+ * 
+ * Storing state. Predominantly token and userID 
+ */
 
 class State {
     state
@@ -10,17 +13,21 @@ class State {
         this.subscribers = []
     }
 
+    // Get copy of state
     get() {
         return {...this.state}
     }
 
+    // Add or change properties on state
     update(newState) {
         this.state = { ...this.state, ...newState }
+        // Call all subscribers with new state
         for (const subscriber of this.subscribers) {
             subscriber({...this.state})
         }
     }
 
+    // Subscribe to state changes
     subscribe(subscriber) { 
         this.subscribers.push(subscriber)
         return () => this.subscribers.splice(this.subscribers.indexOf(subscriber), 1)
@@ -29,18 +36,3 @@ class State {
 }
 
 export default () => new State()
-
-// export default {
-//     get: () => {return {...state}},
-//     update: (newState) => {
-//         state = { ...state, ...newState }
-//         for (const subscriber of subscribers) {
-//             subscriber({...state})
-//         }
-//     },
-//     subscribe: (subscriber) => { 
-//         subscribers.push(subscriber)
-//         return () => subscribers.splice(subscribers.indexOf(subscriber), 1)
-//     }
-// }
-

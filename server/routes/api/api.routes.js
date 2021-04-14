@@ -8,6 +8,7 @@ const users = require('./users/controller')
 const tokens = require('./tokens/controller')
 const rooms = require('./rooms/controller')
 
+// Creating a new express sub app that has a router prefixed to /api
 const { app, router } = require('../../lib/router')('/api')
 
 // We have to wrap everything in try/catch here because
